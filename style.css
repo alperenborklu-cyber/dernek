@@ -144,6 +144,41 @@ ul {
     position: relative;
     width: 100px;
     height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Premium Spinning Outer Ring */
+.loader-container::before {
+    content: '';
+    position: absolute;
+    top: -15px;
+    left: -15px;
+    width: 130px;
+    height: 130px;
+    border-radius: 50%;
+    border: 3px solid rgba(0, 82, 204, 0.06);
+    border-top: 3px solid var(--primary);
+    border-right: 3px solid var(--primary-light);
+    animation: loader-spin 1.8s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+    z-index: 1;
+}
+
+/* Floating Shadow */
+.loader-container::after {
+    content: '';
+    position: absolute;
+    bottom: -20px;
+    left: 50%;
+    transform: translateX(-50%) scale(1);
+    width: 60px;
+    height: 8px;
+    background: rgba(0, 0, 0, 0.12);
+    border-radius: 50%;
+    filter: blur(2px);
+    animation: loader-shadow 4s infinite ease-in-out;
+    z-index: 0;
 }
 
 .loader-wheelchair,
@@ -157,24 +192,91 @@ ul {
 }
 
 .loader-wheelchair {
-    animation: wheelchairToWalk 4s infinite ease-in-out;
+    animation: wheelchairFloat 4s infinite ease-in-out;
 }
 
 .loader-walking {
     opacity: 0;
-    animation: walkingAway 4s infinite ease-in-out;
+    animation: walkingBounce 4s infinite ease-in-out;
 }
 
-@keyframes wheelchairToWalk {
+@keyframes loader-spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes loader-shadow {
+    /* Wheelchair Phase (0% - 45%) */
+    0% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+    }
+    10% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: translateX(-50%) scale(0.6); /* Icon rises, shadow shrinks */
+        opacity: 0.5;
+    }
+    30% {
+        transform: translateX(-50%) scale(1.1); /* Icon falls, shadow grows */
+        opacity: 1;
+    }
+    40% {
+        transform: translateX(-50%) scale(1.1);
+        opacity: 1;
+    }
+    45% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+    }
+    /* Walking/Jumping Phase (45% - 100%) */
+    50% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+    }
+    55% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    65% {
+        transform: translateX(-50%) scale(0.5); /* Jump up */
+        opacity: 0.3;
+    }
+    75% {
+        transform: translateX(-50%) scale(0.4); /* Peak of jump */
+        opacity: 0.2;
+    }
+    82% {
+        transform: translateX(-50%) scale(1.2); /* Landing impact */
+        opacity: 1;
+    }
+    90% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    95%, 100% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+    }
+}
+
+@keyframes wheelchairFloat {
     0% {
         transform: translate(-50%, -50%) scale(0);
         opacity: 0;
     }
     10% {
+        transform: translate(-50%, -50%) scale(1.2);
+        opacity: 1;
+    }
+    20% {
+        transform: translate(-50%, -85%) scale(1.2); /* Floating up */
         opacity: 1;
     }
     30% {
-        transform: translate(-50%, -50%) scale(1.2);
+        transform: translate(-50%, -50%) scale(1.2); /* Fall back down */
         opacity: 1;
     }
     40% {
@@ -187,7 +289,7 @@ ul {
     }
 }
 
-@keyframes walkingAway {
+@keyframes walkingBounce {
     0%, 40% {
         transform: translate(-50%, -50%) scale(0);
         opacity: 0;
@@ -197,19 +299,19 @@ ul {
         opacity: 1;
     }
     55% {
-        transform: translate(-50%, -50%) scale(1.3, 0.7); /* Squash down */
+        transform: translate(-50%, -40%) scale(1.3, 0.7); /* Squash down */
         opacity: 1;
     }
     65% {
-        transform: translate(-50%, -100%) scale(0.8, 1.3); /* Stretch up in jump */
+        transform: translate(-50%, -105%) scale(0.85, 1.25); /* Jump up stretch */
         opacity: 1;
     }
     75% {
-        transform: translate(-50%, -110%) scale(1, 1); /* Apex of jump */
+        transform: translate(-50%, -120%) scale(1, 1); /* Peak of jump */
         opacity: 1;
     }
     82% {
-        transform: translate(-50%, -50%) scale(1.3, 0.7); /* Squash on landing */
+        transform: translate(-50%, -40%) scale(1.3, 0.7); /* Landing impact squash */
         opacity: 1;
     }
     90% {
