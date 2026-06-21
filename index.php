@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dernek - 2026 Design</title>
+    
+    <!-- Google Fonts: Outfit and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.php" class="logo">
+                <img src="logo.png" alt="Dernek Logo">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="#" class="active">Anasayfa</a></li>
+                    <li><a href="#">Kurumsal <i class="fa-solid fa-chevron-down"></i></a></li>
+                    <li><a href="#">Haberler <i class="fa-solid fa-chevron-down"></i></a></li>
+                    <li><a href="#">Mevzuat <i class="fa-solid fa-chevron-down"></i></a></li>
+                    <li><a href="#">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="#" class="btn btn-primary">Üye Ol</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-container">
+            <div class="hero-content">
+                <span class="badge">Yeni Dönem 2026</span>
+                <h1>Geleceğin Sesi, <br><span>Gücümüz</span> Birlikte</h1>
+                <p>Modern çağın gereksinimlerine uygun, şeffaf ve yenilikçi bir dernekçilik anlayışıyla üyelerimize değer katıyoruz. Bizimle geleceğe adım atın.</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary btn-large">Çalışmalarımız <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="#" class="btn btn-outline btn-large">Hakkımızda</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <div class="glass-card">
+                    <img src="WhatsApp Image 2026-06-21 at 17.00.27.jpeg" alt="Dernek Faaliyeti">
+                    <div class="glass-floating-badge top-right">
+                        <i class="fa-solid fa-users"></i>
+                        <span>+5000 Aktif Üye</span>
+                    </div>
+                    <div class="glass-floating-badge bottom-left">
+                        <i class="fa-solid fa-chart-line"></i>
+                        <span>Vizyon 2026</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-blob"></div>
+    </section>
+
+    <!-- News & Announcements -->
+    <section class="news-section">
+        <div class="container">
+            <div class="section-header">
+                <h2>Güncel <span>Haberler</span></h2>
+                <a href="#" class="view-all">Tümünü Gör <i class="fa-solid fa-arrow-right"></i></a>
+            </div>
+            <div class="news-grid">
+                <!-- News Card 1 -->
+                <article class="news-card">
+                    <div class="news-img">
+                        <img src="WhatsApp Image 2026-06-21 at 17.00.27.jpeg" alt="Haber 1">
+                        <span class="news-date">21 Haziran 2026</span>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">Genel Merkez</span>
+                        <h3>Derneğimizin Yeni Dönem Vizyon Toplantısı Gerçekleşti</h3>
+                        <p>2026 yılı hedeflerimiz doğrultusunda yönetim kurulumuz ve üyelerimizle bir araya geldik. Gelecek stratejilerimiz üzerine verimli bir çalıştay düzenlendi...</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- News Card 2 -->
+                <article class="news-card">
+                    <div class="news-img">
+                        <img src="WhatsApp Image 2026-06-21 at 17.00.27.jpeg" alt="Haber 2">
+                        <span class="news-date">15 Haziran 2026</span>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">Kampanyalar</span>
+                        <h3>Yeni Nesil Eğitim Projemiz Başlıyor</h3>
+                        <p>Genç üyelerimiz için hazırlanan dijital yetkinlik geliştirme eğitimlerimiz kayıt almaya başladı. Kontenjan dolmadan hemen başvurun...</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- News Card 3 -->
+                <article class="news-card">
+                    <div class="news-img">
+                        <img src="WhatsApp Image 2026-06-21 at 17.00.27.jpeg" alt="Haber 3">
+                        <span class="news-date">10 Haziran 2026</span>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">Ziyaretler</span>
+                        <h3>Sektör Temsilcileri ile İstişare Görüşmesi</h3>
+                        <p>Sektörel sorunların çözümü adına paydaşlarımızla önemli bir toplantı gerçekleştirdik. Çözüm önerilerimiz masaya yatırıldı...</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container cta-container">
+            <div class="cta-content">
+                <h2>Ailemize Katılın, Gücümüze Güç Katın!</h2>
+                <p>Türkiye'nin en yenilikçi sivil toplum kuruluşunda yerinizi alın. Haklarınız için omuz omuza mücadele edelim.</p>
+                <a href="#" class="btn btn-primary btn-large cta-btn">Hemen Üye Ol</a>
+            </div>
+            <div class="cta-pattern"></div>
+        </div>
+    </section>
+
+    <!-- Fancy Footer -->
+    <footer class="fancy-footer">
+        <!-- SVG Wave Divider -->
+        <div class="footer-wave">
+            <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+                <path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" class="shape-fill"></path>
+            </svg>
+        </div>
+        
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo-wrapper">
+                        <img src="logo.png" alt="Dernek Logo Footer" class="footer-logo">
+                    </div>
+                    <p class="footer-desc">Türkiye'nin vizyoner sivil toplum kuruluşu. Üyelerimiz için değer üretmeye, sektörümüze yön vermeye devam ediyoruz. 2026 hedeflerimizle daha güçlüyüz.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <div class="footer-widget">
+                        <h4>Kurumsal</h4>
+                        <ul>
+                            <li><a href="#">Hakkımızda</a></li>
+                            <li><a href="#">Yönetim Kurulu</a></li>
+                            <li><a href="#">Tarihçe</a></li>
+                            <li><a href="#">Şubelerimiz</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget">
+                        <h4>Hızlı Bağlantılar</h4>
+                        <ul>
+                            <li><a href="#">Üyelik Formu</a></li>
+                            <li><a href="#">Mevzuat</a></li>
+                            <li><a href="#">Haberler & Duyurular</a></li>
+                            <li><a href="#">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget contact-widget">
+                        <h4>İletişim</h4>
+                        <ul class="contact-info">
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                                <span>Örnek Mah. Vizyon Cad. No:1 <br>Çankaya / Ankara, Türkiye</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
+                                <span>+90 (312) 123 45 67</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+                                <span>bilgi@dernek.org.tr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; <?php echo date('Y'); ?> Dernek. Tüm hakları saklıdır. <span class="heart">Made with <i class="fa-solid fa-heart"></i> for 2026</span></p>
+                <div class="footer-legal">
+                    <a href="#">Gizlilik Politikası</a>
+                    <a href="#">KVKK Aydınlatma Metni</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+</body>
+</html>
