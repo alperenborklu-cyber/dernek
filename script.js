@@ -78,4 +78,20 @@ document.addEventListener('DOMContentLoaded', () => {
             slides[currentSlide].classList.add('active');
         }, 4000); // Switch every 4 seconds
     }
+
+    // 6. Scroll Progress Bar
+    const progressBar = document.createElement('div');
+    progressBar.id = 'scroll-progress-bar';
+    document.body.insertBefore(progressBar, document.body.firstChild);
+
+    const updateProgressBar = () => {
+        const scrollTop = window.scrollY;
+        const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+        const progress = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+        progressBar.style.width = progress + '%';
+    };
+
+    window.addEventListener('scroll', updateProgressBar, { passive: true });
+    updateProgressBar();
 });
+
