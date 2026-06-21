@@ -166,5 +166,76 @@ document.addEventListener('DOMContentLoaded', () => {
             footerBottomP.innerHTML += ' <span style="opacity: 0.8; margin-left: 8px;">| Dernek Kütük No: 06.157.157</span>';
         }
     }
+
+    // 10. Hero Background Videos Cross-Fade Loop
+    const video1 = document.getElementById('hero-video-1');
+    const video2 = document.getElementById('hero-video-2');
+
+    if (video1 && video2) {
+        let v1Triggered = false;
+        let v2Triggered = false;
+
+        const playVideo2 = () => {
+            video2.style.opacity = '1';
+            video2.play().catch(e => console.log('Video 2 play failed:', e));
+            video1.style.opacity = '0';
+            setTimeout(() => {
+                if (v1Triggered) {
+                    video1.pause();
+                    video1.currentTime = 0;
+                }
+            }, 1500);
+        };
+
+        const playVideo1 = () => {
+            video1.style.opacity = '1';
+            video1.play().catch(e => console.log('Video 1 play failed:', e));
+            video2.style.opacity = '0';
+            setTimeout(() => {
+                if (v2Triggered) {
+                    video2.pause();
+                    video2.currentTime = 0;
+                }
+            }, 1500);
+        };
+
+        video1.addEventListener('timeupdate', () => {
+            if (video1.duration && !v1Triggered) {
+                // Cross-fade 1.5 seconds before end
+                if (video1.duration - video1.currentTime <= 1.5) {
+                    v1Triggered = true;
+                    v2Triggered = false;
+                    playVideo2();
+                }
+            }
+        });
+
+        video2.addEventListener('timeupdate', () => {
+            if (video2.duration && !v2Triggered) {
+                // Cross-fade 1.5 seconds before end
+                if (video2.duration - video2.currentTime <= 1.5) {
+                    v2Triggered = true;
+                    v1Triggered = false;
+                    playVideo1();
+                }
+            }
+        });
+
+        video1.addEventListener('ended', () => {
+            if (!v1Triggered) {
+                v1Triggered = true;
+                v2Triggered = false;
+                playVideo2();
+            }
+        });
+
+        video2.addEventListener('ended', () => {
+            if (!v2Triggered) {
+                v2Triggered = true;
+                v1Triggered = false;
+                playVideo1();
+            }
+        });
+    }
 });
 
