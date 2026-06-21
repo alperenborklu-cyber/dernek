@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog - Engelsiz Yaşam Derneği</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- SEO Meta Etiketleri -->
+    <meta name="description" content="Engelsiz Yaşam Derneği blog yazıları. Erişilebilirlik, engelli hakları, yardımcı teknolojiler ve istihdam konularında bilgilendirici makaleler.">
+    <meta name="keywords" content="engelli hakları blog, erişilebilirlik makale, yardımcı teknoloji, engelli istihdamı, doğru iletişim dili">
+    <meta name="author" content="Engelsiz Yaşam Derneği">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Blog - Engelsiz Yaşam Derneği">
+    <meta property="og:description" content="Erişilebilirlik, engelli hakları, yardımcı teknolojiler ve engelli istihdamı hakkında güncel makaleler.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="https://www.dernek.org.tr/blog.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-container">
+            <i class="fa-solid fa-wheelchair loader-wheelchair"></i>
+            <i class="fa-solid fa-person-walking loader-walking"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index" class="logo">
+                <img src="logo.png" alt="Engelsiz Yaşam Derneği Logo">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="kurumsal">Kurumsal</a></li>
+                    <li><a href="haberler">Haberler</a></li>
+                    <li><a href="blog" class="active">Blog</a></li>
+                    <li><a href="mevzuat">Mevzuat</a></li>
+                    <li><a href="iletisim">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="uyelik" class="btn btn-primary">Üye Ol</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Subpage Hero -->
+    <section class="subpage-hero">
+        <div class="container">
+            <h1>Engelsiz <span>Blog</span></h1>
+            <p>Erişilebilirlik, engelli hakları, teknoloji ve toplumsal yaşama dair bilgilendirici güncel makalelerimiz.</p>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="blog-section">
+        <div class="container">
+            
+            <!-- Filter & Search Controls -->
+            <div class="blog-controls">
+                <div class="blog-categories" id="blogCategories">
+                    <button class="filter-btn active" data-filter="all">Hepsi</button>
+                    <button class="filter-btn" data-filter="teknoloji">Teknoloji</button>
+                    <button class="filter-btn" data-filter="istihdam">İstihdam</button>
+                    <button class="filter-btn" data-filter="sehir">Şehir & Yaşam</button>
+                    <button class="filter-btn" data-filter="toplum">Toplum & Haklar</button>
+                </div>
+                <div class="blog-search-box">
+                    <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                    <input type="text" id="blogSearchInput" placeholder="Makale ara...">
+                </div>
+            </div>
+
+            <!-- Blog Grid -->
+            <div class="blog-grid" id="blogGrid">
+                
+                <!-- Article 1: Dijital Erişilebilirlik -->
+                <article class="blog-card" data-category="teknoloji">
+                    <div class="blog-card-img">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?auto=format&fit=crop&w=800&q=80" alt="Dijital Erişilebilirlik">
+                        <span class="blog-badge">Teknoloji</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <span><i class="fa-solid fa-calendar-days"></i> 21 Haziran 2026</span>
+                            <span><i class="fa-solid fa-clock"></i> 5 dk okuma</span>
+                        </div>
+                        <h3><a href="blog-dijital-erisebilirlik" class="searchable-title">Dijital Erişilebilirlik Nedir ve Neden Önemlidir?</a></h3>
+                        <p>Web sitelerinin ve uygulamaların engelli bireylerce engelsiz kullanımı, WCAG standartları ve dijital dünyadaki eşit haklar.</p>
+                        <div class="blog-card-footer">
+                            <div class="blog-author">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>Ahmet Yılmaz</span>
+                            </div>
+                            <a href="blog-dijital-erisebilirlik" class="read-more">Oku <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 2: Engelli İstihdamı -->
+                <article class="blog-card" data-category="istihdam">
+                    <div class="blog-card-img">
+                        <img src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=800&q=80" alt="Engelli İstihdamı">
+                        <span class="blog-badge">İstihdam</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <span><i class="fa-solid fa-calendar-days"></i> 18 Haziran 2026</span>
+                            <span><i class="fa-solid fa-clock"></i> 6 dk okuma</span>
+                        </div>
+                        <h3><a href="blog-engelli-istihdami" class="searchable-title">İş Dünyasında Engelli İstihdamı ve Önyargıları Yıkmak</a></h3>
+                        <p>Kurumsal şirketlerde engelli istihdam politikaları, uzaktan çalışmanın sunduğu yeni fırsatlar ve engelsiz kariyer yolları.</p>
+                        <div class="blog-card-footer">
+                            <div class="blog-author">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>Elif Demir</span>
+                            </div>
+                            <a href="blog-engelli-istihdami" class="read-more">Oku <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 3: Engelsiz Şehirler -->
+                <article class="blog-card" data-category="sehir">
+                    <div class="blog-card-img">
+                        <img src="https://images.unsplash.com/photo-1477959858617-67f85cf4f1df?auto=format&fit=crop&w=800&q=80" alt="Engelsiz Şehirler">
+                        <span class="blog-badge">Şehir & Yaşam</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <span><i class="fa-solid fa-calendar-days"></i> 14 Haziran 2026</span>
+                            <span><i class="fa-solid fa-clock"></i> 5 dk okuma</span>
+                        </div>
+                        <h3><a href="blog-engelsiz-sehirler" class="searchable-title">Şehirlerimizi Nasıl Engelsiz ve Erişilebilir Hale Getirebiliriz?</a></h3>
+                        <p>Fiziksel çevre, kaldırımlar, rampalar, hissedilebilir yüzeyler ve akıllı şehir çözümlerinin engelsiz yaşama etkisi.</p>
+                        <div class="blog-card-footer">
+                            <div class="blog-author">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>Murat Kaya</span>
+                            </div>
+                            <a href="blog-engelsiz-sehirler" class="read-more">Oku <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 4: Yardımcı Teknolojiler -->
+                <article class="blog-card" data-category="teknoloji">
+                    <div class="blog-card-img">
+                        <img src="https://images.unsplash.com/photo-1531297484001-80022131f5a1?auto=format&fit=crop&w=800&q=80" alt="Yardımcı Teknolojiler">
+                        <span class="blog-badge">Teknoloji</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <span><i class="fa-solid fa-calendar-days"></i> 10 Haziran 2026</span>
+                            <span><i class="fa-solid fa-clock"></i> 7 dk okuma</span>
+                        </div>
+                        <h3><a href="blog-yardimci-teknolojiler" class="searchable-title">Hayatı Kolaylaştıran Yardımcı Teknolojiler</a></h3>
+                        <p>Ekran okuyuculardan göz takip sistemlerine, akıllı protezlerden yapay zeka destekli görme teknolojilerine kadar yenilikçi araçlar.</p>
+                        <div class="blog-card-footer">
+                            <div class="blog-author">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>Dr. Selin Aksoy</span>
+                            </div>
+                            <a href="blog-yardimci-teknolojiler" class="read-more">Oku <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 5: Doğru İletişim Dili -->
+                <article class="blog-card" data-category="toplum">
+                    <div class="blog-card-img">
+                        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=800&q=80" alt="Doğru İletişim Dili">
+                        <span class="blog-badge">Toplum & Haklar</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <span><i class="fa-solid fa-calendar-days"></i> 05 Haziran 2026</span>
+                            <span><i class="fa-solid fa-clock"></i> 4 dk okuma</span>
+                        </div>
+                        <h3><a href="blog-dogru-iletisim-dili" class="searchable-title">Toplumda Engellilikle Alakalı Doğru İletişim Dili</a></h3>
+                        <p>Acıma ve trajedi odaklı anlatımların dışına çıkarak, eşitliği, bağımsızlığı ve hak temelli yaklaşımı savunan doğru dil kullanımı.</p>
+                        <div class="blog-card-footer">
+                            <div class="blog-author">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>Caner Aydın</span>
+                            </div>
+                            <a href="blog-dogru-iletisim-dili" class="read-more">Oku <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Article 6: Paralimpik Sporlar -->
+                <article class="blog-card" data-category="sehir">
+                    <div class="blog-card-img">
+                        <img src="https://images.unsplash.com/photo-1517649763962-0c623066013b?auto=format&fit=crop&w=800&q=80" alt="Paralimpik Sporlar">
+                        <span class="blog-badge">Şehir & Yaşam</span>
+                    </div>
+                    <div class="blog-card-content">
+                        <div class="blog-meta">
+                            <span><i class="fa-solid fa-calendar-days"></i> 01 Haziran 2026</span>
+                            <span><i class="fa-solid fa-clock"></i> 6 dk okuma</span>
+                        </div>
+                        <h3><a href="blog-paralimpik-spor" class="searchable-title">Sporun Sınır Tanımayan Gücü: Paralimpik Sporlar</a></h3>
+                        <p>Türkiye'den ve dünyadan paralimpik şampiyonların başarı hikayeleri ve sporun engelsiz bireyler üzerindeki rehabilitasyon gücü.</p>
+                        <div class="blog-card-footer">
+                            <div class="blog-author">
+                                <i class="fa-solid fa-user-tie"></i>
+                                <span>Buse Şahin</span>
+                            </div>
+                            <a href="blog-paralimpik-spor" class="read-more">Oku <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+
+            <!-- No Results Panel -->
+            <div class="no-results-panel" id="noResultsPanel">
+                <i class="fa-solid fa-newspaper"></i>
+                <h4>Aradığınız kriterlere uygun makale bulunamadı.</h4>
+                <p>Lütfen farklı bir arama terimi deneyin ya da filtreleri temizleyin.</p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container cta-container">
+            <div class="cta-content">
+                <h2>Engelsiz Yarınları Birlikte İnşa Edelim!</h2>
+                <p>Çalışmalarımıza destek olabilir, gönüllümüz ya da üyemiz olarak engelleri kaldırmada bir rol oynayabilirsiniz.</p>
+                <a href="uyelik" class="btn btn-primary btn-large cta-btn">Hemen Bize Katılın</a>
+            </div>
+            <div class="cta-pattern"></div>
+        </div>
+    </section>
+
+    <!-- Fancy Footer -->
+    <footer class="fancy-footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo-text">Gönül Köprüsü<span>.</span></div>
+                    <p class="footer-desc">Türkiye'nin öncü engelsiz yaşam kuruluşu. Engelli bireylerin toplumsal yaşama katılımını, erişilebilirliğini ve haklarını destekliyoruz. Engelsiz bir gelecek inşa etmek için yanınızdayız.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <div class="footer-widget">
+                        <h4>Kurumsal</h4>
+                        <ul>
+                            <li><a href="kurumsal">Hakkımızda</a></li>
+                            <li><a href="kurumsal">Yönetim Kurulu</a></li>
+                            <li><a href="kurumsal">Tarihçe</a></li>
+                            <li><a href="#">Şubelerimiz</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget">
+                        <h4>Hızlı Bağlantılar</h4>
+                        <ul>
+                            <li><a href="uyelik">Üyelik Formu</a></li>
+                            <li><a href="mevzuat">Mevzuat</a></li>
+                            <li><a href="haberler">Haberler & Duyurular</a></li>
+                            <li><a href="blog">Blog Yazıları</a></li>
+                            <li><a href="iletisim">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget contact-widget">
+                        <h4>İletişim</h4>
+                        <ul class="contact-info">
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                                <span>Örnek Mah. Vizyon Cad. No:1 <br>Çankaya / Ankara, Türkiye</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
+                                <span>+90 (312) 123 45 67</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+                                <span>bilgi@dernek.org.tr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Engelsiz Yaşam Derneği. Tüm hakları saklıdır.</p>
+                <div class="footer-legal">
+                    <a href="gizlilik-politikasi">Gizlilik Politikası</a>
+                    <a href="kvkk-aydinlatma-metni">KVKK Aydınlatma Metni</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+    <!-- Page Specific Script for Live Search and Filter -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const searchInput = document.getElementById('blogSearchInput');
+            const blogCards = document.querySelectorAll('.blog-card');
+            const noResultsPanel = document.getElementById('noResultsPanel');
+            const blogGrid = document.getElementById('blogGrid');
+
+            let activeCategory = 'all';
+            let searchQuery = '';
+
+            const performFilter = () => {
+                let matchesCount = 0;
+
+                blogCards.forEach(card => {
+                    const cardCategory = card.dataset.category;
+                    const cardTitle = card.querySelector('.searchable-title').textContent.toLowerCase();
+                    const cardExcerpt = card.querySelector('.blog-card-content p').textContent.toLowerCase();
+                    
+                    const categoryMatches = (activeCategory === 'all' || cardCategory === activeCategory);
+                    const searchMatches = (cardTitle.includes(searchQuery) || cardExcerpt.includes(searchQuery));
+
+                    if (categoryMatches && searchMatches) {
+                        card.style.display = 'flex';
+                        card.style.opacity = '0';
+                        // Trigger tiny fade in animation
+                        setTimeout(() => {
+                            card.style.opacity = '1';
+                            card.style.transform = 'translateY(0)';
+                        }, 50);
+                        matchesCount++;
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                if (matchesCount === 0) {
+                    noResultsPanel.style.display = 'block';
+                    blogGrid.style.minHeight = 'auto';
+                } else {
+                    noResultsPanel.style.display = 'none';
+                    blogGrid.style.minHeight = '300px';
+                }
+            };
+
+            // Category filter click
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    activeCategory = btn.dataset.filter;
+                    performFilter();
+                });
+            });
+
+            // Search input typing
+            searchInput.addEventListener('input', (e) => {
+                searchQuery = e.target.value.trim().toLowerCase();
+                performFilter();
+            });
+        });
+    </script>
+</body>
+</html>
