@@ -106,5 +106,56 @@ document.addEventListener('DOMContentLoaded', () => {
         </a>
     `;
     document.body.appendChild(contactContainer);
+    // 8. Stats Counter Animation
+    const stats = document.querySelectorAll('.stat-number');
+    
+    const formatNumber = (num) => {
+        if (num >= 10000) {
+            return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "+";
+        }
+        return num + "+";
+    };
+
+    const animateCount = (el) => {
+        const target = parseInt(el.getAttribute('data-target'), 10);
+        const duration = 2000; // 2 seconds
+        const startTime = performance.now();
+
+        const updateCount = (currentTime) => {
+            const elapsedTime = currentTime - startTime;
+            const progress = Math.min(elapsedTime / duration, 1);
+            
+            // Easing function: easeOutQuad
+            const easeProgress = progress * (2 - progress);
+            const currentVal = Math.floor(easeProgress * target);
+
+            el.textContent = formatNumber(currentVal);
+
+            if (progress < 1) {
+                requestAnimationFrame(updateCount);
+            } else {
+                el.textContent = formatNumber(target);
+            }
+        };
+
+        requestAnimationFrame(updateCount);
+    };
+
+    if (stats.length > 0) {
+        const statsObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCount(entry.target);
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+
+        stats.forEach(stat => {
+            statsObserver.observe(stat);
+        });
+    }
 });
 
