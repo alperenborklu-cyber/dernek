@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Üyelik Başvurusu - Engelsiz Yaşam Derneği</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- SEO Meta Etiketleri -->
+    <meta name="description" content="Engelsiz Yaşam Derneği üyelik ve gönüllülük başvuru formu. Aramıza katılın, engelleri birlikte aşalım.">
+    <meta name="keywords" content="dernek üyelik, gönüllü ol, engelsiz yaşam derneği başvuru, engelli hakları üyelik">
+    <meta name="author" content="Engelsiz Yaşam Derneği">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Üyelik Başvurusu - Engelsiz Yaşam Derneği">
+    <meta property="og:description" content="Engelsiz Yaşam Derneği'ne üye veya gönüllü olarak katılın. Birlikte daha güçlüyüz.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="https://www.dernek.org.tr/uyelik.html">
+    <meta property="og:type" content="website">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-container">
+            <i class="fa-solid fa-wheelchair loader-wheelchair"></i>
+            <i class="fa-solid fa-person-walking loader-walking"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="Engelsiz Yaşam Derneği Logo">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="kurumsal.html">Kurumsal</a></li>
+                    <li><a href="haberler.html">Haberler</a></li>
+                    <li><a href="mevzuat.html">Mevzuat</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="uyelik.html" class="btn btn-primary">Üye Ol</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Subpage Hero -->
+    <section class="subpage-hero">
+        <div class="container">
+            <h1>Aramıza <span>Katılın</span></h1>
+            <p>Engelsiz Yaşam Derneği'ne üye veya gönüllü olarak başvuruda bulunun, engelleri birlikte aşalım.</p>
+        </div>
+    </section>
+
+    <!-- Membership Layout Section -->
+    <section class="membership-section">
+        <div class="container">
+            <div class="membership-grid">
+                
+                <!-- Left: Application Wizard -->
+                <div class="membership-card-container">
+                    
+                    <!-- Progress Bar / Step Indicators -->
+                    <div class="form-progress-bar" id="formProgressBar">
+                        <div class="progress-line">
+                            <div class="progress-line-fill" id="progressLineFill"></div>
+                        </div>
+                        <div class="step-node active" data-step="1">
+                            <div class="node-circle"><i class="fa-solid fa-user"></i></div>
+                            <span>Kişisel</span>
+                        </div>
+                        <div class="step-node" data-step="2">
+                            <div class="node-circle"><i class="fa-solid fa-address-book"></i></div>
+                            <span>İletişim</span>
+                        </div>
+                        <div class="step-node" data-step="3">
+                            <div class="node-circle"><i class="fa-solid fa-sliders"></i></div>
+                            <span>Tercihler</span>
+                        </div>
+                        <div class="step-node" data-step="4">
+                            <div class="node-circle"><i class="fa-solid fa-check-double"></i></div>
+                            <span>Onay</span>
+                        </div>
+                    </div>
+
+                    <!-- Main Form Card -->
+                    <div class="membership-form-card">
+                        
+                        <form id="membershipForm" novalidate>
+                            
+                            <!-- STEP 1: Kişisel Bilgiler -->
+                            <div class="form-step-panel active" data-step="1">
+                                <h3 class="step-title">Kişisel Bilgiler</h3>
+                                <p class="step-desc">Lütfen yasal dernek kaydı için kimlik bilgilerinizi eksiksiz doldurun.</p>
+                                
+                                <div class="form-group">
+                                    <label for="fullName"><i class="fa-solid fa-signature input-icon"></i> Adınız Soyadınız <span class="required-star">*</span></label>
+                                    <input type="text" id="fullName" class="form-control" placeholder="Ad Soyad" required minlength="5">
+                                    <div class="error-msg" id="fullNameError">Lütfen adınızı ve soyadınızı en az 5 karakter olarak girin.</div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="tcNo"><i class="fa-solid fa-id-card input-icon"></i> T.C. Kimlik No <span class="required-star">*</span></label>
+                                        <input type="text" id="tcNo" class="form-control" placeholder="11 Haneli TC Kimlik No" maxlength="11" required pattern="\d{11}">
+                                        <div class="error-msg" id="tcNoError">Geçerli bir T.C. Kimlik numarası giriniz.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="birthDate"><i class="fa-solid fa-calendar-days input-icon"></i> Doğum Tarihi <span class="required-star">*</span></label>
+                                        <input type="date" id="birthDate" class="form-control" required>
+                                        <div class="error-msg" id="birthDateError">18 yaşından küçükler dernek üyesi olamaz.</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-venus-mars input-icon"></i> Cinsiyet <span class="required-star">*</span></label>
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input type="radio" name="gender" value="Kadın" required>
+                                            <span class="custom-radio"></span> Kadın
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="gender" value="Erkek">
+                                            <span class="custom-radio"></span> Erkek
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="gender" value="Belirtmek İstemiyorum">
+                                            <span class="custom-radio"></span> Belirtmek İstemiyorum
+                                        </label>
+                                    </div>
+                                    <div class="error-msg" id="genderError">Lütfen cinsiyet seçimi yapın.</div>
+                                </div>
+
+                                <div class="step-actions">
+                                    <button type="button" class="btn btn-primary btn-next">İleri <i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 2: İletişim Bilgileri -->
+                            <div class="form-step-panel" data-step="2">
+                                <h3 class="step-title">İletişim & Konum</h3>
+                                <p class="step-desc">Başvurunuzla ilgili sizinle iletişime geçebilmemiz için bilgilerinizi yazın.</p>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="phone"><i class="fa-solid fa-phone input-icon"></i> Telefon Numarası <span class="required-star">*</span></label>
+                                        <input type="tel" id="phone" class="form-control" placeholder="05XX XXX XX XX" required>
+                                        <div class="error-msg" id="phoneError">Geçerli bir telefon numarası girin.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="email"><i class="fa-solid fa-envelope input-icon"></i> E-posta Adresi <span class="required-star">*</span></label>
+                                        <input type="email" id="email" class="form-control" placeholder="e-posta@adres.com" required>
+                                        <div class="error-msg" id="emailError">Geçerli bir e-posta adresi girin.</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="city"><i class="fa-solid fa-map-location-dot input-icon"></i> Yaşadığınız Şehir <span class="required-star">*</span></label>
+                                    <select id="city" class="form-control" required>
+                                        <option value="" disabled selected>Şehir Seçin</option>
+                                        <option value="Adana">Adana</option>
+                                        <option value="Ankara">Ankara</option>
+                                        <option value="Antalya">Antalya</option>
+                                        <option value="Aydın">Aydın</option>
+                                        <option value="Balıkesir">Balıkesir</option>
+                                        <option value="Bursa">Bursa</option>
+                                        <option value="Denizli">Denizli</option>
+                                        <option value="Diyarbakır">Diyarbakır</option>
+                                        <option value="Erzurum">Erzurum</option>
+                                        <option value="Eskişehir">Eskişehir</option>
+                                        <option value="Gaziantep">Gaziantep</option>
+                                        <option value="Hatay">Hatay</option>
+                                        <option value="İstanbul">İstanbul</option>
+                                        <option value="İzmir">İzmir</option>
+                                        <option value="Kahramanmaraş">Kahramanmaraş</option>
+                                        <option value="Kayseri">Kayseri</option>
+                                        <option value="Kocaeli">Kocaeli</option>
+                                        <option value="Konya">Konya</option>
+                                        <option value="Malatya">Malatya</option>
+                                        <option value="Manisa">Manisa</option>
+                                        <option value="Mardin">Mardin</option>
+                                        <option value="Mersin">Mersin</option>
+                                        <option value="Muğla">Muğla</option>
+                                        <option value="Ordu">Ordu</option>
+                                        <option value="Sakarya">Sakarya</option>
+                                        <option value="Samsun">Samsun</option>
+                                        <option value="Şanlıurfa">Şanlıurfa</option>
+                                        <option value="Tekirdağ">Tekirdağ</option>
+                                        <option value="Trabzon">Trabzon</option>
+                                        <option value="Van">Van</option>
+                                        <option value="Diğer">Diğer</option>
+                                    </select>
+                                    <div class="error-msg" id="cityError">Lütfen bir şehir seçin.</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="address"><i class="fa-solid fa-house input-icon"></i> Ev Adresi <span class="required-star">*</span></label>
+                                    <textarea id="address" class="form-control" placeholder="Açık adresinizi buraya yazın..." required minlength="10"></textarea>
+                                    <div class="error-msg" id="addressError">Lütfen geçerli bir açık adres girin (en az 10 karakter).</div>
+                                </div>
+
+                                <div class="step-actions">
+                                    <button type="button" class="btn btn-outline btn-prev"><i class="fa-solid fa-arrow-left"></i> Geri</button>
+                                    <button type="button" class="btn btn-primary btn-next">İleri <i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 3: Üyelik Tercihleri -->
+                            <div class="form-step-panel" data-step="3">
+                                <h3 class="step-title">Üyelik Tercihleri & Engel Durumu</h3>
+                                <p class="step-desc">Dernekteki katılım modelinizi ve ihtiyaçlarınızı belirleyin.</p>
+
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-handshake-angle input-icon"></i> Üyelik Tipi <span class="required-star">*</span></label>
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input type="radio" name="memberType" value="Gönüllü Üye" required checked>
+                                            <span class="custom-radio"></span> Gönüllü Üye
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="memberType" value="Asil Üye">
+                                            <span class="custom-radio"></span> Asil Üye (Resmi Kayıtlı)
+                                        </label>
+                                    </div>
+                                    <p class="field-info-text"><b>Asil Üye:</b> Dernek genel kurullarında oy hakkına sahip, tüzüğe göre aidat ödemekle yükümlü üyelerdir. <br><b>Gönüllü Üye:</b> Çalışmalarımıza, projelerimize destek veren ancak yasal mali ve oy yükümlülüğü bulunmayan destekçilerdir.</p>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-universal-access input-icon"></i> Özel Gereksinim / Engel Durumunuz Var mı? <span class="required-star">*</span></label>
+                                    <div class="radio-group">
+                                        <label class="radio-label">
+                                            <input type="radio" name="disabilityStatus" value="Evet" id="disabilityYes">
+                                            <span class="custom-radio"></span> Evet
+                                        </label>
+                                        <label class="radio-label">
+                                            <input type="radio" name="disabilityStatus" value="Hayır" id="disabilityNo" checked>
+                                            <span class="custom-radio"></span> Hayır
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <!-- Dynamic Disability Group Selector -->
+                                <div class="form-group hidden-field" id="disabilityGroupWrapper">
+                                    <label for="disabilityGroup"><i class="fa-solid fa-wheelchair input-icon"></i> Engel Grubu / Türü <span class="required-star">*</span></label>
+                                    <select id="disabilityGroup" class="form-control">
+                                        <option value="" disabled selected>Engel Grubu Seçin</option>
+                                        <option value="Bedensel Engel">Bedensel / Ortopedik</option>
+                                        <option value="Görme Engeli">Görme Engeli</option>
+                                        <option value="İşitme Engeli">İşitme Engeli</option>
+                                        <option value="Zihinsel Gereksinim">Zihinsel / Gelişimsel</option>
+                                        <option value="Konuşma / Dil Engeli">Konuşma ve Dil Engeli</option>
+                                        <option value="Süreğen Hastalık">Süreğen Hastalık</option>
+                                        <option value="Diğer / Belirtmek İstemiyorum">Diğer / Belirtmek İstemiyorum</option>
+                                    </select>
+                                    <div class="error-msg" id="disabilityGroupError">Lütfen bir engel grubu seçin.</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label><i class="fa-solid fa-heart input-icon"></i> Hangi Çalışma Alanlarına Katılmak İstersiniz?</label>
+                                    <div class="checkbox-grid">
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="interests" value="Erişilebilirlik & Haritalama">
+                                            <span class="custom-checkbox"></span> Erişilebilirlik & Haritalama
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="interests" value="Eğitim & Akademi">
+                                            <span class="custom-checkbox"></span> Eğitim & Akademi
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="interests" value="Sosyal Etkinlik & Spor">
+                                            <span class="custom-checkbox"></span> Sosyal Etkinlik & Spor
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="interests" value="Hak Savunuculuğu">
+                                            <span class="custom-checkbox"></span> Hak Savunuculuğu
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="interests" value="Sosyal Medya & Tanıtım">
+                                            <span class="custom-checkbox"></span> Sosyal Medya & Tanıtım
+                                        </label>
+                                        <label class="checkbox-label">
+                                            <input type="checkbox" name="interests" value="Proje Geliştirme">
+                                            <span class="custom-checkbox"></span> Proje Geliştirme
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div class="step-actions">
+                                    <button type="button" class="btn btn-outline btn-prev"><i class="fa-solid fa-arrow-left"></i> Geri</button>
+                                    <button type="button" class="btn btn-primary btn-next">İleri <i class="fa-solid fa-arrow-right"></i></button>
+                                </div>
+                            </div>
+
+                            <!-- STEP 4: Onaylar & Gönder -->
+                            <div class="form-step-panel" data-step="4">
+                                <h3 class="step-title">Yasal Onaylar & Gönderim</h3>
+                                <p class="step-desc">Lütfen yasal aydınlatma metinlerini ve taahhütleri onaylayın.</p>
+
+                                <div class="consent-box">
+                                    <h4>Üyelik Taahhütnamesi</h4>
+                                    <p>Engelsiz Yaşam Derneği tüzüğünde belirtilen amaç ve ilkeleri benimesdiğimi, dernek tüzüğüne ve kararlarına uygun hareket edeceğimi, derneğin onurunu ve saygınlığını koruyacağımı taahhüt ederim. Asil üyelik başvurusunda bulunmam halinde, yönetim kurulunun başvurumu onaylamasıyla birlikte yıllık üyelik aidatını zamanında ödeyeceğimi beyan ederim.</p>
+                                </div>
+
+                                <div class="form-group margin-top-20">
+                                    <label class="checkbox-label align-start">
+                                        <input type="checkbox" id="kvkkCheck" required>
+                                        <span class="custom-checkbox"></span> 
+                                        <span>
+                                            <a href="kvkk-aydinlatma-metni.html" target="_blank" class="text-link">KVKK Aydınlatma Metni</a>'ni ve <a href="gizlilik-politikasi.html" target="_blank" class="text-link">Gizlilik Politikası</a>'nı okudum, kişisel verilerimin işlenmesini kabul ediyorum. <span class="required-star">*</span>
+                                        </span>
+                                    </label>
+                                    <div class="error-msg" id="kvkkCheckError">Devam edebilmek için KVKK onayını vermelisiniz.</div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="checkbox-label align-start">
+                                        <input type="checkbox" id="tuzukCheck" required>
+                                        <span class="custom-checkbox"></span> 
+                                        <span>
+                                            Dernek tüzüğünü okudum, amaç ve ilkelere uygun çalışacağımı taahhüt ediyorum. <span class="required-star">*</span>
+                                        </span>
+                                    </label>
+                                    <div class="error-msg" id="tuzukCheckError">Devam edebilmek için dernek tüzüğünü kabul etmelisiniz.</div>
+                                </div>
+
+                                <div class="step-actions">
+                                    <button type="button" class="btn btn-outline btn-prev"><i class="fa-solid fa-arrow-left"></i> Geri</button>
+                                    <button type="submit" class="btn btn-primary btn-submit">Başvuruyu Tamamla <i class="fa-solid fa-paper-plane"></i></button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                        <!-- STEP 5 (Success State View) -->
+                        <div class="form-success-panel" id="formSuccessPanel">
+                            <div class="success-icon-wrapper">
+                                <div class="success-circle">
+                                    <i class="fa-solid fa-check"></i>
+                                </div>
+                            </div>
+                            <h3>Başvurunuz Alındı!</h3>
+                            <p class="success-p">Engelsiz Yaşam Derneği'ne yapmış olduğunuz başvuru başarıyla sistemimize kaydedilmiştir. Yönetim kurulumuz tarafından incelendikten sonra e-posta ve telefon üzerinden sizinle iletişime geçilecektir.</p>
+                            
+                            <div class="application-summary">
+                                <h4>Başvuru Özeti</h4>
+                                <div class="summary-grid">
+                                    <div class="summary-item"><strong>Ad Soyad:</strong> <span id="sumName">-</span></div>
+                                    <div class="summary-item"><strong>Başvuru Türü:</strong> <span id="sumType">-</span></div>
+                                    <div class="summary-item"><strong>Telefon:</strong> <span id="sumPhone">-</span></div>
+                                    <div class="summary-item"><strong>E-posta:</strong> <span id="sumEmail">-</span></div>
+                                    <div class="summary-item"><strong>Şehir:</strong> <span id="sumCity">-</span></div>
+                                    <div class="summary-item"><strong>Gereksinim Durumu:</strong> <span id="sumDisability">-</span></div>
+                                </div>
+                            </div>
+
+                            <div class="success-actions">
+                                <a href="index.html" class="btn btn-primary"><i class="fa-solid fa-house"></i> Ana Sayfaya Dön</a>
+                                <a href="kurumsal.html" class="btn btn-outline"><i class="fa-solid fa-circle-info"></i> Derneği İncele</a>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Right: Information Sidebar -->
+                <div class="membership-sidebar">
+                    
+                    <!-- Box 1: Why Join -->
+                    <div class="sidebar-box">
+                        <h3>Neden Katılmalısınız?</h3>
+                        <ul class="benefit-list">
+                            <li>
+                                <div class="benefit-icon"><i class="fa-solid fa-users"></i></div>
+                                <div class="benefit-text">
+                                    <h4>Dayanışma Ağı</h4>
+                                    <p>Binlerce üyemiz ve gönüllümüzle oluşturduğumuz ailede yeni insanlarla tanışın, gücümüzü birleştirin.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="benefit-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                                <div class="benefit-text">
+                                    <h4>Eğitim ve Atölyeler</h4>
+                                    <p>Engelli hakları, erişilebilir kodlama, liderlik ve bağımsız yaşam eğitimlerimize ücretsiz katılın.</p>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="benefit-icon"><i class="fa-solid fa-universal-access"></i></div>
+                                <div class="benefit-text">
+                                    <h4>Eşit Haklar Mücadelesi</h4>
+                                    <p>Şehir içi erişilebilirlik ve yasal hak savunuculuğu çalışmalarında etkin rol alarak engelleri aşın.</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Box 2: Review Process -->
+                    <div class="sidebar-box">
+                        <h3>Süreç Nasıl İşler?</h3>
+                        <div class="process-steps">
+                            <div class="p-step">
+                                <div class="p-num">1</div>
+                                <div class="p-content">
+                                    <h4>Formun Doldurulması</h4>
+                                    <p>Yukarıdaki 4 adımlı üyelik formunu eksiksiz doldurup gönderin.</p>
+                                </div>
+                            </div>
+                            <div class="p-step">
+                                <div class="p-num">2</div>
+                                <div class="p-content">
+                                    <h4>Ön Değerlendirme</h4>
+                                    <p>Üyelik komisyonumuz başvurunuzu inceler (Ortalama 2-3 iş günü).</p>
+                                </div>
+                            </div>
+                            <div class="p-step">
+                                <div class="p-num">3</div>
+                                <div class="p-content">
+                                    <h4>Kabul ve Bildirim</h4>
+                                    <p>Başvurunuz onaylandığında e-posta ve SMS ile resmi katılım belgeniz gönderilir.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Box 3: Downloads -->
+                    <div class="sidebar-box doc-box">
+                        <h3>Faydalı Belgeler</h3>
+                        <p>Başvurunuzdan önce incelemek isteyebileceğiniz yasal dökümanlar:</p>
+                        <a href="mevzuat.html" class="doc-download-link">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <div>
+                                <span>Dernek Tüzüğü (Yasal Metin)</span>
+                                <small>PDF | 1.2 MB</small>
+                            </div>
+                        </a>
+                        <a href="kvkk-aydinlatma-metni.html" class="doc-download-link">
+                            <i class="fa-solid fa-file-shield"></i>
+                            <div>
+                                <span>KVKK Bilgilendirme Formu</span>
+                                <small>HTML | İncele</small>
+                            </div>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container cta-container">
+            <div class="cta-content">
+                <h2>Engelsiz Yarınları Birlikte İnşa Edelim!</h2>
+                <p>Çalışmalarımıza destek olabilir, gönüllümüz ya da üyemiz olarak engelleri kaldırmada bir rol oynayabilirsiniz.</p>
+                <a href="uyelik.html" class="btn btn-primary btn-large cta-btn">Hemen Bize Katılın</a>
+            </div>
+            <div class="cta-pattern"></div>
+        </div>
+    </section>
+
+    <!-- Fancy Footer -->
+    <footer class="fancy-footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo-text">Gönül Köprüsü<span>.</span></div>
+                    <p class="footer-desc">Türkiye'nin öncü engelsiz yaşam kuruluşu. Engelli bireylerin toplumsal yaşama katılımını, erişilebilirliğini ve haklarını destekliyoruz. Engelsiz bir gelecek inşa etmek için yanınızdayız.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <div class="footer-widget">
+                        <h4>Kurumsal</h4>
+                        <ul>
+                            <li><a href="kurumsal.html">Hakkımızda</a></li>
+                            <li><a href="kurumsal.html">Yönetim Kurulu</a></li>
+                            <li><a href="kurumsal.html">Tarihçe</a></li>
+                            <li><a href="#">Şubelerimiz</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget">
+                        <h4>Hızlı Bağlantılar</h4>
+                        <ul>
+                            <li><a href="uyelik.html">Üyelik Formu</a></li>
+                            <li><a href="mevzuat.html">Mevzuat</a></li>
+                            <li><a href="haberler.html">Haberler & Duyurular</a></li>
+                            <li><a href="iletisim.html">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget contact-widget">
+                        <h4>İletişim</h4>
+                        <ul class="contact-info">
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                                <span>Örnek Mah. Vizyon Cad. No:1 <br>Çankaya / Ankara, Türkiye</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
+                                <span>+90 (312) 123 45 67</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+                                <span>bilgi@dernek.org.tr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Engelsiz Yaşam Derneği. Tüm hakları saklıdır.</p>
+                <div class="footer-legal">
+                    <a href="gizlilik-politikasi.html">Gizlilik Politikası</a>
+                    <a href="kvkk-aydinlatma-metni.html">KVKK Aydınlatma Metni</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+
+    <!-- Page Specific Script for Multi-step Wizard and Validation -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('membershipForm');
+            const steps = Array.from(document.querySelectorAll('.form-step-panel'));
+            const stepNodes = Array.from(document.querySelectorAll('.step-node'));
+            const progressLineFill = document.getElementById('progressLineFill');
+            const disabilityYes = document.getElementById('disabilityYes');
+            const disabilityNo = document.getElementById('disabilityNo');
+            const disabilityGroupWrapper = document.getElementById('disabilityGroupWrapper');
+            const disabilityGroup = document.getElementById('disabilityGroup');
+
+            let currentStep = 1;
+
+            // 1. Dynamic field display logic for disability
+            const toggleDisabilityField = () => {
+                if (disabilityYes.checked) {
+                    disabilityGroupWrapper.classList.remove('hidden-field');
+                    disabilityGroupWrapper.classList.add('visible-field');
+                    disabilityGroup.setAttribute('required', 'required');
+                } else {
+                    disabilityGroupWrapper.classList.remove('visible-field');
+                    disabilityGroupWrapper.classList.add('hidden-field');
+                    disabilityGroup.removeAttribute('required');
+                    disabilityGroup.value = '';
+                    disabilityGroup.classList.remove('is-invalid');
+                }
+            };
+
+            disabilityYes.addEventListener('change', toggleDisabilityField);
+            disabilityNo.addEventListener('change', toggleDisabilityField);
+
+            // 2. Navigation between steps
+            const updateProgress = () => {
+                const totalSteps = steps.length;
+                const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
+                progressLineFill.style.width = `${progressPercent}%`;
+
+                stepNodes.forEach((node, idx) => {
+                    const stepNum = idx + 1;
+                    if (stepNum < currentStep) {
+                        node.classList.add('completed');
+                        node.classList.remove('active');
+                    } else if (stepNum === currentStep) {
+                        node.classList.add('active');
+                        node.classList.remove('completed');
+                    } else {
+                        node.classList.remove('active', 'completed');
+                    }
+                });
+            };
+
+            const showStep = (stepNumber) => {
+                steps.forEach(step => {
+                    if (parseInt(step.dataset.step) === stepNumber) {
+                        step.classList.add('active');
+                    } else {
+                        step.classList.remove('active');
+                    }
+                });
+                updateProgress();
+                window.scrollTo({
+                    top: document.querySelector('.membership-card-container').offsetTop - 120,
+                    behavior: 'smooth'
+                });
+            };
+
+            // T.C. Kimlik No Validasyon Algoritması
+            const validateTC = (tc) => {
+                if (!/^[1-9]\d{10}$/.test(tc)) return false;
+                
+                const digits = tc.split('').map(Number);
+                const d10 = digits[9];
+                const d11 = digits[10];
+
+                const oddSum = digits[0] + digits[2] + digits[4] + digits[6] + digits[8];
+                const evenSum = digits[1] + digits[3] + digits[5] + digits[7];
+
+                const calc10 = (oddSum * 7 - evenSum) % 10;
+                if (calc10 !== d10) return false;
+
+                const calc11 = (digits.slice(0, 10).reduce((acc, curr) => acc + curr, 0)) % 10;
+                if (calc11 !== d11) return false;
+
+                return true;
+            };
+
+            // Age Validation (>18 years old)
+            const validateAge = (birthDateStr) => {
+                if (!birthDateStr) return false;
+                const birthDate = new Date(birthDateStr);
+                const today = new Date();
+                let age = today.getFullYear() - birthDate.getFullYear();
+                const m = today.getMonth() - birthDate.getMonth();
+                if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+                    age--;
+                }
+                return age >= 18;
+            };
+
+            // Step Validation logic
+            const validateStep = (stepNumber) => {
+                let isValid = true;
+                const panel = document.querySelector(`.form-step-panel[data-step="${stepNumber}"]`);
+                
+                // Reset errors
+                const inputs = panel.querySelectorAll('input[required], select[required], textarea[required]');
+                inputs.forEach(input => {
+                    input.classList.remove('is-invalid');
+                });
+                const errors = panel.querySelectorAll('.error-msg');
+                errors.forEach(err => err.style.display = 'none');
+
+                if (stepNumber === 1) {
+                    const fullName = document.getElementById('fullName');
+                    const tcNo = document.getElementById('tcNo');
+                    const birthDate = document.getElementById('birthDate');
+                    const genders = document.querySelectorAll('input[name="gender"]');
+
+                    if (fullName.value.trim().length < 5) {
+                        fullName.classList.add('is-invalid');
+                        document.getElementById('fullNameError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!validateTC(tcNo.value.trim())) {
+                        tcNo.classList.add('is-invalid');
+                        document.getElementById('tcNoError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!validateAge(birthDate.value)) {
+                        birthDate.classList.add('is-invalid');
+                        document.getElementById('birthDateError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    let genderChecked = false;
+                    genders.forEach(r => { if (r.checked) genderChecked = true; });
+                    if (!genderChecked) {
+                        document.getElementById('genderError').style.display = 'block';
+                        isValid = false;
+                    }
+                } 
+                else if (stepNumber === 2) {
+                    const phone = document.getElementById('phone');
+                    const email = document.getElementById('email');
+                    const city = document.getElementById('city');
+                    const address = document.getElementById('address');
+
+                    const phoneVal = phone.value.trim().replace(/\s+/g, '');
+                    if (!/^(05|5)\d{9}$/.test(phoneVal)) {
+                        phone.classList.add('is-invalid');
+                        document.getElementById('phoneError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) {
+                        email.classList.add('is-invalid');
+                        document.getElementById('emailError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!city.value) {
+                        city.classList.add('is-invalid');
+                        document.getElementById('cityError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (address.value.trim().length < 10) {
+                        address.classList.add('is-invalid');
+                        document.getElementById('addressError').style.display = 'block';
+                        isValid = false;
+                    }
+                }
+                else if (stepNumber === 3) {
+                    if (disabilityYes.checked && !disabilityGroup.value) {
+                        disabilityGroup.classList.add('is-invalid');
+                        document.getElementById('disabilityGroupError').style.display = 'block';
+                        isValid = false;
+                    }
+                }
+                else if (stepNumber === 4) {
+                    const kvkkCheck = document.getElementById('kvkkCheck');
+                    const tuzukCheck = document.getElementById('tuzukCheck');
+
+                    if (!kvkkCheck.checked) {
+                        document.getElementById('kvkkCheckError').style.display = 'block';
+                        isValid = false;
+                    }
+                    if (!tuzukCheck.checked) {
+                        document.getElementById('tuzukCheckError').style.display = 'block';
+                        isValid = false;
+                    }
+                }
+
+                return isValid;
+            };
+
+            // Event Listeners for wizard navigation buttons
+            document.querySelectorAll('.btn-next').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (validateStep(currentStep)) {
+                        currentStep++;
+                        showStep(currentStep);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.btn-prev').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if (currentStep > 1) {
+                        currentStep--;
+                        showStep(currentStep);
+                    }
+                });
+            });
+
+            // Form Submit Logic
+            form.addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                if (validateStep(4)) {
+                    document.getElementById('sumName').textContent = document.getElementById('fullName').value.trim();
+                    
+                    const memberTypeVal = document.querySelector('input[name="memberType"]:checked').value;
+                    document.getElementById('sumType').textContent = memberTypeVal;
+                    
+                    document.getElementById('sumPhone').textContent = document.getElementById('phone').value.trim();
+                    document.getElementById('sumEmail').textContent = document.getElementById('email').value.trim();
+                    document.getElementById('sumCity').textContent = document.getElementById('city').value;
+                    
+                    const hasDisability = disabilityYes.checked;
+                    document.getElementById('sumDisability').textContent = hasDisability ? `Evet (${disabilityGroup.value})` : 'Yok';
+
+                    form.style.display = 'none';
+                    document.getElementById('formProgressBar').style.display = 'none';
+                    
+                    const successPanel = document.getElementById('formSuccessPanel');
+                    successPanel.classList.add('active');
+
+                    window.scrollTo({
+                        top: document.querySelector('.membership-card-container').offsetTop - 120,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+
+            // Auto-format phone input while typing
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', (e) => {
+                let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
+                e.target.value = !x[2] ? x[1] : x[1] + ' ' + x[2] + (x[3] ? ' ' + x[3] : '') + (x[4] ? ' ' + x[4] : '');
+            });
+
+            // Auto-format TC No input (only numbers)
+            const tcInput = document.getElementById('tcNo');
+            tcInput.addEventListener('input', (e) => {
+                e.target.value = e.target.value.replace(/\D/g, '');
+            });
+        });
+    </script>
+</body>
+</html>
