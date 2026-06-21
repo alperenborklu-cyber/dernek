@@ -1985,14 +1985,19 @@ textarea.form-control {
 }
 
 .custom-checkbox {
-    width: 20px;
-    height: 20px;
+    width: 26px;
+    height: 26px;
     border-radius: 6px;
-    border: 2px solid var(--border-color);
+    border: 2px solid #94a3b8;
     position: relative;
     transition: var(--transition);
     background: var(--white);
     flex-shrink: 0;
+}
+
+.checkbox-label:hover .custom-checkbox {
+    border-color: var(--primary);
+    background: #f0f5ff;
 }
 
 .checkbox-label input:checked + .custom-checkbox {
@@ -2004,7 +2009,7 @@ textarea.form-control {
     content: '\f00c';
     font-family: 'Font Awesome 6 Free';
     font-weight: 900;
-    font-size: 0.7rem;
+    font-size: 0.9rem;
     color: var(--white);
     position: absolute;
     top: 50%;
