@@ -157,5 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
             statsObserver.observe(stat);
         });
     }
+
+    // 9. Append Dernek Kütük No to Footer
+    const footerBottomP = document.querySelector('.footer-bottom p');
+    if (footerBottomP) {
+        // Prevent duplicate append just in case
+        if (!footerBottomP.textContent.includes('06.157.157')) {
+            footerBottomP.innerHTML += ' <span style="opacity: 0.8; margin-left: 8px;">| Dernek Kütük No: 06.157.157</span>';
+        }
+    }
 });
 
