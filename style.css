@@ -1089,13 +1089,15 @@ header.scrolled .logo img {
     overflow: hidden;
 }
 
-.subpage-hero h1 {
+.subpage-hero h1,
+.subpage-hero .subpage-title {
     font-size: 3.5rem;
     margin-bottom: 16px;
     letter-spacing: -1px;
 }
 
-.subpage-hero h1 span {
+.subpage-hero h1 span,
+.subpage-hero .subpage-title span {
     color: var(--primary);
 }
 
@@ -1564,7 +1566,8 @@ textarea.form-control {
    Responsive Adaptations for Subpages
    ========================================================================== */
 @media (max-width: 1024px) {
-    .subpage-hero h1 {
+    .subpage-hero h1,
+    .subpage-hero .subpage-title {
         font-size: 2.8rem;
     }
     
@@ -1592,7 +1595,8 @@ textarea.form-control {
         padding: 130px 0 60px;
     }
     
-    .subpage-hero h1 {
+    .subpage-hero h1,
+    .subpage-hero .subpage-title {
         font-size: 2.3rem;
     }
     
@@ -1706,6 +1710,7 @@ textarea.form-control {
     color: var(--primary);
 }
 
+.news-detail-content h1,
 .news-detail-content h2 {
     font-size: 2.2rem;
     margin-bottom: 24px;

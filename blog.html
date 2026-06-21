@@ -50,7 +50,7 @@
             </a>
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="kurumsal">Kurumsal</a></li>
+                    <li><a href="hakkimizda">Kurumsal</a></li>
                     <li><a href="projelerimiz">Projelerimiz</a></li>
                     <li><a href="haberler">Haberler</a></li>
                     <li><a href="blog" class="active">Blog</a></li>
@@ -106,14 +106,14 @@
                             <span><i class="fa-solid fa-calendar-days"></i> 21 Haziran 2026</span>
                             <span><i class="fa-solid fa-clock"></i> 5 dk okuma</span>
                         </div>
-                        <h3><a href="blog-dijital-erisebilirlik" class="searchable-title">Dijital Erişilebilirlik Nedir ve Neden Önemlidir?</a></h3>
+                        <h3><a href="blog-dijital-erisilebilirlik" class="searchable-title">Dijital Erişilebilirlik Nedir ve Neden Önemlidir?</a></h3>
                         <p>Web sitelerinin ve uygulamaların engelli bireylerce engelsiz kullanımı, WCAG standartları ve dijital dünyadaki eşit haklar.</p>
                         <div class="blog-card-footer">
                             <div class="blog-author">
                                 <i class="fa-solid fa-user-tie"></i>
                                 <span>Ahmet Yılmaz</span>
                             </div>
-                            <a href="blog-dijital-erisebilirlik" class="read-more">Oku <i class="fa-solid fa-arrow-right"></i></a>
+                            <a href="blog-dijital-erisilebilirlik" class="read-more">Oku <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </div>
                 </article>
@@ -236,7 +236,7 @@
             </div>
 
             <!-- No Results Panel -->
-            <div class="no-results-panel" id="noResultsPanel">
+            <div class="no-results-panel" id="noResultsPanel" style="display: none;">
                 <i class="fa-solid fa-newspaper"></i>
                 <h4>Aradığınız kriterlere uygun makale bulunamadı.</h4>
                 <p>Lütfen farklı bir arama terimi deneyin ya da filtreleri temizleyin.</p>
@@ -265,10 +265,10 @@
                     <div class="footer-logo-text">Gönül Köprüsü<span>.</span></div>
                     <p class="footer-desc">Türkiye'nin öncü engelsiz yaşam kuruluşu. Engelli bireylerin toplumsal yaşama katılımını, erişilebilirliğini ve haklarını destekliyoruz. Engelsiz bir gelecek inşa etmek için yanınızdayız.</p>
                     <div class="social-links">
-                        <a href="#" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
-                        <a href="#" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
-                        <a href="#" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://facebook.com/engelsizyasam" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/engelsizyasam" target="_blank" rel="noopener" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://instagram.com/engelsizyasam" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://linkedin.com/company/engelsizyasam" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
                     </div>
                 </div>
                 
@@ -277,9 +277,9 @@
                         <h4>Kurumsal</h4>
                         <ul>
                             <li><a href="hakkimizda">Hakkımızda</a></li>
-                            <li><a href="kurumsal">Yönetim Kurulu</a></li>
-                            <li><a href="kurumsal">Tarihçe</a></li>
-                            <li><a href="#">Şubelerimiz</a></li>
+                            <li><a href="hakkimizda">Yönetim Kurulu</a></li>
+                            <li><a href="hakkimizda">Tarihçe</a></li>
+                            <li><a href="iletisim">Şubelerimiz</a></li>
                         </ul>
                     </div>
                     <div class="footer-widget">
@@ -297,11 +297,11 @@
                         <ul class="contact-info">
                             <li>
                                 <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
-                                <span>Örnek Mah. Vizyon Cad. No:1 <br>Çankaya / Ankara, Türkiye</span>
+                                <span>Kızılay Mah. Atatürk Bulvarı No:123 <br>Çankaya / Ankara, Türkiye</span>
                             </li>
                             <li>
                                 <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
-                                <span>+90 (312) 123 45 67</span>
+                                <span>+90 (312) 444 0 393</span>
                             </li>
                             <li>
                                 <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
@@ -313,7 +313,7 @@
             </div>
             
             <div class="footer-bottom">
-                <p>&copy; 2026 Engelli Memur &amp; İşçi Derneği. Tüm hakları saklıdır.</p>
+                <p>&copy; 2026 Engelsiz Yaşam Derneği. Tüm hakları saklıdır.</p>
                 <div class="footer-legal">
                     <a href="gizlilik-politikasi">Gizlilik Politikası</a>
                     <a href="kvkk-aydinlatma-metni">KVKK Aydınlatma Metni</a>
@@ -386,6 +386,9 @@
                 searchQuery = e.target.value.trim().toLowerCase();
                 performFilter();
             });
+
+            // Initial filter run on page load
+            performFilter();
         });
     </script>
 </body>
