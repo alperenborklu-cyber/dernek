@@ -3074,8 +3074,8 @@ textarea.form-control {
     z-index: 10;
     box-shadow: var(--shadow-sm);
     border-bottom: 1px solid var(--border-color);
-    margin-top: -30px;
-    border-radius: 24px 24px 0 0;
+    margin-top: 0;
+    border-radius: 0;
 }
 
 .stats-grid {
