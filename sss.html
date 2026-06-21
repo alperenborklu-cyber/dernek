@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sıkça Sorulan Sorular | Engelli Memur & İşçi Derneği</title>
+
+    <!-- SEO Meta Etiketleri -->
+    <meta name="description" content="Engelli Memur & İşçi Derneği Sıkça Sorulan Sorular (SSS) sayfası. Üyelik, engelli hakları, projeler, ÖTV muafiyeti, EKPSS ve dernek faaliyetleri hakkında merak ettiğiniz her şey.">
+    <meta name="keywords" content="sıkça sorulan sorular, sss, engelli hakları faq, üyelik soruları, engelli memur ve işçi derneği, ötv muafiyeti, ekpss, engellilik">
+    <meta name="author" content="Engelli Memur & İşçi Derneği">
+    <meta name="robots" content="index, follow">
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="Sıkça Sorulan Sorular | Engelli Memur & İşçi Derneği">
+    <meta property="og:description" content="Üyelik, engelli hakları, projeler ve dernek faaliyetleri hakkında merak ettiğiniz her şey.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="https://www.dernek.org.tr/sss">
+    <meta property="og:type" content="website">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Sıkça Sorulan Sorular | Engelli Memur & İşçi Derneği">
+    <meta name="twitter:description" content="Üyelik, engelli hakları, projeler ve dernek faaliyetleri hakkında merak ettiğiniz her şey.">
+    <meta name="twitter:image" content="logo.png">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* ── FAQ Page Specific Styles ── */
+        .faq-section {
+            padding: 80px 0 100px;
+            background: var(--bg-color);
+        }
+
+        /* Search bar */
+        .faq-search-wrap {
+            max-width: 640px;
+            margin: 0 auto 60px;
+            position: relative;
+        }
+        .faq-search-wrap input {
+            width: 100%;
+            padding: 18px 24px 18px 56px;
+            border-radius: 50px;
+            border: 2px solid var(--border-color);
+            font-size: 1rem;
+            font-family: var(--font-body);
+            background: var(--white);
+            color: var(--text-main);
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+        .faq-search-wrap input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 92, 230, 0.12);
+        }
+        .faq-search-wrap input::placeholder { color: var(--text-muted); }
+        .faq-search-wrap .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* Category tabs */
+        .faq-tabs {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 52px;
+        }
+        .faq-tab {
+            padding: 10px 22px;
+            border-radius: 50px;
+            border: 2px solid var(--border-color);
+            background: var(--white);
+            font-family: var(--font-body);
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .faq-tab i { font-size: 0.85rem; }
+        .faq-tab:hover, .faq-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--white);
+            box-shadow: 0 6px 20px rgba(0, 92, 230, 0.25);
+            transform: translateY(-1px);
+        }
+
+        /* FAQ groups */
+        .faq-group { display: none; }
+        .faq-group.visible { display: block; }
+
+        .faq-group-title {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 2px solid var(--border-color);
+        }
+        .faq-group-title .title-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.1rem;
+            flex-shrink: 0;
+        }
+
+        /* Individual FAQ items */
+        .faq-item {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            margin-bottom: 14px;
+            overflow: hidden;
+            transition: var(--transition);
+        }
+        .faq-item:hover { border-color: var(--primary-light); box-shadow: var(--shadow-sm); }
+
+        .faq-question {
+            padding: 22px 28px;
+            font-family: var(--font-heading);
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            transition: var(--transition);
+            color: var(--text-main);
+            user-select: none;
+        }
+        .faq-question:hover { color: var(--primary); }
+        .faq-question .faq-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            border: 2px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            transition: var(--transition);
+            flex-shrink: 0;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.38s cubic-bezier(0.16, 1, 0.3, 1), padding 0.38s cubic-bezier(0.16, 1, 0.3, 1);
+            color: var(--text-muted);
+            line-height: 1.8;
+            font-size: 0.97rem;
+        }
+        .faq-answer-inner { padding: 0 28px 26px; }
+        .faq-answer a { color: var(--primary); text-decoration: underline; }
+
+        .faq-item.active {
+            border-color: var(--primary);
+            box-shadow: 0 4px 20px rgba(0, 92, 230, 0.1);
+        }
+        .faq-item.active .faq-answer { max-height: 600px; }
+        .faq-item.active .faq-question { color: var(--primary); }
+        .faq-item.active .faq-question .faq-icon {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+            transform: rotate(45deg);
+        }
+
+        /* No results */
+        .faq-no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-muted);
+            display: none;
+        }
+        .faq-no-results i { font-size: 3rem; margin-bottom: 16px; display: block; color: var(--border-color); }
+        .faq-no-results h3 { margin-bottom: 8px; color: var(--text-main); }
+
+        /* CTA box at bottom */
+        .faq-cta {
+            margin-top: 70px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            border-radius: 24px;
+            padding: 56px 48px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .faq-cta-text h2 {
+            color: white;
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .faq-cta-text p { color: rgba(255,255,255,0.8); font-size: 1rem; }
+        .faq-cta-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+        .faq-cta-btns .btn-white {
+            padding: 14px 28px;
+            background: white;
+            color: var(--primary);
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 2px solid white;
+        }
+        .faq-cta-btns .btn-white:hover { background: transparent; color: white; }
+        .faq-cta-btns .btn-outline-white {
+            padding: 14px 28px;
+            background: transparent;
+            color: white;
+            border-radius: 50px;
+            font-family: var(--font-heading);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: var(--transition);
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+        .faq-cta-btns .btn-outline-white:hover { border-color: white; background: rgba(255,255,255,0.1); }
+
+        /* Stats row */
+        .faq-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 60px;
+        }
+        .faq-stat {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 28px 24px;
+            text-align: center;
+            transition: var(--transition);
+        }
+        .faq-stat:hover { border-color: var(--primary-light); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+        .faq-stat i { font-size: 2rem; color: var(--primary); margin-bottom: 12px; display: block; }
+        .faq-stat .stat-num { font-family: var(--font-heading); font-size: 2rem; font-weight: 800; color: var(--text-main); }
+        .faq-stat .stat-label { font-size: 0.88rem; color: var(--text-muted); margin-top: 4px; }
+
+        @media (max-width: 1024px) {
+            .faq-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .faq-cta { flex-direction: column; padding: 40px 28px; text-align: center; }
+            .faq-cta-btns { justify-content: center; }
+            .faq-stats { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 480px) {
+            .faq-stats { grid-template-columns: 1fr 1fr; }
+            .faq-question { font-size: 0.97rem; padding: 18px 20px; }
+            .faq-answer-inner { padding: 0 20px 22px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-container">
+            <i class="fa-solid fa-wheelchair loader-wheelchair"></i>
+            <i class="fa-solid fa-person-walking loader-walking"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index" class="logo">
+                <img src="logo.png" alt="Engelli Memur & İşçi Derneği Logo">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="hakkimizda">Kurumsal</a></li>
+                    <li><a href="projelerimiz">Projelerimiz</a></li>
+                    <li><a href="haberler">Haberler</a></li>
+                    <li><a href="blog">Blog</a></li>
+                    <li><a href="mevzuat">Mevzuat</a></li>
+                    <li><a href="iletisim">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="bagis-yap" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                <a href="uyelik" class="btn btn-primary">Üye Ol</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Subpage Hero -->
+    <section class="subpage-hero">
+        <div class="container">
+            <h1>Sıkça Sorulan <span>Sorular</span></h1>
+            <p>Üyelik, engelli hakları, projelerimiz ve dernek faaliyetleri hakkında en çok merak edilen soruların yanıtları burada.</p>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+
+            <!-- Stats Row -->
+            <div class="faq-stats">
+                <div class="faq-stat">
+                    <i class="fa-solid fa-users"></i>
+                    <div class="stat-num">2.400+</div>
+                    <div class="stat-label">Kayıtlı Üye</div>
+                </div>
+                <div class="faq-stat">
+                    <i class="fa-solid fa-folder-open"></i>
+                    <div class="stat-num">18</div>
+                    <div class="stat-label">Aktif Proje</div>
+                </div>
+                <div class="faq-stat">
+                    <i class="fa-solid fa-handshake"></i>
+                    <div class="stat-num">50+</div>
+                    <div class="stat-label">Ortak Kuruluş</div>
+                </div>
+                <div class="faq-stat">
+                    <i class="fa-solid fa-calendar-check"></i>
+                    <div class="stat-num">12</div>
+                    <div class="stat-label">Yıllık Deneyim</div>
+                </div>
+            </div>
+
+            <!-- Search -->
+            <div class="faq-search-wrap">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="faqSearch" placeholder="Soru veya anahtar kelime ile arayın..." autocomplete="off">
+            </div>
+
+            <!-- Category Tabs -->
+            <div class="faq-tabs">
+                <button class="faq-tab active" data-cat="all">
+                    <i class="fa-solid fa-border-all"></i> Tümü
+                </button>
+                <button class="faq-tab" data-cat="uyelik">
+                    <i class="fa-solid fa-id-card"></i> Üyelik
+                </button>
+                <button class="faq-tab" data-cat="haklar">
+                    <i class="fa-solid fa-scale-balanced"></i> Engelli Hakları
+                </button>
+                <button class="faq-tab" data-cat="projeler">
+                    <i class="fa-solid fa-diagram-project"></i> Projeler
+                </button>
+                <button class="faq-tab" data-cat="gonullu">
+                    <i class="fa-solid fa-heart"></i> Gönüllülük
+                </button>
+                <button class="faq-tab" data-cat="dernek">
+                    <i class="fa-solid fa-building"></i> Dernek Hakkında
+                </button>
+            </div>
+
+            <!-- No Results Message -->
+            <div class="faq-no-results" id="faqNoResults">
+                <i class="fa-solid fa-circle-question"></i>
+                <h3>Sonuç bulunamadı</h3>
+                <p>Aradığınız soruyu bulamadık. Bize doğrudan ulaşabilirsiniz.</p>
+                <a href="iletisim" class="btn btn-primary" style="display:inline-block;margin-top:16px;">Bize Ulaşın</a>
+            </div>
+
+            <!-- ── GROUP: Üyelik ── -->
+            <div class="faq-group visible" data-group="uyelik">
+                <div class="faq-group-title">
+                    <div class="title-icon"><i class="fa-solid fa-id-card"></i></div>
+                    Üyelik Süreci
+                </div>
+
+                <div class="faq-item" data-keywords="üyelik nasıl başvuru kim olabilir">
+                    <div class="faq-question">
+                        <span>Derneğinize nasıl üye olabilirim?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            <a href="uyelik">Üyelik başvuru formumuzu</a> çevrimiçi doldurabilir ya da Kızılay Mah. Atatürk Bulvarı No:123 Çankaya / Ankara adresindeki dernek ofisimize bizzat başvurabilirsiniz. Başvurunuz yönetim kurulumuz tarafından en geç 15 iş günü içinde değerlendirilir ve sonuç size e-posta ile bildirilir.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="üyelik koşulları şartlar kim başvurabilir engelli">
+                    <div class="faq-question">
+                        <span>Üye olmak için engelli olmak şart mı?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Hayır. Derneğimize engelli bireyler, engelli yakınları, alanda çalışan profesyoneller ve engelsiz yaşam misyonumuzu desteklemek isteyen herkes üye olabilir. Üyelik türlerinizi (Asıl Üye, Destekçi Üye) başvuru formumuzda görebilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="üyelik ücret aidat ne kadar">
+                    <div class="faq-question">
+                        <span>Üyelik ücreti / aidat var mı?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Asıl üyeler için yıllık sembolik bir aidat belirlenmektedir. Engelli bireyler ve ilk yıl öğrenciler için aidattan tam muafiyet uygulanmaktadır. Güncel aidat tutarları için <a href="uyelik">üyelik sayfamızı</a> veya derneğimizi arayabilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="üyelik iptal çıkma ayrılma">
+                    <div class="faq-question">
+                        <span>Üyelikten çıkmak istersem ne yapmalıyım?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Üyelikten ayrılmak için <strong>bilgi@dernek.org.tr</strong> adresine yazılı dilekçenizi iletmeniz yeterlidir. Ayrılma işleminiz en geç 30 gün içinde sonuçlandırılır. Dernek tüzüğümüz uyarınca o yıla ait aidatlar iade edilmemektedir.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="üyelik belgeler evrak sağlık raporu engel raporu">
+                    <div class="faq-question">
+                        <span>Üyelik başvurusunda hangi belgeleri sunmam gerekiyor?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Engelli bireylerden T.C. Kimlik Belgesi, güncel Engelli Sağlık Kurulu Raporu (veya Engelli Kimlik Kartı), iletişim bilgileri ve vesikalık fotoğraf talep edilmektedir. Engelli yakınları ve diğer üyeler için yalnızca T.C. Kimlik Belgesi ve iletişim bilgileri yeterlidir. Belgeler <a href="uyelik">başvuru formu üzerinden</a> dijital olarak yüklenebilir.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── GROUP: Engelli Hakları ── -->
+            <div class="faq-group visible" data-group="haklar">
+                <div class="faq-group-title" style="margin-top:50px;">
+                    <div class="title-icon"><i class="fa-solid fa-scale-balanced"></i></div>
+                    Engelli Hakları
+                </div>
+
+                <div class="faq-item" data-keywords="ötv muafiyeti araç alım indirim özel tüketim vergisi">
+                    <div class="faq-question">
+                        <span>ÖTV muafiyetiyle araç alabilmek için hangi koşullar gerekiyor?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Engellilik derecesi <strong>%90 veya üzeri</strong> olan bireyler yaş sınırı olmaksızın ÖTV muafiyetinden yararlanabilir. Ortopedik engeli bulunan ve engellilik oranı %90'ın altında olan kişiler ise yalnızca <strong>kendi engeline uygun özel tertibatlı araç</strong> alımlarında muafiyetten faydalanabilir. Gerekli belgeler ve başvuru süreçlerine ilişkin kapsamlı rehberimizi <a href="mevzuat">Mevzuat sayfamızdan</a> indirebilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="ekpss kamu işçisi memur istihdam kota">
+                    <div class="faq-question">
+                        <span>EKPSS nedir? Kamu sektöründe engelli istihdamı nasıl işliyor?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            EKPSS (Engelli Kamu Personel Seçme Sınavı), engelli bireylerin kamu kurumlarına devlet memuru olarak atanabilmesi için ÖSYM tarafından düzenlenen sınavdır. 4857 sayılı İş Kanunu uyarınca 50 veya daha fazla çalışanı bulunan işyerleri, çalışan sayısının en az <strong>%3'ü</strong> oranında engelli birey çalıştırmakla yükümlüdür. Detaylı bilgi için <a href="mevzuat">Mevzuat</a> sayfamızı ziyaret edin.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="gelir vergisi indirimi engelli vergi avantaj">
+                    <div class="faq-question">
+                        <span>Engelli bireyler gelir vergisi indiriminden nasıl yararlanır?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Gelir Vergisi Kanunu'nun 31. maddesi uyarınca engel derecesine göre üç kademeli vergi indirimi uygulanmaktadır. Birinci derecede (%80 ve üzeri) engelli çalışanlar en yüksek indirim tutarından yararlanır. Bakmakla yükümlü engelli yakını bulunanlar da bu indirimden kısmi olarak faydalanabilir. Hesaplamalar ve başvuru için çalıştığınız kurumun muhasebe/İK birimiyle iletişime geçmenizi öneririz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="ulaşım ücretsiz otobüs metro toplu taşıma engelli">
+                    <div class="faq-question">
+                        <span>Engelli bireyler toplu taşımadan ücretsiz yararlanabilir mi?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Evet. Türkiye genelinde pek çok büyükşehir ve il belediyesi, engelli bireylere ücretsiz veya indirimli toplu taşıma hizmeti sunmaktadır. Beraberindeki bir refakatçi de çoğu zaman bu haktan yararlanabilmektedir. Geçerli engelli kimliği veya engelli sağlık kurulu raporuyla başvurulabilir. Ankara Büyükşehir Belediyesi'nde EGO Engelli Kartı ile tüm toplu taşıma hatlarında ücretsiz seyahat hakkı mevcuttur.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="emlak vergisi muafiyet indirim ev konut engelli">
+                    <div class="faq-question">
+                        <span>Engelli bireylerin emlak vergisi muafiyeti var mı?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            1319 sayılı Emlak Vergisi Kanunu'na göre, geliri yalnızca sosyal güvenlik kurumlarından elde edilen emekli aylığından ibaret olan ve belirli metrekare sınırının altında tek konutu bulunan engelli bireyler, konut için ödedikleri emlak vergisinden muaf tutulabilmektedir. Başvurular bağlı bulunulan belediyenin gelir müdürlüğüne yapılmaktadır.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── GROUP: Projeler ── -->
+            <div class="faq-group visible" data-group="projeler">
+                <div class="faq-group-title" style="margin-top:50px;">
+                    <div class="title-icon"><i class="fa-solid fa-diagram-project"></i></div>
+                    Projeler & Faaliyetler
+                </div>
+
+                <div class="faq-item" data-keywords="projeler neler hangi çalışmalar faaliyet">
+                    <div class="faq-question">
+                        <span>Derneğinizin yürüttüğü başlıca projeler nelerdir?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Başlıca projelerimiz arasında <a href="haber-engelsiz-harita">Şehir Ulaşımında Engelsiz Harita</a>, <a href="haber-kodlama-akademisi">Engelsiz Kodlama Akademisi</a>, <a href="proje-sesli-kitap">Sesli Kitap Kütüphanesi</a>, <a href="proje-istihdam-zirvesi">İstihdam Zirvesi</a> ve <a href="proje-engelsiz-turizm">Engelsiz Turizm Rehberi</a> yer almaktadır. Tüm projelerimizi <a href="projelerimiz">Projelerimiz sayfasından</a> inceleyebilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="kodlama akademisi yazılım eğitim başvuru katılım">
+                    <div class="faq-question">
+                        <span>Engelsiz Kodlama Akademisi'ne nasıl katılabilirim?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Kodlama Akademisi her yıl belirlenen kontenjanlar kapsamında öğrenci almaktadır. Başvurular dernek üyelerimize öncelik tanınarak açılmakta ve kurs detayları <a href="haberler">Haberler</a> sayfamızda duyurulmaktadır. Başvuru yapmak için üye olmanız ya da <a href="iletisim">bizimle iletişime</a> geçmeniz yeterlidir.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="sesli kitap görme engelli okuyucu gönüllü">
+                    <div class="faq-question">
+                        <span>Sesli Kitap Kütüphanesi'nden nasıl yararlanabilirim?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Kütüphanemiz yalnızca görme engelli üyelerimize ücretsiz açıktır. Üye olduktan sonra dijital kütüphaneye erişim bilgilerinizi e-posta ile iletiyoruz. Gönüllü okuyucu olmak istiyorsanız <a href="proje-sesli-kitap">Sesli Kitap Kütüphanesi sayfamızı</a> ziyaret edin.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="bağış destek finansman nasıl yardım">
+                    <div class="faq-question">
+                        <span>Projelere maddi destek veya bağış yapabilir miyim?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Evet, projelerimize bağış yapabilirsiniz. Bağışlarınız için <a href="iletisim">İletişim sayfamız</a> üzerinden bizimle iletişime geçin; kurumsal bağış koordinatörümüz size özel bir bilgilendirme yapacaktır. Şeffaf bağış raporlarımızı her yıl genel kurul öncesinde kamuoyuyla paylaşıyoruz.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── GROUP: Gönüllülük ── -->
+            <div class="faq-group visible" data-group="gonullu">
+                <div class="faq-group-title" style="margin-top:50px;">
+                    <div class="title-icon"><i class="fa-solid fa-heart"></i></div>
+                    Gönüllülük
+                </div>
+
+                <div class="faq-item" data-keywords="gönüllü nasıl olunur başvuru katılmak ister">
+                    <div class="faq-question">
+                        <span>Derneğinizde gönüllü olabilmek için ne yapmalıyım?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Gönüllü olmak için öncelikle derneğimize <a href="uyelik">üye olmanızı</a> ya da doğrudan <strong>bilgi@dernek.org.tr</strong> adresine "Gönüllülük Başvurusu" konusuyla e-posta göndermenizi öneririz. İlgi alanınıza ve uzmanlığınıza göre sizi uygun bir proje ekibiyle eşleştiriyoruz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="gönüllü ne kadar zaman haftalık zorunlu">
+                    <div class="faq-question">
+                        <span>Gönüllülük için ne kadar zaman ayırmam bekleniyor?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Minimum bir zaman zorunluluğumuz bulunmuyor. Kimi gönüllülerimiz ayda birkaç saat etkinlik desteği sunarken, kimileri proje koordinasyonunda tam zamanlıya yakın çalışmaktadır. Mevcut programınıza en uygun gönüllülük biçimini birlikte belirliyoruz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="kurumsal gönüllülük şirket ekip sosyal sorumluluk">
+                    <div class="faq-question">
+                        <span>Şirketimiz olarak kurumsal gönüllülük yapabilir miyiz?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Kesinlikle! Kurumsal sosyal sorumluluk kapsamında çalışan ekiplerinizi projelerimize dahil edebilir, ortak etkinlikler düzenleyebilir ya da sponsorluk anlaşması yapabilirsiniz. Detaylı bilgi için <a href="iletisim">kurumsal iletişim formumuzu</a> doldurun.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── GROUP: Dernek Hakkında ── -->
+            <div class="faq-group visible" data-group="dernek">
+                <div class="faq-group-title" style="margin-top:50px;">
+                    <div class="title-icon"><i class="fa-solid fa-building"></i></div>
+                    Dernek Hakkında
+                </div>
+
+                <div class="faq-item" data-keywords="dernek ne zaman kuruldu tarih geçmiş">
+                    <div class="faq-question">
+                        <span>Derneğiniz ne zaman kuruldu ve amacı nedir?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Engelli Memur & İşçi Derneği 2014 yılında Ankara'da kurulmuştur. Temel amacımız; engelli bireylerin eğitim, istihdam, sağlık, ulaşım ve sosyal yaşama eşit ve engelsiz biçimde katılabilmelerini sağlamak, yasal haklarını korumak ve toplumsal farkındalığı artırmaktır. Derneğimizin tarihçesi ve kuruluş felsefesi hakkında daha fazla bilgiye <a href="hakkimizda">Hakkımızda</a> sayfasından ulaşabilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="şube il ilçe temsilcilik ankara istanbul">
+                    <div class="faq-question">
+                        <span>Başka illerde şubeniz var mı?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Merkezimiz Ankara'da olup İstanbul, İzmir ve Bursa'da temsilciliklerimiz mevcuttur. Yakın dönemde yeni illere açılma planlarımız devam etmektedir. Bulunduğunuz ildeki temsilcilik bilgisi için <a href="iletisim">İletişim sayfamızı</a> ziyaret edebilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="şikayet öneri geri bildirim iletişim">
+                    <div class="faq-question">
+                        <span>Şikayet veya önerimi nasıl iletebilirim?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Tüm geri bildirimlerinizi <strong>bilgi@dernek.org.tr</strong> e-posta adresine ya da <a href="iletisim">İletişim formumuz</a> üzerinden iletebilirsiniz. Her başvuru en geç 5 iş günü içinde yanıtlanmaktadır. Acil durumlar için <strong>+90 (312) 444 0 393</strong> numaralı hattımızı arayabilirsiniz.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="faq-item" data-keywords="sosyal medya instagram twitter facebook takip et">
+                    <div class="faq-question">
+                        <span>Sosyal medya hesaplarınız hangileri?</span>
+                        <div class="faq-icon"><i class="fa-solid fa-plus"></i></div>
+                    </div>
+                    <div class="faq-answer">
+                        <div class="faq-answer-inner">
+                            Tüm platformlarda <strong>@engelsizyasam</strong> kullanıcı adıyla bulunabilirsiniz:
+                            <ul style="margin-top:10px; padding-left:20px; line-height:2;">
+                                <li><a href="https://www.instagram.com/koprusu.gonul/" target="_blank" rel="noopener">Instagram</a> — Etkinlik fotoğrafları ve günlük içerikler</li>
+                                <li><a href="https://twitter.com/engelsizyasam" target="_blank" rel="noopener">Twitter / X</a> — Anlık duyurular ve haberler</li>
+                                <li><a href="https://facebook.com/engelsizyasam" target="_blank" rel="noopener">Facebook</a> — Topluluk ve etkinlik paylaşımları</li>
+                                <li><a href="https://linkedin.com/company/engelsizyasam" target="_blank" rel="noopener">LinkedIn</a> — Kurumsal güncellemeler ve kariyer fırsatları</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CTA Box -->
+            <div class="faq-cta">
+                <div class="faq-cta-text">
+                    <h2>Aradığınız cevabı bulamadınız mı?</h2>
+                    <p>Ekibimiz size yardımcı olmaktan mutluluk duyar. Hemen iletişime geçin ya da topluluk etkinliklerimize katılın.</p>
+                </div>
+                <div class="faq-cta-btns">
+                    <a href="iletisim" class="btn-white"><i class="fa-solid fa-envelope"></i> Bize Yazın</a>
+                    <a href="uyelik" class="btn-outline-white"><i class="fa-solid fa-user-plus"></i> Üye Ol</a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Fancy Footer -->
+    <footer class="fancy-footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo-text">Gönül Köprüsü<span>.</span></div>
+                    <p class="footer-desc">Türkiye'nin öncü engelsiz yaşam kuruluşu. Engelli bireylerin toplumsal yaşama katılımını, erişilebilirliğini ve haklarını destekliyoruz. Engelsiz bir gelecek inşa etmek için yanınızdayız.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/engelsizyasam" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/engelsizyasam" target="_blank" rel="noopener" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/koprusu.gonul/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://linkedin.com/company/engelsizyasam" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-links-group">
+                    <div class="footer-widget">
+                        <h4>Kurumsal</h4>
+                        <ul>
+                            <li><a href="hakkimizda">Hakkımızda</a></li>
+                            <li><a href="hakkimizda">Yönetim Kurulu</a></li>
+                            <li><a href="hakkimizda">Tarihçe</a></li>
+                            <li><a href="iletisim">Şubelerimiz</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget">
+                        <h4>Hızlı Bağlantılar</h4>
+                        <ul>
+                            <li><a href="uyelik">Üyelik Formu</a></li>
+                            <li><a href="mevzuat">Mevzuat</a></li>
+                            <li><a href="sss">Sıkça Sorulan Sorular</a></li>
+                            <li><a href="haberler">Haberler & Duyurular</a></li>
+                            <li><a href="iletisim">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget contact-widget">
+                        <h4>İletişim</h4>
+                        <ul class="contact-info">
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                                <span>Kızılay Mah. Atatürk Bulvarı No:123 <br>Çankaya / Ankara, Türkiye</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
+                                <span>+90 (312) 444 0 393</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+                                <span>bilgi@dernek.org.tr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 Engelli Memur & İşçi Derneği. Tüm hakları saklıdır.</p>
+                <div class="footer-legal">
+                    <a href="gizlilik-politikasi">Gizlilik Politikası</a>
+                    <a href="kvkk-aydinlatma-metni">KVKK Aydınlatma Metni</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+    (function() {
+        const searchInput = document.getElementById('faqSearch');
+        const tabs = document.querySelectorAll('.faq-tab');
+        const groups = document.querySelectorAll('.faq-group');
+        const items = document.querySelectorAll('.faq-item');
+        const noResults = document.getElementById('faqNoResults');
+
+        // ── Accordion toggle ──
+        items.forEach(item => {
+            item.querySelector('.faq-question').addEventListener('click', () => {
+                const isOpen = item.classList.contains('active');
+                items.forEach(i => i.classList.remove('active'));
+                if (!isOpen) item.classList.add('active');
+            });
+        });
+
+        // ── Tab filtering ──
+        let activeCat = 'all';
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                activeCat = tab.dataset.cat;
+                applyFilters();
+            });
+        });
+
+        // ── Search filtering ──
+        searchInput.addEventListener('input', applyFilters);
+
+        function applyFilters() {
+            const query = searchInput.value.toLowerCase().trim();
+            let anyVisible = false;
+
+            // Show / hide entire groups
+            groups.forEach(group => {
+                const cat = group.dataset.group;
+                const groupMatch = activeCat === 'all' || activeCat === cat;
+                group.classList.toggle('visible', groupMatch);
+            });
+
+            // Show / hide individual items by keyword
+            items.forEach(item => {
+                const group = item.closest('.faq-group');
+                const cat = group.dataset.group;
+                const catMatch = activeCat === 'all' || activeCat === cat;
+                const questionText = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const keywords = (item.dataset.keywords || '').toLowerCase();
+                const answerText = item.querySelector('.faq-answer-inner').textContent.toLowerCase();
+                const textMatch = !query || questionText.includes(query) || keywords.includes(query) || answerText.includes(query);
+
+                const show = catMatch && textMatch;
+                item.style.display = show ? '' : 'none';
+                if (show) { anyVisible = true; group.classList.add('visible'); }
+            });
+
+            // Hide groups that have no visible items
+            groups.forEach(group => {
+                const visibleItems = Array.from(group.querySelectorAll('.faq-item')).filter(i => i.style.display !== 'none');
+                if (visibleItems.length === 0) group.classList.remove('visible');
+            });
+
+            noResults.style.display = anyVisible ? 'none' : 'block';
+        }
+    })();
+    </script>
+</body>
+</html>

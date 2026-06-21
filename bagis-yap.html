@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bağış Yap | Engelli Memur & İşçi Derneği</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.png">
+    
+    <!-- SEO Meta Etiketleri -->
+    <meta name="description" content="Bağış Yapın - Engelli Memur & İşçi Derneği. Derneğimize bağış yaparak projelerimize ve engelli çalışanların haklarına destek olabilirsiniz.">
+    <meta name="keywords" content="bağış yap, engelli derneği bağış, destek ol, iban, engelli hakları, erişilebilirlik, engelli memur, engelli işçi">
+    <meta name="author" content="Engelli Memur & İşçi Derneği">
+    <meta name="robots" content="index, follow">
+    
+    <!-- Open Graph (Sosyal Medya Paylaşımları) -->
+    <meta property="og:title" content="Bağış Yap | Engelli Memur & İşçi Derneği">
+    <meta property="og:description" content="Derneğimize bağış yaparak projelerimize ve engelli çalışanların haklarına destek olabilirsiniz.">
+    <meta property="og:image" content="logo.png">
+    <meta property="og:url" content="https://www.dernek.org.tr/bagis-yap">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Bağış Yap | Engelli Memur & İşçi Derneği">
+    <meta name="twitter:description" content="Derneğimize bağış yaparak projelerimize ve engelli çalışanların haklarına destek olabilirsiniz.">
+    <meta name="twitter:image" content="logo.png">
+    
+    <!-- Google Fonts: Outfit and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-container">
+            <i class="fa-solid fa-wheelchair loader-wheelchair"></i>
+            <i class="fa-solid fa-person-walking loader-walking"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index" class="logo">
+                <img src="logo.png" alt="Engelli Memur & İşçi Derneği Logo">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="hakkimizda">Kurumsal</a></li>
+                    <li><a href="projelerimiz">Projelerimiz</a></li>
+                    <li><a href="haberler">Haberler</a></li>
+                    <li><a href="blog">Blog</a></li>
+                    <li><a href="mevzuat">Mevzuat</a></li>
+                    <li><a href="iletisim">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="bagis-yap" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                <a href="uyelik" class="btn btn-primary">Üye Ol</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Subpage Hero -->
+    <section class="subpage-hero">
+        <div class="container">
+            <h1>Bağış <span>Yapın</span></h1>
+            <p>Desteklerinizle engelleri ortadan kaldırın, daha erişilebilir bir çalışma hayatı ve geleceğe katkıda bulunun.</p>
+        </div>
+    </section>
+
+    <!-- Donation Section -->
+    <section class="contact-section">
+        <div class="container">
+            <div class="contact-wrapper">
+                
+                <!-- Left: Bank Accounts / IBAN Info -->
+                <div class="contact-info-card" style="flex: 1 1 500px; display: flex; flex-direction: column; gap: 30px;">
+                    <h3>Banka Hesap Bilgilerimiz</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 10px;">Bağışlarınızı aşağıdaki resmi banka hesaplarımıza yapabilirsiniz. Havale/EFT açıklamasına <strong>"Bağış"</strong> veya <strong>"Gönüllü Katkı"</strong> yazmayı unutmayınız.</p>
+                    
+                    <!-- Bank Item 1 -->
+                    <div style="background-color: var(--white); padding: 24px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; position: relative;">
+                        <h4 style="color: var(--primary); display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-building-columns"></i> T.C. Ziraat Bankası
+                        </h4>
+                        <div style="font-size: 0.95rem; color: var(--text-main);">
+                            <strong>Alıcı Adı:</strong> Engelli Memur ve İşçi Derneği<br>
+                            <strong>Şube:</strong> Ankara Kamu Girişimci Şubesi (1603)<br>
+                            <strong>Hesap No:</strong> 98765432-5001<br>
+                        </div>
+                        <div style="background-color: var(--bg-color); padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color);">
+                            <span id="iban-ziraat">TR98 0001 0016 0398 7654 3250 01</span>
+                            <button onclick="copyToClipboard('iban-ziraat', this)" style="background: none; border: none; color: var(--primary); cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 600; font-family: var(--font-body);"><i class="fa-regular fa-copy"></i> Kopyala</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Bank Item 2 -->
+                    <div style="background-color: var(--white); padding: 24px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; gap: 12px; position: relative;">
+                        <h4 style="color: var(--secondary); display: flex; align-items: center; gap: 8px;">
+                            <i class="fa-solid fa-building-columns"></i> Türkiye Vakıflar Bankası (VakıfBank)
+                        </h4>
+                        <div style="font-size: 0.95rem; color: var(--text-main);">
+                            <strong>Alıcı Adı:</strong> Engelli Memur ve İşçi Derneği<br>
+                            <strong>Şube:</strong> Çankaya Şubesi (0012)<br>
+                            <strong>Hesap No:</strong> 12345678-5002<br>
+                        </div>
+                        <div style="background-color: var(--bg-color); padding: 12px; border-radius: 8px; font-family: monospace; font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; border: 1px solid var(--border-color);">
+                            <span id="iban-vakif">TR12 0001 5001 2012 3456 7850 02</span>
+                            <button onclick="copyToClipboard('iban-vakif', this)" style="background: none; border: none; color: var(--primary); cursor: pointer; display: flex; align-items: center; gap: 4px; font-weight: 600; font-family: var(--font-body);"><i class="fa-regular fa-copy"></i> Kopyala</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right: Why Donate info card -->
+                <div class="contact-form-card" style="flex: 1 1 450px;">
+                    <h3>Neden Destek Olmalısınız?</h3>
+                    <p style="color: var(--text-muted); margin-bottom: 24px; line-height: 1.7;">Engelli Memur & İşçi Derneği olarak gerçekleştirdiğimiz tüm projeler ve sağladığımız destekler tamamen sizlerin katkılarıyla büyümektedir. Bağışlarınızla aşağıdaki faaliyetlerimize doğrudan katkıda bulunursunuz:</p>
+                    
+                    <ul style="display: flex; flex-direction: column; gap: 16px;">
+                        <li style="display: flex; gap: 12px; align-items: flex-start;">
+                            <div style="width: 40px; height: 40px; background: rgba(0, 92, 230, 0.1); color: var(--primary); border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <div>
+                                <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Eğitim ve Gelişim Atölyeleri</h4>
+                                <p style="color: var(--text-muted); font-size: 0.9rem;">Engelli gençlerin kodlama, dijital tasarım & kariyer eğitimleri alması için gerekli donanım ve altyapıyı sağlıyoruz.</p>
+                            </div>
+                        </li>
+                        <li style="display: flex; gap: 12px; align-items: flex-start;">
+                            <div style="width: 40px; height: 40px; background: rgba(255, 107, 0, 0.1); color: var(--secondary); border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><i class="fa-solid fa-universal-access"></i></div>
+                            <div>
+                                <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Erişilebilirlik Çözümleri</h4>
+                                <p style="color: var(--text-muted); font-size: 0.9rem;">Kamu kurumlarında ve çalışma alanlarında fiziksel ve dijital erişilebilirliği artıracak projeler üretiyoruz.</p>
+                            </div>
+                        </li>
+                        <li style="display: flex; gap: 12px; align-items: flex-start;">
+                            <div style="width: 40px; height: 40px; background: rgba(40, 167, 69, 0.1); color: #28a745; border-radius: 50%; display: flex; justify-content: center; align-items: center; flex-shrink: 0;"><i class="fa-solid fa-laptop-code"></i></div>
+                            <div>
+                                <h4 style="font-size: 1.1rem; margin-bottom: 4px;">Yardımcı Teknolojik Cihaz Desteği</h4>
+                                <p style="color: var(--text-muted); font-size: 0.9rem;">Çalışma hayatındaki engelli bireylere ekran okuyucular, ses stüdyosu ekipmanları ve yardımcı donanımlar temin ediyoruz.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Fancy Footer -->
+    <footer class="fancy-footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo-text">Gönül Köprüsü<span>.</span></div>
+                    <p class="footer-desc">Türkiye'nin öncü engelsiz yaşam kuruluşu. Engelli bireylerin toplumsal yaşama katılımını, erişilebilirliğini ve haklarını destekliyoruz. Engelsiz bir gelecek inşa etmek için yanınızdayız.</p>
+                    <div class="social-links">
+                        <a href="https://facebook.com/engelsizyasam" target="_blank" rel="noopener" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://twitter.com/engelsizyasam" target="_blank" rel="noopener" aria-label="Twitter"><i class="fa-brands fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/koprusu.gonul/" target="_blank" rel="noopener" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://linkedin.com/company/engelsizyasam" target="_blank" rel="noopener" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-links-group">
+                    <div class="footer-widget">
+                        <h4>Kurumsal</h4>
+                        <ul>
+                            <li><a href="hakkimizda">Hakkımızda</a></li>
+                            <li><a href="hakkimizda">Yönetim Kurulu</a></li>
+                            <li><a href="hakkimizda">Tarihçe</a></li>
+                            <li><a href="iletisim">Şubelerimiz</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget">
+                        <h4>Hızlı Bağlantılar</h4>
+                        <ul>
+                            <li><a href="uyelik">Üyelik Formu</a></li>
+                            <li><a href="mevzuat">Mevzuat</a></li>
+                            <li><a href="haberler">Haberler & Duyurular</a></li>
+                            <li><a href="blog">Blog Yazıları</a></li>
+                            <li><a href="iletisim">İletişim</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-widget contact-widget">
+                        <h4>İletişim</h4>
+                        <ul class="contact-info">
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-location-dot"></i></div>
+                                <span>Kızılay Mah. Atatürk Bulvarı No:123 <br>Çankaya / Ankara, Türkiye</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-phone"></i></div>
+                                <span>+90 (312) 444 0 393</span>
+                            </li>
+                            <li>
+                                <div class="icon-box"><i class="fa-solid fa-envelope"></i></div>
+                                <span>bilgi@dernek.org.tr</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2026 Engelli Memur & İşçi Derneği. Tüm hakları saklıdır.</p>
+                <div class="footer-legal">
+                    <a href="gizlilik-politikasi">Gizlilik Politikası</a>
+                    <a href="kvkk-aydinlatma-metni">KVKK Aydınlatma Metni</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="script.js"></script>
+    <script>
+        function copyToClipboard(elementId, button) {
+            const text = document.getElementById(elementId).innerText.replace(/\s+/g, '');
+            navigator.clipboard.writeText(text).then(() => {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fa-solid fa-check"></i> Kopyalandı!';
+                button.style.color = '#28a745';
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.style.color = 'var(--primary)';
+                }, 2000);
+            }).catch(err => {
+                alert('IBAN kopyalanamadı: ', err);
+            });
+        }
+    </script>
+</body>
+</html>

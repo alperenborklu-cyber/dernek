@@ -93,5 +93,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('scroll', updateProgressBar, { passive: true });
     updateProgressBar();
+
+    // 7. Floating Contact Widget Injection
+    const contactContainer = document.createElement('div');
+    contactContainer.className = 'floating-contact-container';
+    contactContainer.innerHTML = `
+        <a href="https://wa.me/905301234567" target="_blank" rel="noopener" class="floating-btn floating-whatsapp" data-tooltip="WhatsApp ile Ulaşın" aria-label="WhatsApp">
+            <i class="fa-brands fa-whatsapp"></i>
+        </a>
+        <a href="tel:+903124440393" class="floating-btn floating-phone" data-tooltip="Bizi Arayın" aria-label="Telefon">
+            <i class="fa-solid fa-phone"></i>
+        </a>
+    `;
+    document.body.appendChild(contactContainer);
 });
 
