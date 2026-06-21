@@ -1975,7 +1975,9 @@ textarea.form-control {
 }
 
 .radio-label,
-.checkbox-label {
+.checkbox-label,
+.form-group label.radio-label,
+.form-group label.checkbox-label {
     display: inline-flex;
     align-items: center;
     gap: 10px;
@@ -1983,6 +1985,8 @@ textarea.form-control {
     font-size: 0.95rem;
     font-weight: 500;
     user-select: none;
+    margin-bottom: 0;
+    font-family: var(--font-body);
 }
 
 .radio-label input,
