@@ -1212,6 +1212,74 @@ header.scrolled .logo img {
     margin-top: 50px;
 }
 
+/* Hierarchical Board Layout */
+.team-hierarchy {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    margin-top: 50px;
+}
+
+.team-row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.team-row.row-1 .team-card {
+    max-width: 280px;
+    width: 100%;
+}
+
+.team-row.row-2,
+.team-row.row-3 {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 30px;
+    width: 100%;
+}
+
+.team-row.row-4 {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.team-row.row-4 .team-card {
+    max-width: 280px;
+    width: 100%;
+}
+
+@media (max-width: 1200px) {
+    .team-row.row-2,
+    .team-row.row-3 {
+        grid-template-columns: repeat(3, 1fr);
+        justify-content: center;
+    }
+}
+
+@media (max-width: 992px) {
+    .team-row.row-2,
+    .team-row.row-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .team-row.row-2,
+    .team-row.row-3 {
+        grid-template-columns: 1fr;
+    }
+    .team-row.row-1 .team-card,
+    .team-row.row-4 .team-card {
+        max-width: 100%;
+    }
+}
+
+
 .team-card {
     background: var(--white);
     border-radius: 20px;
