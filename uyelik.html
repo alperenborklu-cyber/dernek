@@ -698,7 +698,7 @@
                     const address = document.getElementById('address');
 
                     const phoneVal = phone.value.trim().replace(/\s+/g, '');
-                    if (!/^(05|5)\d{9}$/.test(phoneVal)) {
+                    if (!/^05\d{9}$/.test(phoneVal)) {
                         phone.classList.add('is-invalid');
                         document.getElementById('phoneError').style.display = 'block';
                         isValid = false;
@@ -798,8 +798,25 @@
             // Auto-format phone input while typing
             const phoneInput = document.getElementById('phone');
             phoneInput.addEventListener('input', (e) => {
-                let x = e.target.value.replace(/\D/g, '').match(/(\d{0,3})(\d{0,3})(\d{0,2})(\d{0,2})/);
-                e.target.value = !x[2] ? x[1] : x[1] + ' ' + x[2] + (x[3] ? ' ' + x[3] : '') + (x[4] ? ' ' + x[4] : '');
+                let value = e.target.value.replace(/\D/g, '');
+                if (value.length > 0 && !value.startsWith('0')) {
+                    value = '0' + value;
+                }
+                
+                let formatted = '';
+                if (value.length > 0) {
+                    formatted += value.substring(0, 4);
+                }
+                if (value.length > 4) {
+                    formatted += ' ' + value.substring(4, 7);
+                }
+                if (value.length > 7) {
+                    formatted += ' ' + value.substring(7, 9);
+                }
+                if (value.length > 9) {
+                    formatted += ' ' + value.substring(9, 11);
+                }
+                e.target.value = formatted;
             });
 
             // Auto-format TC No input (only numbers)
