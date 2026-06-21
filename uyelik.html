@@ -106,8 +106,6 @@
                     </div>
 
                     <!-- Main Form Card -->
-                    <div class="membership-form-card">
-                        
                         <form id="membershipForm" novalidate>
                             
                             <!-- STEP 1: Kişisel Bilgiler -->
@@ -115,17 +113,24 @@
                                 <h3 class="step-title">Kişisel Bilgiler</h3>
                                 <p class="step-desc">Lütfen yasal dernek kaydı için kimlik bilgilerinizi eksiksiz doldurun.</p>
                                 
-                                <div class="form-group">
-                                    <label for="fullName"><i class="fa-solid fa-signature input-icon"></i> Adınız Soyadınız <span class="required-star">*</span></label>
-                                    <input type="text" id="fullName" class="form-control" placeholder="Ad Soyad" required minlength="5">
-                                    <div class="error-msg" id="fullNameError">Lütfen adınızı ve soyadınızı en az 5 karakter olarak girin.</div>
-                                </div>
-
                                 <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="fullName"><i class="fa-solid fa-signature input-icon"></i> Adınız Soyadınız <span class="required-star">*</span></label>
+                                        <input type="text" id="fullName" class="form-control" placeholder="Ad Soyad" required minlength="5">
+                                        <div class="error-msg" id="fullNameError">Lütfen adınızı ve soyadınızı en az 5 karakter olarak girin.</div>
+                                    </div>
                                     <div class="form-group">
                                         <label for="tcNo"><i class="fa-solid fa-id-card input-icon"></i> T.C. Kimlik No <span class="required-star">*</span></label>
                                         <input type="text" id="tcNo" class="form-control" placeholder="11 Haneli TC Kimlik No" maxlength="11" required pattern="\d{11}">
                                         <div class="error-msg" id="tcNoError">Geçerli bir T.C. Kimlik numarası giriniz.</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="birthPlace"><i class="fa-solid fa-map-pin input-icon"></i> Doğum Yeri <span class="required-star">*</span></label>
+                                        <input type="text" id="birthPlace" class="form-control" placeholder="Doğum Yeri" required>
+                                        <div class="error-msg" id="birthPlaceError">Lütfen doğum yerinizi girin.</div>
                                     </div>
                                     <div class="form-group">
                                         <label for="birthDate"><i class="fa-solid fa-calendar-days input-icon"></i> Doğum Tarihi <span class="required-star">*</span></label>
@@ -134,8 +139,61 @@
                                     </div>
                                 </div>
 
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="fatherName"><i class="fa-solid fa-user-tie input-icon"></i> Baba Adı <span class="required-star">*</span></label>
+                                        <input type="text" id="fatherName" class="form-control" placeholder="Baba Adı" required>
+                                        <div class="error-msg" id="fatherNameError">Lütfen baba adını girin.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="motherName"><i class="fa-solid fa-user input-icon"></i> Anne Adı <span class="required-star">*</span></label>
+                                        <input type="text" id="motherName" class="form-control" placeholder="Anne Adı" required>
+                                        <div class="error-msg" id="motherNameError">Lütfen anne adını girin.</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="maritalStatus"><i class="fa-solid fa-heart input-icon"></i> Medeni Durumu <span class="required-star">*</span></label>
+                                        <select id="maritalStatus" class="form-control" required>
+                                            <option value="" disabled selected>Seçin</option>
+                                            <option value="Evli">Evli</option>
+                                            <option value="Bekar">Bekar</option>
+                                        </select>
+                                        <div class="error-msg" id="maritalStatusError">Lütfen medeni durumunuzu seçin.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="bloodGroup"><i class="fa-solid fa-droplet input-icon"></i> Kan Grubu <span class="required-star">*</span></label>
+                                        <select id="bloodGroup" class="form-control" required>
+                                            <option value="" disabled selected>Seçin</option>
+                                            <option value="A+">A Rh (+)</option>
+                                            <option value="A-">A Rh (-)</option>
+                                            <option value="B+">B Rh (+)</option>
+                                            <option value="B-">B Rh (-)</option>
+                                            <option value="AB+">AB Rh (+)</option>
+                                            <option value="AB-">AB Rh (-)</option>
+                                            <option value="0+">0 Rh (+)</option>
+                                            <option value="0-">0 Rh (-)</option>
+                                        </select>
+                                        <div class="error-msg" id="bloodGroupError">Lütfen kan grubunuzu seçin.</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="disabilityType"><i class="fa-solid fa-wheelchair input-icon"></i> Engel Durumu (Tanısı) <span class="required-star">*</span></label>
+                                        <input type="text" id="disabilityType" class="form-control" placeholder="Örn: Bedensel, Görme vb." required>
+                                        <div class="error-msg" id="disabilityTypeError">Lütfen engel durumunuzu belirtin.</div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="disabilityRatio"><i class="fa-solid fa-percent input-icon"></i> Engel Oranı <span class="required-star">*</span></label>
+                                        <input type="number" id="disabilityRatio" class="form-control" placeholder="Engel Oranı %" min="0" max="100" required>
+                                        <div class="error-msg" id="disabilityRatioError">Geçerli bir oran (0-100) giriniz.</div>
+                                    </div>
+                                </div>
+
                                 <div class="form-group">
-                                    <label><i class="fa-solid fa-venus-mars input-icon"></i> Cinsiyet <span class="required-star">*</span></label>
+                                    <label><i class="fa-solid fa-venus-mars input-icon"></i> Cinsiyeti <span class="required-star">*</span></label>
                                     <div class="radio-group">
                                         <label class="radio-label">
                                             <input type="radio" name="gender" value="Kadın" required>
@@ -144,10 +202,6 @@
                                         <label class="radio-label">
                                             <input type="radio" name="gender" value="Erkek">
                                             <span class="custom-radio"></span> Erkek
-                                        </label>
-                                        <label class="radio-label">
-                                            <input type="radio" name="gender" value="Belirtmek İstemiyorum">
-                                            <span class="custom-radio"></span> Belirtmek İstemiyorum
                                         </label>
                                     </div>
                                     <div class="error-msg" id="genderError">Lütfen cinsiyet seçimi yapın.</div>
@@ -158,67 +212,53 @@
                                 </div>
                             </div>
 
-                            <!-- STEP 2: İletişim Bilgileri -->
+                            <!-- STEP 2: İletişim ve Eğitim Bilgileri -->
                             <div class="form-step-panel" data-step="2">
-                                <h3 class="step-title">İletişim & Konum</h3>
-                                <p class="step-desc">Başvurunuzla ilgili sizinle iletişime geçebilmemiz için bilgilerinizi yazın.</p>
+                                <h3 class="step-title">İletişim ve Eğitim Bilgileri</h3>
+                                <p class="step-desc">İletişim kanallarınızı ve eğitim geçmişinizi eksiksiz doldurun.</p>
 
                                 <div class="form-row">
                                     <div class="form-group">
-                                        <label for="phone"><i class="fa-solid fa-phone input-icon"></i> Telefon Numarası <span class="required-star">*</span></label>
+                                        <label for="phone"><i class="fa-solid fa-phone input-icon"></i> Cep Telefonu <span class="required-star">*</span></label>
                                         <input type="tel" id="phone" class="form-control" placeholder="05XX XXX XX XX" required>
                                         <div class="error-msg" id="phoneError">Geçerli bir telefon numarası girin.</div>
                                     </div>
                                     <div class="form-group">
-                                        <label for="email"><i class="fa-solid fa-envelope input-icon"></i> E-posta Adresi <span class="required-star">*</span></label>
+                                        <label for="workPhone"><i class="fa-solid fa-briefcase input-icon"></i> İş Telefonu</label>
+                                        <input type="tel" id="workPhone" class="form-control" placeholder="03XX XXX XX XX">
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="email"><i class="fa-solid fa-envelope input-icon"></i> E-Mail Adresi <span class="required-star">*</span></label>
                                         <input type="email" id="email" class="form-control" placeholder="e-posta@adres.com" required>
                                         <div class="error-msg" id="emailError">Geçerli bir e-posta adresi girin.</div>
                                     </div>
+                                    <div class="form-group">
+                                        <label for="educationLevel"><i class="fa-solid fa-user-graduate input-icon"></i> Eğitim Durumu <span class="required-star">*</span></label>
+                                        <select id="educationLevel" class="form-control" required>
+                                            <option value="" disabled selected>Seçin</option>
+                                            <option value="İlkokul">İlkokul</option>
+                                            <option value="Ortaokul">Ortaokul</option>
+                                            <option value="Lise">Lise</option>
+                                            <option value="Ön Lisans">Ön Lisans</option>
+                                            <option value="Lisans">Lisans</option>
+                                            <option value="Lisansüstü">Lisansüstü</option>
+                                        </select>
+                                        <div class="error-msg" id="educationLevelError">Lütfen eğitim durumunuzu seçin.</div>
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="city"><i class="fa-solid fa-map-location-dot input-icon"></i> Yaşadığınız Şehir <span class="required-star">*</span></label>
-                                    <select id="city" class="form-control" required>
-                                        <option value="" disabled selected>Şehir Seçin</option>
-                                        <option value="Adana">Adana</option>
-                                        <option value="Ankara">Ankara</option>
-                                        <option value="Antalya">Antalya</option>
-                                        <option value="Aydın">Aydın</option>
-                                        <option value="Balıkesir">Balıkesir</option>
-                                        <option value="Bursa">Bursa</option>
-                                        <option value="Denizli">Denizli</option>
-                                        <option value="Diyarbakır">Diyarbakır</option>
-                                        <option value="Erzurum">Erzurum</option>
-                                        <option value="Eskişehir">Eskişehir</option>
-                                        <option value="Gaziantep">Gaziantep</option>
-                                        <option value="Hatay">Hatay</option>
-                                        <option value="İstanbul">İstanbul</option>
-                                        <option value="İzmir">İzmir</option>
-                                        <option value="Kahramanmaraş">Kahramanmaraş</option>
-                                        <option value="Kayseri">Kayseri</option>
-                                        <option value="Kocaeli">Kocaeli</option>
-                                        <option value="Konya">Konya</option>
-                                        <option value="Malatya">Malatya</option>
-                                        <option value="Manisa">Manisa</option>
-                                        <option value="Mardin">Mardin</option>
-                                        <option value="Mersin">Mersin</option>
-                                        <option value="Muğla">Muğla</option>
-                                        <option value="Ordu">Ordu</option>
-                                        <option value="Sakarya">Sakarya</option>
-                                        <option value="Samsun">Samsun</option>
-                                        <option value="Şanlıurfa">Şanlıurfa</option>
-                                        <option value="Tekirdağ">Tekirdağ</option>
-                                        <option value="Trabzon">Trabzon</option>
-                                        <option value="Van">Van</option>
-                                        <option value="Diğer">Diğer</option>
-                                    </select>
-                                    <div class="error-msg" id="cityError">Lütfen bir şehir seçin.</div>
+                                    <label for="schoolAndDepartment"><i class="fa-solid fa-school input-icon"></i> Okul Adı ve Bölüm</label>
+                                    <input type="text" id="schoolAndDepartment" class="form-control" placeholder="Örn: Ankara Üni. - Bilgisayar Mühendisliği">
                                 </div>
 
                                 <div class="form-group">
-                                    <label for="address"><i class="fa-solid fa-house input-icon"></i> Ev Adresi <span class="required-star">*</span></label>
-                                    <textarea id="address" class="form-control" placeholder="Açık adresinizi buraya yazın..." required minlength="10"></textarea>
-                                    <div class="error-msg" id="addressError">Lütfen geçerli bir açık adres girin (en az 10 karakter).</div>
+                                    <label for="address"><i class="fa-solid fa-house input-icon"></i> İkamet Adresi <span class="required-star">*</span></label>
+                                    <textarea id="address" class="form-control" placeholder="Açık ikamet adresinizi buraya yazın..." required minlength="10"></textarea>
+                                    <div class="error-msg" id="addressError">Lütfen geçerli bir ikamet adresi girin (en az 10 karakter).</div>
                                 </div>
 
                                 <div class="step-actions">
@@ -227,84 +267,41 @@
                                 </div>
                             </div>
 
-                            <!-- STEP 3: Üyelik Tercihleri -->
+                            <!-- STEP 3: İş Yeri ve Diğer Bilgiler -->
                             <div class="form-step-panel" data-step="3">
-                                <h3 class="step-title">Üyelik Tercihleri & Engel Durumu</h3>
-                                <p class="step-desc">Dernekteki katılım modelinizi ve ihtiyaçlarınızı belirleyin.</p>
+                                <h3 class="step-title">İş Yeri ve Diğer Bilgiler</h3>
+                                <p class="step-desc">Çalıştığınız kurum ve diğer üyeliklerinize ilişkin detaylar.</p>
 
-                                <div class="form-group">
-                                    <label><i class="fa-solid fa-handshake-angle input-icon"></i> Üyelik Tipi <span class="required-star">*</span></label>
-                                    <div class="radio-group">
-                                        <label class="radio-label">
-                                            <input type="radio" name="memberType" value="Gönüllü Üye" required checked>
-                                            <span class="custom-radio"></span> Gönüllü Üye
-                                        </label>
-                                        <label class="radio-label">
-                                            <input type="radio" name="memberType" value="Asil Üye">
-                                            <span class="custom-radio"></span> Asil Üye (Resmi Kayıtlı)
-                                        </label>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="workplaceName"><i class="fa-solid fa-building input-icon"></i> Kurumu - İşyeri Adı</label>
+                                        <input type="text" id="workplaceName" class="form-control" placeholder="Çalıştığınız Kurum Adı">
                                     </div>
-                                    <p class="field-info-text"><b>Asil Üye:</b> Dernek genel kurullarında oy hakkına sahip, tüzüğe göre aidat ödemekle yükümlü üyelerdir. <br><b>Gönüllü Üye:</b> Çalışmalarımıza, projelerimize destek veren ancak yasal mali ve oy yükümlülüğü bulunmayan destekçilerdir.</p>
-                                </div>
-
-                                <div class="form-group">
-                                    <label><i class="fa-solid fa-universal-access input-icon"></i> Özel Gereksinim / Engel Durumunuz Var mı? <span class="required-star">*</span></label>
-                                    <div class="radio-group">
-                                        <label class="radio-label">
-                                            <input type="radio" name="disabilityStatus" value="Evet" id="disabilityYes">
-                                            <span class="custom-radio"></span> Evet
-                                        </label>
-                                        <label class="radio-label">
-                                            <input type="radio" name="disabilityStatus" value="Hayır" id="disabilityNo" checked>
-                                            <span class="custom-radio"></span> Hayır
-                                        </label>
+                                    <div class="form-group">
+                                        <label for="jobTitle"><i class="fa-solid fa-user-tie input-icon"></i> Unvanı</label>
+                                        <input type="text" id="jobTitle" class="form-control" placeholder="Örn: Memur, İşçi, Mühendis">
                                     </div>
                                 </div>
 
-                                <!-- Dynamic Disability Group Selector -->
-                                <div class="form-group hidden-field" id="disabilityGroupWrapper">
-                                    <label for="disabilityGroup"><i class="fa-solid fa-wheelchair input-icon"></i> Engel Grubu / Türü <span class="required-star">*</span></label>
-                                    <select id="disabilityGroup" class="form-control">
-                                        <option value="" disabled selected>Engel Grubu Seçin</option>
-                                        <option value="Bedensel Engel">Bedensel / Ortopedik</option>
-                                        <option value="Görme Engeli">Görme Engeli</option>
-                                        <option value="İşitme Engeli">İşitme Engeli</option>
-                                        <option value="Zihinsel Gereksinim">Zihinsel / Gelişimsel</option>
-                                        <option value="Konuşma / Dil Engeli">Konuşma ve Dil Engeli</option>
-                                        <option value="Süreğen Hastalık">Süreğen Hastalık</option>
-                                        <option value="Diğer / Belirtmek İstemiyorum">Diğer / Belirtmek İstemiyorum</option>
-                                    </select>
-                                    <div class="error-msg" id="disabilityGroupError">Lütfen bir engel grubu seçin.</div>
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="profession"><i class="fa-solid fa-tools input-icon"></i> Mesleği</label>
+                                        <input type="text" id="profession" class="form-control" placeholder="Mesleğiniz">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="otherAssociations"><i class="fa-solid fa-users-rectangle input-icon"></i> Üyesi Olduğu Dernek & Vakıf Adı</label>
+                                        <input type="text" id="otherAssociations" class="form-control" placeholder="Varsa üye olduğunuz diğer STK'lar">
+                                    </div>
                                 </div>
 
                                 <div class="form-group">
-                                    <label><i class="fa-solid fa-heart input-icon"></i> Hangi Çalışma Alanlarına Katılmak İstersiniz?</label>
-                                    <div class="checkbox-grid">
-                                        <label class="checkbox-label">
-                                            <input type="checkbox" name="interests" value="Erişilebilirlik & Haritalama">
-                                            <span class="custom-checkbox"></span> Erişilebilirlik & Haritalama
-                                        </label>
-                                        <label class="checkbox-label">
-                                            <input type="checkbox" name="interests" value="Eğitim & Akademi">
-                                            <span class="custom-checkbox"></span> Eğitim & Akademi
-                                        </label>
-                                        <label class="checkbox-label">
-                                            <input type="checkbox" name="interests" value="Sosyal Etkinlik & Spor">
-                                            <span class="custom-checkbox"></span> Sosyal Etkinlik & Spor
-                                        </label>
-                                        <label class="checkbox-label">
-                                            <input type="checkbox" name="interests" value="Hak Savunuculuğu">
-                                            <span class="custom-checkbox"></span> Hak Savunuculuğu
-                                        </label>
-                                        <label class="checkbox-label">
-                                            <input type="checkbox" name="interests" value="Sosyal Medya & Tanıtım">
-                                            <span class="custom-checkbox"></span> Sosyal Medya & Tanıtım
-                                        </label>
-                                        <label class="checkbox-label">
-                                            <input type="checkbox" name="interests" value="Proje Geliştirme">
-                                            <span class="custom-checkbox"></span> Proje Geliştirme
-                                        </label>
-                                    </div>
+                                    <label for="workAddress"><i class="fa-solid fa-map-pin input-icon"></i> İş Adresi</label>
+                                    <textarea id="workAddress" class="form-control" placeholder="İş adresi detayları..."></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="employmentStatus"><i class="fa-solid fa-circle-question input-icon"></i> Emekli Olduğu Kurum & Çalışmama Durumu Bilgisi</label>
+                                    <input type="text" id="employmentStatus" class="form-control" placeholder="Emeklilik veya iş durumu detayları">
                                 </div>
 
                                 <div class="step-actions">
@@ -313,17 +310,21 @@
                                 </div>
                             </div>
 
-                            <!-- STEP 4: Onaylar & Gönder -->
+                            <!-- STEP 4: Taahhütname & Onay -->
                             <div class="form-step-panel" data-step="4">
-                                <h3 class="step-title">Yasal Onaylar & Gönderim</h3>
+                                <h3 class="step-title">Taahhütname & Onay</h3>
                                 <p class="step-desc">Lütfen yasal aydınlatma metinlerini ve taahhütleri onaylayın.</p>
 
-                                <div class="consent-box">
-                                    <h4>Üyelik Taahhütnamesi</h4>
-                                    <p>Engelli Memur & İşçi Derneği tüzüğünde belirtilen amaç ve ilkeleri benimsediğimi, dernek tüzüğüne ve kararlarına uygun hareket edeceğimi, derneğin onurunu ve saygınlığını koruyacağımı taahhüt ederim. Asil üyelik başvurusunda bulunmam halinde, yönetim kurulunun başvurumu onaylamasıyla birlikte yıllık üyelik aidatını zamanında ödeyeceğimi beyan ederim.</p>
+                                <div class="consent-box" style="max-height: 250px; overflow-y: auto; padding: 20px; border-radius: 12px; border: 1px solid var(--border-color); background-color: var(--bg-color); margin-bottom: 24px;">
+                                    <h4 style="margin-bottom: 12px; color: var(--primary); font-size: 1.1rem; display: flex; align-items: center; gap: 8px;">
+                                        <i class="fa-solid fa-file-contract"></i> Üyelik Taahhütnamesi
+                                    </h4>
+                                    <p style="font-size: 0.92rem; line-height: 1.7; color: var(--text-main); text-align: justify; margin: 0;">
+                                        Gönül Köprüsü Engelli Memur ve İşçi Derneği tüzüğünü, Yönetim Kurulu kararlarını ve önerilen şartları kabul ediyor ve derneğinize üye olmak istiyorum. Üyeliğe kabul edilmem durumunda yasal üyelik aidatını (2026 yılı için yıllık 360 TL'yi) Hesap Adı: Engelli Memur ve İşçi Derneği, iban: TR60 0001 5001 5800 7384 1008 73 'na ödeyeceğimi ve bütün yükümlülüklerimi yerine getireceğimi beyan ve kabul ediyorum.
+                                    </p>
                                 </div>
 
-                                <div class="form-group margin-top-20">
+                                <div class="form-group">
                                     <label class="checkbox-label">
                                         <input type="checkbox" id="kvkkCheck" required checked>
                                         <span class="custom-checkbox"></span> 
@@ -339,10 +340,10 @@
                                         <input type="checkbox" id="tuzukCheck" required>
                                         <span class="custom-checkbox"></span> 
                                         <span>
-                                            Dernek tüzüğünü okudum, amaç ve ilkelere uygun çalışacağımı taahhüt ediyorum. <span class="required-star">*</span>
+                                            Dernek tüzüğünü, yönetim kurulu kararlarını ve taahhütnameyi okudum, kabul ediyorum. <span class="required-star">*</span>
                                         </span>
                                     </label>
-                                    <div class="error-msg" id="tuzukCheckError">Devam edebilmek için dernek tüzüğünü kabul etmelisiniz.</div>
+                                    <div class="error-msg" id="tuzukCheckError">Devam edebilmek için taahhütnameyi kabul etmelisiniz.</div>
                                 </div>
 
                                 <div class="step-actions">
@@ -556,32 +557,10 @@
             const steps = Array.from(document.querySelectorAll('.form-step-panel'));
             const stepNodes = Array.from(document.querySelectorAll('.step-node'));
             const progressLineFill = document.getElementById('progressLineFill');
-            const disabilityYes = document.getElementById('disabilityYes');
-            const disabilityNo = document.getElementById('disabilityNo');
-            const disabilityGroupWrapper = document.getElementById('disabilityGroupWrapper');
-            const disabilityGroup = document.getElementById('disabilityGroup');
 
             let currentStep = 1;
 
-            // 1. Dynamic field display logic for disability
-            const toggleDisabilityField = () => {
-                if (disabilityYes.checked) {
-                    disabilityGroupWrapper.classList.remove('hidden-field');
-                    disabilityGroupWrapper.classList.add('visible-field');
-                    disabilityGroup.setAttribute('required', 'required');
-                } else {
-                    disabilityGroupWrapper.classList.remove('visible-field');
-                    disabilityGroupWrapper.classList.add('hidden-field');
-                    disabilityGroup.removeAttribute('required');
-                    disabilityGroup.value = '';
-                    disabilityGroup.classList.remove('is-invalid');
-                }
-            };
-
-            disabilityYes.addEventListener('change', toggleDisabilityField);
-            disabilityNo.addEventListener('change', toggleDisabilityField);
-
-            // 2. Navigation between steps
+            // Navigation between steps
             const updateProgress = () => {
                 const totalSteps = steps.length;
                 const progressPercent = ((currentStep - 1) / (totalSteps - 1)) * 100;
@@ -665,7 +644,14 @@
                 if (stepNumber === 1) {
                     const fullName = document.getElementById('fullName');
                     const tcNo = document.getElementById('tcNo');
+                    const birthPlace = document.getElementById('birthPlace');
                     const birthDate = document.getElementById('birthDate');
+                    const fatherName = document.getElementById('fatherName');
+                    const motherName = document.getElementById('motherName');
+                    const maritalStatus = document.getElementById('maritalStatus');
+                    const bloodGroup = document.getElementById('bloodGroup');
+                    const disabilityType = document.getElementById('disabilityType');
+                    const disabilityRatio = document.getElementById('disabilityRatio');
                     const genders = document.querySelectorAll('input[name="gender"]');
 
                     if (fullName.value.trim().length < 5) {
@@ -680,9 +666,52 @@
                         isValid = false;
                     }
 
+                    if (!birthPlace.value.trim()) {
+                        birthPlace.classList.add('is-invalid');
+                        document.getElementById('birthPlaceError').style.display = 'block';
+                        isValid = false;
+                    }
+
                     if (!validateAge(birthDate.value)) {
                         birthDate.classList.add('is-invalid');
                         document.getElementById('birthDateError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!fatherName.value.trim()) {
+                        fatherName.classList.add('is-invalid');
+                        document.getElementById('fatherNameError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!motherName.value.trim()) {
+                        motherName.classList.add('is-invalid');
+                        document.getElementById('motherNameError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!maritalStatus.value) {
+                        maritalStatus.classList.add('is-invalid');
+                        document.getElementById('maritalStatusError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!bloodGroup.value) {
+                        bloodGroup.classList.add('is-invalid');
+                        document.getElementById('bloodGroupError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    if (!disabilityType.value.trim()) {
+                        disabilityType.classList.add('is-invalid');
+                        document.getElementById('disabilityTypeError').style.display = 'block';
+                        isValid = false;
+                    }
+
+                    const ratio = parseInt(disabilityRatio.value);
+                    if (isNaN(ratio) || ratio < 0 || ratio > 100) {
+                        disabilityRatio.classList.add('is-invalid');
+                        document.getElementById('disabilityRatioError').style.display = 'block';
                         isValid = false;
                     }
 
@@ -696,7 +725,7 @@
                 else if (stepNumber === 2) {
                     const phone = document.getElementById('phone');
                     const email = document.getElementById('email');
-                    const city = document.getElementById('city');
+                    const educationLevel = document.getElementById('educationLevel');
                     const address = document.getElementById('address');
 
                     const phoneVal = phone.value.trim().replace(/\s+/g, '');
@@ -712,9 +741,9 @@
                         isValid = false;
                     }
 
-                    if (!city.value) {
-                        city.classList.add('is-invalid');
-                        document.getElementById('cityError').style.display = 'block';
+                    if (!educationLevel.value) {
+                        educationLevel.classList.add('is-invalid');
+                        document.getElementById('educationLevelError').style.display = 'block';
                         isValid = false;
                     }
 
@@ -725,11 +754,8 @@
                     }
                 }
                 else if (stepNumber === 3) {
-                    if (disabilityYes.checked && !disabilityGroup.value) {
-                        disabilityGroup.classList.add('is-invalid');
-                        document.getElementById('disabilityGroupError').style.display = 'block';
-                        isValid = false;
-                    }
+                    // Step 3 contains optional job fields. No strict validation required.
+                    isValid = true;
                 }
                 else if (stepNumber === 4) {
                     const kvkkCheck = document.getElementById('kvkkCheck');
@@ -773,16 +799,15 @@
                 
                 if (validateStep(4)) {
                     document.getElementById('sumName').textContent = document.getElementById('fullName').value.trim();
-                    
-                    const memberTypeVal = document.querySelector('input[name="memberType"]:checked').value;
-                    document.getElementById('sumType').textContent = memberTypeVal;
+                    document.getElementById('sumType').textContent = "Asil Üye";
                     
                     document.getElementById('sumPhone').textContent = document.getElementById('phone').value.trim();
                     document.getElementById('sumEmail').textContent = document.getElementById('email').value.trim();
-                    document.getElementById('sumCity').textContent = document.getElementById('city').value;
+                    document.getElementById('sumCity').textContent = "Belirtilmedi";
                     
-                    const hasDisability = disabilityYes.checked;
-                    document.getElementById('sumDisability').textContent = hasDisability ? `Evet (${disabilityGroup.value})` : 'Yok';
+                    const disType = document.getElementById('disabilityType').value.trim();
+                    const disRatio = document.getElementById('disabilityRatio').value.trim();
+                    document.getElementById('sumDisability').textContent = `Evet (${disType} - %${disRatio})`;
 
                     form.style.display = 'none';
                     document.getElementById('formProgressBar').style.display = 'none';
