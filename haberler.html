@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Engelsiz Yaşam Derneği - Birlikte Daha Güçlüyüz</title>
+    <title>Haberler & Duyurular - Engelsiz Yaşam Derneği</title>
     
     <!-- Google Fonts: Outfit and Inter -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -35,7 +35,7 @@
             <nav class="nav-menu">
                 <ul>
                     <li><a href="kurumsal.html">Kurumsal</a></li>
-                    <li><a href="haberler.html">Haberler</a></li>
+                    <li><a href="haberler.html" class="active">Haberler</a></li>
                     <li><a href="mevzuat.html">Mevzuat</a></li>
                     <li><a href="iletisim.html">İletişim</a></li>
                 </ul>
@@ -47,42 +47,26 @@
         </div>
     </header>
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container hero-container">
-            <div class="hero-content">
-                <span class="badge">Engelsiz Yarınlar 2026</span>
-                <h1>Engelleri Aşalım, <br><span>Geleceği</span> Paylaşalım</h1>
-                <p>Erişilebilir, eşit ve engelsiz bir dünya için çalışıyoruz. Bedensel, zihinsel ve duyusal farklılıkların hayatı sınırlandırmadığı bir toplum için bize katılın.</p>
-                <div class="hero-buttons">
-                    <a href="#" class="btn btn-primary btn-large">Projelerimiz <i class="fa-solid fa-arrow-right"></i></a>
-                    <a href="#" class="btn btn-outline btn-large">Hakkımızda</a>
-                </div>
-            </div>
-            <div class="hero-image">
-                <div class="glass-card">
-                    <img src="https://images.unsplash.com/photo-1531206715517-5c0ba140b2b8?auto=format&fit=crop&w=800&q=80" alt="Engelsiz Topluluk">
-                    <div class="glass-floating-badge top-right">
-                        <i class="fa-solid fa-universal-access"></i>
-                        <span>Erişilebilir Yaşam</span>
-                    </div>
-                    <div class="glass-floating-badge bottom-left">
-                        <i class="fa-solid fa-heart-pulse"></i>
-                        <span>Engelsiz Yaşam</span>
-                    </div>
-                </div>
-            </div>
+    <!-- Subpage Hero -->
+    <section class="subpage-hero">
+        <div class="container">
+            <h1>Haberler & <span>Duyurular</span></h1>
+            <p>Projelerimiz, etkinliklerimiz ve farkındalık çalışmalarımızdan en son gelişmeleri ve güncel haberleri buradan takip edebilirsiniz.</p>
         </div>
-        <div class="hero-blob"></div>
     </section>
 
-    <!-- News & Announcements -->
-    <section class="news-section">
+    <!-- News Grid & Filter Section -->
+    <section class="news-section" style="background-color: var(--white); padding: 40px 0 80px;">
         <div class="container">
-            <div class="section-header">
-                <h2>Güncel <span>Çalışmalarımız</span></h2>
-                <a href="#" class="view-all">Tümünü Gör <i class="fa-solid fa-arrow-right"></i></a>
+            <!-- Filter buttons -->
+            <div class="filter-container">
+                <button class="filter-btn active">Hepsi</button>
+                <button class="filter-btn">Erişilebilirlik</button>
+                <button class="filter-btn">Eğitim & İstihdam</button>
+                <button class="filter-btn">Spor & Sosyal</button>
             </div>
+
+            <!-- News Grid -->
             <div class="news-grid">
                 <!-- News Card 1 -->
                 <article class="news-card">
@@ -125,25 +109,64 @@
                         <a href="#" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 </article>
-            </div>
-        </div>
-    </section>
 
-    <!-- Call to Action -->
-    <section class="cta-section">
-        <div class="container cta-container">
-            <div class="cta-content">
-                <h2>Engelsiz Yarınları Birlikte İnşa Edelim!</h2>
-                <p>Çalışmalarımıza destek olabilir, gönüllümüz ya da üyemiz olarak engelleri kaldırmada bir rol oynayabilirsiniz.</p>
-                <a href="#" class="btn btn-primary btn-large cta-btn">Hemen Bize Katılın</a>
+                <!-- News Card 4 -->
+                <article class="news-card">
+                    <div class="news-img">
+                        <img src="https://images.unsplash.com/photo-1517486808906-6ca8b3f04846?auto=format&fit=crop&w=800&q=80" alt="Farkındalık Semineri">
+                        <span class="news-date">01 Haziran 2026</span>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">Spor & Sosyal</span>
+                        <h3>Empati ve Farkındalık Seminerlerimiz Devam Ediyor</h3>
+                        <p>Lise ve üniversitelerde gençlerin engellilik konusunda empati kazanması için düzenlediğimiz interaktif paneller bu ay da büyük ilgi gördü.</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- News Card 5 -->
+                <article class="news-card">
+                    <div class="news-img">
+                        <img src="https://images.unsplash.com/photo-1573164713714-d95e436ab8d6?auto=format&fit=crop&w=800&q=80" alt="Erişilebilir Web Sitesi">
+                        <span class="news-date">24 Mayıs 2026</span>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">Erişilebilirlik</span>
+                        <h3>Kamu Sitelerinde Erişilebilirlik Denetimleri Yapıldı</h3>
+                        <p>Web erişilebilirlik komisyonumuz, kamu kurumlarına ait 50 popüler web sitesini inceleyerek görme engelli uyumluluğu raporunu yayınladı.</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </article>
+
+                <!-- News Card 6 -->
+                <article class="news-card">
+                    <div class="news-img">
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?auto=format&fit=crop&w=800&q=80" alt="Mesleki İstihdam">
+                        <span class="news-date">12 Mayıs 2026</span>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">Eğitim & İstihdam</span>
+                        <h3>Engelsiz Kariyer Günü 2026 Yoğun Katılımla Gerçekleşti</h3>
+                        <p>50'den fazla firmanın katılım sağladığı fuarda 120 engelli üyemiz doğrudan iş görüşmesi yaparak yeni kariyer fırsatlarına adım attı.</p>
+                        <a href="#" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                </article>
             </div>
-            <div class="cta-pattern"></div>
+
+            <!-- Newsletter Box -->
+            <div class="newsletter-box">
+                <h2>Gelişmelerden <span>Haberdar Olun</span></h2>
+                <p>E-posta bültenimize abone olarak etkinliklerimizden ve duyurularımızdan ilk siz haberdar olabilirsiniz.</p>
+                <form class="newsletter-form" onsubmit="event.preventDefault(); alert('Bültene başarıyla kayıt oldunuz!');">
+                    <input type="email" placeholder="E-posta adresinizi yazın..." required>
+                    <button type="submit" class="btn btn-primary" style="background-color: var(--secondary); box-shadow: none;">Abone Ol</button>
+                </form>
+            </div>
         </div>
     </section>
 
     <!-- Fancy Footer -->
     <footer class="fancy-footer">
-        
         <div class="container footer-container">
             <div class="footer-top">
                 <div class="footer-brand">
@@ -161,9 +184,9 @@
                     <div class="footer-widget">
                         <h4>Kurumsal</h4>
                         <ul>
-                            <li><a href="#">Hakkımızda</a></li>
-                            <li><a href="#">Yönetim Kurulu</a></li>
-                            <li><a href="#">Tarihçe</a></li>
+                            <li><a href="kurumsal.html">Hakkımızda</a></li>
+                            <li><a href="kurumsal.html">Yönetim Kurulu</a></li>
+                            <li><a href="kurumsal.html">Tarihçe</a></li>
                             <li><a href="#">Şubelerimiz</a></li>
                         </ul>
                     </div>
@@ -171,9 +194,9 @@
                         <h4>Hızlı Bağlantılar</h4>
                         <ul>
                             <li><a href="#">Üyelik Formu</a></li>
-                            <li><a href="#">Mevzuat</a></li>
-                            <li><a href="#">Haberler & Duyurular</a></li>
-                            <li><a href="#">İletişim</a></li>
+                            <li><a href="mevzuat.html">Mevzuat</a></li>
+                            <li><a href="haberler.html">Haberler & Duyurular</a></li>
+                            <li><a href="iletisim.html">İletişim</a></li>
                         </ul>
                     </div>
                     <div class="footer-widget contact-widget">

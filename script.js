@@ -47,4 +47,24 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 4. Accordion Logic for Mevzuat page
+    const accordionHeaders = document.querySelectorAll('.accordion-header');
+    
+    accordionHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            const item = header.parentElement;
+            
+            // Toggle current item
+            item.classList.toggle('active');
+            
+            // Close other items
+            const siblingItems = item.parentElement.querySelectorAll('.accordion-item');
+            siblingItems.forEach(sibling => {
+                if (sibling !== item) {
+                    sibling.classList.remove('active');
+                }
+            });
+        });
+    });
 });

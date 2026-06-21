@@ -903,3 +903,551 @@ header.scrolled .logo img {
         text-align: center;
     }
 }
+
+/* ==========================================================================
+   Subpages Style Additions
+   ========================================================================== */
+
+/* Subpage Hero */
+.subpage-hero {
+    padding: 160px 0 80px;
+    background: radial-gradient(circle at 100% 0%, #f0f5ff 0%, #ffffff 100%);
+    text-align: center;
+    border-bottom: 1px solid var(--border-color);
+    position: relative;
+    overflow: hidden;
+}
+
+.subpage-hero h1 {
+    font-size: 3.5rem;
+    margin-bottom: 16px;
+    letter-spacing: -1px;
+}
+
+.subpage-hero h1 span {
+    color: var(--primary);
+}
+
+.subpage-hero p {
+    font-size: 1.15rem;
+    color: var(--text-muted);
+    max-width: 700px;
+    margin: 0 auto;
+}
+
+/* About & History (Kurumsal) */
+.about-section {
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+}
+
+.about-text h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.about-text p {
+    color: var(--text-muted);
+    margin-bottom: 20px;
+}
+
+.about-image img {
+    width: 100%;
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+}
+
+/* Mission & Vision Cards */
+.mission-vision-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 60px;
+}
+
+.mv-card {
+    background: var(--bg-color);
+    border-radius: 20px;
+    padding: 40px 30px;
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    text-align: center;
+}
+
+.mv-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+}
+
+.mv-card .icon-box {
+    width: 70px;
+    height: 70px;
+    background: rgba(0, 82, 204, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary);
+    font-size: 1.8rem;
+    margin: 0 auto 24px;
+}
+
+.mv-card h3 {
+    font-size: 1.5rem;
+    margin-bottom: 16px;
+}
+
+.mv-card p {
+    color: var(--text-muted);
+}
+
+/* Board of Directors / Team */
+.team-section {
+    padding: 80px 0;
+    background-color: var(--bg-color);
+}
+
+.team-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 30px;
+    margin-top: 50px;
+}
+
+.team-card {
+    background: var(--white);
+    border-radius: 20px;
+    padding: 30px 20px;
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: var(--transition);
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: var(--primary-light);
+}
+
+.team-img {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin: 0 auto 20px;
+    border: 4px solid rgba(0, 82, 204, 0.1);
+    transition: var(--transition);
+}
+
+.team-card:hover .team-img {
+    border-color: var(--primary);
+    transform: scale(1.05);
+}
+
+.team-card h3 {
+    font-size: 1.25rem;
+    margin-bottom: 6px;
+}
+
+.team-card span {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: block;
+}
+
+/* News Page Filters */
+.filter-container {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    margin: 50px 0 40px;
+    flex-wrap: wrap;
+}
+
+.filter-btn {
+    padding: 10px 24px;
+    border-radius: 50px;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    border: 1px solid var(--border-color);
+    background: var(--white);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+    box-shadow: 0 4px 10px rgba(0, 82, 204, 0.2);
+}
+
+/* Newsletter section */
+.newsletter-section {
+    padding: 80px 0;
+}
+
+.newsletter-box {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+    border-radius: 24px;
+    padding: 60px;
+    color: var(--white);
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.newsletter-box h2 {
+    font-size: 2.5rem;
+    color: var(--white);
+    margin-bottom: 12px;
+}
+
+.newsletter-box p {
+    font-size: 1.1rem;
+    opacity: 0.9;
+}
+
+.newsletter-form {
+    display: flex;
+    max-width: 600px;
+    margin: 32px auto 0;
+    gap: 12px;
+}
+
+.newsletter-form input {
+    flex-grow: 1;
+    padding: 16px 28px;
+    border-radius: 50px;
+    border: none;
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 1rem;
+}
+
+/* Accordion (Mevzuat) */
+.mevzuat-section {
+    padding: 80px 0;
+    background-color: var(--white);
+}
+
+.accordion-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.accordion-item {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    overflow: hidden;
+    transition: var(--transition);
+}
+
+.accordion-item:hover {
+    border-color: var(--primary-light);
+}
+
+.accordion-header {
+    padding: 24px 30px;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.accordion-header:hover {
+    color: var(--primary);
+}
+
+.accordion-header i {
+    transition: var(--transition);
+    color: var(--text-muted);
+}
+
+.accordion-content {
+    padding: 0 30px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1), padding 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    color: var(--text-muted);
+    line-height: 1.7;
+}
+
+.accordion-item.active {
+    background: var(--white);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary);
+}
+
+.accordion-item.active .accordion-content {
+    padding: 0 30px 30px;
+    max-height: 500px;
+}
+
+.accordion-item.active .accordion-header i {
+    transform: rotate(180deg);
+    color: var(--primary);
+}
+
+/* Documents Grid */
+.document-list {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+
+.doc-card {
+    background: var(--bg-color);
+    border: 1px solid var(--border-color);
+    border-radius: 18px;
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: var(--transition);
+}
+
+.doc-card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-light);
+    background: var(--white);
+}
+
+.doc-info {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.doc-info i {
+    font-size: 2.5rem;
+    color: #e11d48;
+}
+
+.doc-text h4 {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.doc-text span {
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+.doc-download {
+    width: 44px;
+    height: 44px;
+    background: var(--white);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+}
+
+.doc-card:hover .doc-download {
+    background: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+}
+
+/* Contact Page (İletişim) */
+.contact-section {
+    padding: 80px 0;
+}
+
+.contact-wrapper {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 60px;
+    margin-top: 30px;
+}
+
+.contact-form-card {
+    background: var(--white);
+    border: 1px solid var(--border-color);
+    border-radius: 28px;
+    padding: 48px;
+    box-shadow: var(--shadow-lg);
+}
+
+.contact-form-card h3 {
+    font-size: 1.8rem;
+    margin-bottom: 28px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.form-group label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    font-family: var(--font-heading);
+    font-size: 0.95rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 14px 20px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    outline: none;
+    font-family: var(--font-body);
+    font-size: 0.95rem;
+    transition: var(--transition);
+    background-color: var(--bg-color);
+}
+
+.form-control:focus {
+    border-color: var(--primary);
+    background-color: var(--white);
+    box-shadow: 0 0 0 4px rgba(0, 82, 204, 0.1);
+}
+
+textarea.form-control {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.contact-details {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.contact-info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.contact-info-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.contact-info-item .icon-box {
+    width: 52px;
+    height: 52px;
+    background: rgba(0, 82, 204, 0.1);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary);
+    font-size: 1.3rem;
+    flex-shrink: 0;
+}
+
+.contact-info-item h4 {
+    font-size: 1.1rem;
+    margin-bottom: 4px;
+}
+
+.contact-info-item p {
+    color: var(--text-muted);
+}
+
+.map-container {
+    border-radius: 24px;
+    overflow: hidden;
+    border: 1px solid var(--border-color);
+    box-shadow: var(--shadow-md);
+}
+
+.map-container iframe {
+    display: block;
+}
+
+/* ==========================================================================
+   Responsive Adaptations for Subpages
+   ========================================================================== */
+@media (max-width: 1024px) {
+    .subpage-hero h1 {
+        font-size: 2.8rem;
+    }
+    
+    .about-grid {
+        grid-template-columns: 1fr;
+        gap: 40px;
+    }
+    
+    .team-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .document-list {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-wrapper {
+        grid-template-columns: 1fr;
+        gap: 50px;
+    }
+}
+
+@media (max-width: 768px) {
+    .subpage-hero {
+        padding: 130px 0 60px;
+    }
+    
+    .subpage-hero h1 {
+        font-size: 2.3rem;
+    }
+    
+    .mission-vision-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .team-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .newsletter-box {
+        padding: 40px 24px;
+    }
+    
+    .newsletter-form {
+        flex-direction: column;
+    }
+    
+    .contact-form-card {
+        padding: 30px 20px;
+    }
+    
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+}
+
