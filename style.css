@@ -167,22 +167,22 @@ ul {
 
 @keyframes wheelchairToWalk {
     0% {
-        transform: translate(-150%, -50%) rotate(0deg);
+        transform: translate(-50%, -50%) scale(0);
         opacity: 0;
     }
     10% {
         opacity: 1;
     }
     30% {
-        transform: translate(-50%, -50%) rotate(-360deg);
+        transform: translate(-50%, -50%) scale(1.2);
         opacity: 1;
     }
     40% {
-        transform: translate(-50%, -50%) scale(1.1);
+        transform: translate(-50%, -50%) scale(1.2);
         opacity: 1;
     }
     45%, 100% {
-        transform: translate(-50%, -50%) scale(0.8);
+        transform: translate(-50%, -50%) scale(0);
         opacity: 0;
     }
 }
@@ -681,17 +681,18 @@ header.scrolled .logo img {
     max-width: 350px;
 }
 
-.footer-logo-wrapper {
-    background: var(--white);
-    padding: 12px 24px;
-    border-radius: 12px;
+.footer-logo-text {
+    font-family: var(--font-heading);
+    font-size: 2rem;
+    font-weight: 800;
+    color: var(--white);
+    margin-bottom: 20px;
     display: inline-block;
-    margin-bottom: 24px;
+    letter-spacing: -0.5px;
 }
 
-.footer-logo {
-    height: 45px;
-    filter: none;
+.footer-logo-text span {
+    color: var(--secondary);
 }
 
 .footer-desc {
