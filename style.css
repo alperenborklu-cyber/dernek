@@ -140,32 +140,79 @@ ul {
     transition: opacity 0.5s ease, visibility 0.5s ease;
 }
 
-.loader {
-    display: flex;
-    gap: 12px;
+.loader-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
 }
 
-.circle {
-    width: 20px;
-    height: 20px;
-    background-color: var(--primary);
-    border-radius: 50%;
-    animation: bounce 0.5s alternate infinite ease;
+.loader-wheelchair,
+.loader-walking {
+    position: absolute;
+    font-size: 3.5rem;
+    color: var(--primary);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.circle:nth-child(2) {
-    animation-delay: 0.16s;
-    background-color: var(--secondary);
+.loader-wheelchair {
+    animation: wheelchairToWalk 4s infinite ease-in-out;
 }
 
-.circle:nth-child(3) {
-    animation-delay: 0.32s;
-    background-color: var(--primary-light);
+.loader-walking {
+    opacity: 0;
+    animation: walkingAway 4s infinite ease-in-out;
 }
 
-@keyframes bounce {
-    0% { transform: translateY(0); }
-    100% { transform: translateY(-20px); }
+@keyframes wheelchairToWalk {
+    0% {
+        transform: translate(-150%, -50%) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 1;
+    }
+    30% {
+        transform: translate(-50%, -50%) rotate(-360deg);
+        opacity: 1;
+    }
+    40% {
+        transform: translate(-50%, -50%) scale(1.1);
+        opacity: 1;
+    }
+    45%, 100% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+}
+
+@keyframes walkingAway {
+    0%, 40% {
+        transform: translate(-50%, -50%) scale(0.8);
+        opacity: 0;
+    }
+    45% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: translate(-50%, -50%) translateY(-6px);
+    }
+    60% {
+        transform: translate(0%, -50%) translateY(0);
+    }
+    70% {
+        transform: translate(50%, -50%) translateY(-6px);
+    }
+    85% {
+        transform: translate(150%, -50%) translateY(0);
+        opacity: 1;
+    }
+    90%, 100% {
+        transform: translate(150%, -50%);
+        opacity: 0;
+    }
 }
 
 /* ==========================================================================
@@ -614,27 +661,8 @@ header.scrolled .logo img {
     position: relative;
     background-color: var(--footer-blue);
     color: var(--white);
-    margin-top: 100px; /* Space for wave */
-}
-
-.footer-wave {
-    position: absolute;
-    top: -119px;
-    left: 0;
-    width: 100%;
-    overflow: hidden;
-    line-height: 0;
-}
-
-.footer-wave svg {
-    position: relative;
-    display: block;
-    width: calc(100% + 1.3px);
-    height: 120px;
-}
-
-.footer-wave .shape-fill {
-    fill: var(--footer-blue);
+    margin-top: 60px;
+    padding-top: 60px;
 }
 
 .footer-container {
