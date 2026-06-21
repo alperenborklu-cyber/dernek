@@ -1955,10 +1955,16 @@ textarea.form-control {
 
 .radio-label input,
 .checkbox-label input {
-    display: none;
+    position: absolute;
+    opacity: 0;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    pointer-events: none;
 }
 
 .custom-radio {
+    display: inline-block;
     width: 26px;
     height: 26px;
     border-radius: 50%;
@@ -1991,6 +1997,7 @@ textarea.form-control {
 }
 
 .custom-checkbox {
+    display: inline-block;
     width: 26px;
     height: 26px;
     border-radius: 6px;
