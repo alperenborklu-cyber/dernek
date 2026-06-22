@@ -14,11 +14,21 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Sticky Header Logic
     const header = document.getElementById('header');
     
+    // Inject Top Banner dynamically
+    if (header) {
+        const topBanner = document.createElement('div');
+        topBanner.className = 'top-banner';
+        topBanner.innerHTML = `<img src="header_banner.webp" alt="Gönül Köprüsü Derneği Banner">`;
+        header.insertBefore(topBanner, header.firstChild);
+    }
+    
     const handleScroll = () => {
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
+            document.body.classList.add('header-scrolled');
         } else {
             header.classList.remove('scrolled');
+            document.body.classList.remove('header-scrolled');
         }
     };
     
