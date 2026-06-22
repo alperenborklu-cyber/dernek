@@ -2934,8 +2934,8 @@ textarea.form-control {
 .projects-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 30px;
-    margin-bottom: 80px;
+    gap: 18px;
+    margin-bottom: 60px;
 }
 
 .project-card {
@@ -2957,7 +2957,7 @@ textarea.form-control {
 
 .project-img-wrapper {
     position: relative;
-    aspect-ratio: 16/7;
+    aspect-ratio: 16/6;
     overflow: hidden;
 }
 
@@ -2974,11 +2974,11 @@ textarea.form-control {
 
 .project-status {
     position: absolute;
-    top: 20px;
-    right: 20px;
-    padding: 6px 14px;
+    top: 12px;
+    right: 12px;
+    padding: 4px 10px;
     border-radius: 50px;
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     font-weight: 600;
     z-index: 2;
     box-shadow: var(--shadow-sm);
@@ -3000,7 +3000,7 @@ textarea.form-control {
 }
 
 .project-body {
-    padding: 28px;
+    padding: 16px;
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -3016,22 +3016,22 @@ textarea.form-control {
 }
 
 .project-body h3 {
-    font-size: 1.4rem;
-    margin-bottom: 12px;
+    font-size: 1rem;
+    margin-bottom: 8px;
     color: var(--text-main);
     line-height: 1.4;
 }
 
 .project-body p {
     color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.7;
-    margin-bottom: 24px;
+    font-size: 0.8rem;
+    line-height: 1.6;
+    margin-bottom: 14px;
     flex-grow: 1;
 }
 
 .project-footer {
-    padding: 0 28px 28px;
+    padding: 0 16px 16px;
     margin-top: auto;
 }
 
