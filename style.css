@@ -387,12 +387,12 @@ header.scrolled .header-container {
 }
 
 .logo img {
-    height: 60px; /* Larger logo */
+    height: 78px; /* Larger logo */
     transition: var(--transition);
 }
 
 header.scrolled .logo img {
-    height: 48px;
+    height: 62px;
 }
 
 .nav-menu ul {
