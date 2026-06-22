@@ -2957,7 +2957,7 @@ textarea.form-control {
 
 .project-img-wrapper {
     position: relative;
-    aspect-ratio: 16/10;
+    aspect-ratio: 16/7;
     overflow: hidden;
 }
 
