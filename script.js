@@ -11,9 +11,69 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500); // Wait half a second for dramatic effect
     });
 
-    // 2. Sticky Header Logic
+    // 2. Sticky Header & Top Bar Logic
     const header = document.getElementById('header');
-    
+    if (header) {
+        // Create and prepend top bar
+        const topBar = document.createElement('div');
+        topBar.className = 'header-top-bar';
+        topBar.innerHTML = `
+            <div class="container top-bar-container">
+                <div class="top-bar-left">
+                    <span><i class="fa-solid fa-phone"></i> +90 (312) 444 03 93</span>
+                    <span><i class="fa-solid fa-envelope"></i> info@dernek.org.tr</span>
+                    <span><i class="fa-solid fa-location-dot"></i> Ankara, Türkiye</span>
+                </div>
+                <div class="top-bar-right">
+                    <div class="accessibility-options">
+                        <button id="contrast-toggle" title="Yüksek Kontrast Modu" aria-label="Yüksek Kontrast Modu"><i class="fa-solid fa-circle-half-stroke"></i> Kontrast</button>
+                        <button id="text-increase" title="Yazı Boyutunu Artır" aria-label="Yazı Boyutunu Artır"><i class="fa-solid fa-plus"></i> A</button>
+                        <button id="text-decrease" title="Yazı Boyutunu Azalt" aria-label="Yazı Boyutunu Azalt"><i class="fa-solid fa-minus"></i> A</button>
+                    </div>
+                    <div class="top-bar-socials">
+                        <a href="#" target="_blank" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="#" target="_blank" title="X (Twitter)" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="#" target="_blank" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="#" target="_blank" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        `;
+        header.insertBefore(topBar, header.firstChild);
+
+        // Accessibility Logic
+        const contrastToggle = document.getElementById('contrast-toggle');
+        if (contrastToggle) {
+            contrastToggle.addEventListener('click', () => {
+                document.body.classList.toggle('high-contrast');
+                const isContrast = document.body.classList.contains('high-contrast');
+                localStorage.setItem('high-contrast', isContrast);
+            });
+            // Keep preference
+            if (localStorage.getItem('high-contrast') === 'true') {
+                document.body.classList.add('high-contrast');
+            }
+        }
+
+        let fontSizeOffset = 0;
+        const increaseBtn = document.getElementById('text-increase');
+        const decreaseBtn = document.getElementById('text-decrease');
+        if (increaseBtn && decreaseBtn) {
+            increaseBtn.addEventListener('click', () => {
+                if (fontSizeOffset < 4) {
+                    fontSizeOffset += 2;
+                    document.documentElement.style.fontSize = `calc(100% + ${fontSizeOffset}px)`;
+                }
+            });
+            decreaseBtn.addEventListener('click', () => {
+                if (fontSizeOffset > -2) {
+                    fontSizeOffset -= 2;
+                    document.documentElement.style.fontSize = `calc(100% + ${fontSizeOffset}px)`;
+                }
+            });
+        }
+    }
+
     const handleScroll = () => {
         if (window.scrollY > 50) {
             header.classList.add('scrolled');
