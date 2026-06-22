@@ -461,6 +461,18 @@ header.scrolled .logo img {
     padding: 140px 0 80px;
 }
 
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, rgba(10, 25, 47, 0.2) 0%, rgba(10, 25, 47, 0.25) 100%);
+    z-index: 2; /* Place overlay above video (z-index: 1) but below container (z-index: 3 or auto with relative) */
+    pointer-events: none;
+}
+
 .hero-bg-video {
     position: absolute;
     top: 0;
@@ -478,7 +490,7 @@ header.scrolled .logo img {
     align-items: center;
     text-align: center;
     position: relative;
-    z-index: 2;
+    z-index: 3; /* Lift text content above overlay */
 }
 
 .hero-content {
