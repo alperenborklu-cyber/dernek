@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
                 <div class="top-bar-right">
                     <div class="accessibility-options">
-                        <button id="contrast-toggle" title="Yüksek Kontrast Modu" aria-label="Yüksek Kontrast Modu"><i class="fa-solid fa-circle-half-stroke"></i> Kontrast</button>
+                        <button id="dark-mode-toggle" title="Gece Modu" aria-label="Gece Modu"><i class="fa-solid fa-moon"></i> Gece Modu</button>
                         <button id="text-increase" title="Yazı Boyutunu Artır" aria-label="Yazı Boyutunu Artır"><i class="fa-solid fa-plus"></i> A</button>
                         <button id="text-decrease" title="Yazı Boyutunu Azalt" aria-label="Yazı Boyutunu Azalt"><i class="fa-solid fa-minus"></i> A</button>
                     </div>
@@ -41,17 +41,28 @@ document.addEventListener('DOMContentLoaded', () => {
         `;
         header.insertBefore(topBar, header.firstChild);
 
-        // Accessibility Logic
-        const contrastToggle = document.getElementById('contrast-toggle');
-        if (contrastToggle) {
-            contrastToggle.addEventListener('click', () => {
-                document.body.classList.toggle('high-contrast');
-                const isContrast = document.body.classList.contains('high-contrast');
-                localStorage.setItem('high-contrast', isContrast);
+        // Dark Mode Logic
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        if (darkModeToggle) {
+            darkModeToggle.addEventListener('click', () => {
+                document.body.classList.toggle('dark-mode');
+                const isDarkMode = document.body.classList.contains('dark-mode');
+                localStorage.setItem('dark-mode', isDarkMode);
+                
+                // Update icon dynamically
+                const icon = darkModeToggle.querySelector('i');
+                if (isDarkMode) {
+                    icon.className = 'fa-solid fa-sun';
+                } else {
+                    icon.className = 'fa-solid fa-moon';
+                }
             });
             // Keep preference
-            if (localStorage.getItem('high-contrast') === 'true') {
-                document.body.classList.add('high-contrast');
+            const savedDarkMode = localStorage.getItem('dark-mode');
+            if (savedDarkMode === 'true') {
+                document.body.classList.add('dark-mode');
+                const icon = darkModeToggle.querySelector('i');
+                if (icon) icon.className = 'fa-solid fa-sun';
             }
         }
 
