@@ -3466,18 +3466,18 @@ body.dark-mode .nav-menu a.active {
     color: #3d8bff !important;
 }
 
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode h5,
-body.dark-mode h6 {
+body.dark-mode h1:not(.hero):not(.hero *),
+body.dark-mode h2:not(.hero):not(.hero *),
+body.dark-mode h3:not(.hero):not(.hero *),
+body.dark-mode h4:not(.hero):not(.hero *),
+body.dark-mode h5:not(.hero):not(.hero *),
+body.dark-mode h6:not(.hero):not(.hero *) {
     color: #ffffff !important;
 }
 
-body.dark-mode p,
-body.dark-mode span:not(.btn):not(.top-bar-left span),
-body.dark-mode li {
+body.dark-mode p:not(.hero):not(.hero *),
+body.dark-mode span:not(.btn):not(.top-bar-left span):not(.hero):not(.hero *),
+body.dark-mode li:not(.hero):not(.hero *) {
     color: #94a3b8 !important;
 }
 
@@ -3491,7 +3491,8 @@ body.dark-mode .services-section,
 body.dark-mode .news-section,
 body.dark-mode .stats-section,
 body.dark-mode .contact-section,
-body.dark-mode .home-stats-section {
+body.dark-mode .home-stats-section,
+body.dark-mode .cta-section {
     background-color: #0b1329 !important;
 }
 
