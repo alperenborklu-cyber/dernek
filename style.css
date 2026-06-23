@@ -3666,7 +3666,7 @@ body.dark-mode .pdf-meta {
 
 /* Breaking News Ticker CSS */
 .news-ticker-bar {
-    background-color: var(--secondary); /* #ff6b00 */
+    background-color: #0f1c3f; /* Navy Blue */
     color: var(--white);
     height: 28px;
     display: flex;
@@ -3679,7 +3679,7 @@ body.dark-mode .pdf-meta {
 }
 
 .ticker-badge {
-    background: #0f1c3f;
+    background: var(--secondary); /* Orange */
     color: var(--white);
     padding: 0 12px;
     height: 100%;
@@ -3771,8 +3771,8 @@ body.dark-mode .pdf-meta {
 }
 
 /* Adjust dark mode */
-body.dark-mode .ticker-badge {
-    background: #070d19 !important;
+body.dark-mode .news-ticker-bar {
+    background-color: #070d19 !important;
 }
 
 
