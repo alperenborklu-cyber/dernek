@@ -559,7 +559,7 @@ header.scrolled .logo img {
     align-items: center;
     position: relative;
     overflow: hidden;
-    padding: 140px 0 80px;
+    padding: 168px 0 80px;
 }
 
 .hero::before {
@@ -1217,7 +1217,7 @@ header.scrolled .logo img {
     }
     
     .hero {
-        padding: 110px 0 60px;
+        padding: 138px 0 60px;
     }
     
     .hero-content h1 {
@@ -1288,7 +1288,7 @@ header.scrolled .logo img {
     }
     
     .subpage-hero {
-        padding: 110px 0 45px;
+        padding: 138px 0 45px;
     }
     
     .subpage-hero h1,
@@ -1307,7 +1307,7 @@ header.scrolled .logo img {
 
 /* Subpage Hero */
 .subpage-hero {
-    padding: 160px 0 80px;
+    padding: 188px 0 80px;
     background: radial-gradient(circle at 100% 0%, #f0f5ff 0%, #ffffff 100%);
     text-align: center;
     border-bottom: 1px solid var(--border-color);
@@ -1896,7 +1896,7 @@ textarea.form-control {
 
 @media (max-width: 768px) {
     .subpage-hero {
-        padding: 130px 0 60px;
+        padding: 158px 0 60px;
     }
     
     .subpage-hero h1,
