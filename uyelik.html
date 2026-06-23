@@ -82,6 +82,14 @@
                 <!-- Left: Application Wizard -->
                 <div class="membership-card-container">
                     
+                    <!-- Info Alert for PDF Download -->
+                    <div class="info-alert">
+                        <i class="fa-solid fa-circle-info" style="color: var(--primary); font-size: 1.2rem; margin-top: 2px;"></i>
+                        <div style="font-size: 0.88rem; color: var(--text-main); line-height: 1.5; text-align: left;">
+                            <strong>Çevrimdışı Başvuru:</strong> Online formu doldurmak yerine dilerseniz <a href="documents/uye_formu.pdf" download="Gönül_Köprüsü_Derneği_Üye_Formu.pdf" style="color: var(--primary); font-weight: 600; text-decoration: underline;">Üyelik Formu PDF</a> belgesini bilgisayarınıza indirip doldurabilirsiniz.
+                        </div>
+                    </div>
+                    
                     <!-- Progress Bar / Step Indicators -->
                     <div class="form-progress-bar" id="formProgressBar">
                         <div class="progress-line">
@@ -388,6 +396,29 @@
                 <!-- Right: Information Sidebar -->
                 <div class="membership-sidebar">
                     
+                    <!-- PDF Download Card -->
+                    <div class="sidebar-box pdf-download-card">
+                        <div class="pdf-card-header">
+                            <div class="pdf-icon-wrapper">
+                                <i class="fa-solid fa-file-pdf"></i>
+                            </div>
+                            <div>
+                                <h3>Fiziksel Başvuru</h3>
+                                <p class="pdf-subtitle">Formu İndir & Doldur</p>
+                            </div>
+                        </div>
+                        <p class="pdf-description">
+                            Başvurunuzu online ortam yerine el yazınızla yapmak isterseniz, resmi üyelik formumuzu indirip, doldurup ıslak imzalı olarak derneğimize ulaştırabilirsiniz.
+                        </p>
+                        <a href="documents/uye_formu.pdf" download="Gönül_Köprüsü_Derneği_Üye_Formu.pdf" class="btn btn-primary pdf-download-btn">
+                            <i class="fa-solid fa-cloud-arrow-down"></i> Üyelik Formunu İndir
+                        </a>
+                        <div class="pdf-meta">
+                            <span><i class="fa-solid fa-database"></i> 440 KB</span>
+                            <span><i class="fa-solid fa-circle-check"></i> Güncel Form</span>
+                        </div>
+                    </div>
+
                     <!-- Box 1: Why Join -->
                     <div class="sidebar-box">
                         <h3>Neden Katılmalısınız?</h3>
@@ -448,6 +479,13 @@
                     <div class="sidebar-box doc-box">
                         <h3>Faydalı Belgeler</h3>
                         <p>Başvurunuzdan önce incelemek isteyebileceğiniz yasal dökümanlar:</p>
+                        <a href="documents/uye_formu.pdf" download="Gönül_Köprüsü_Derneği_Üye_Formu.pdf" class="doc-download-link">
+                            <i class="fa-solid fa-file-pdf"></i>
+                            <div>
+                                <span>Dernek Üye Formu (Çevrimdışı Başvuru)</span>
+                                <small>PDF | 440 KB</small>
+                            </div>
+                        </a>
                         <a href="documents/dernek_tuzugu.pdf" download class="doc-download-link">
                             <i class="fa-solid fa-file-pdf"></i>
                             <div>
