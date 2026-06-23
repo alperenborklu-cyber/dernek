@@ -3664,6 +3664,117 @@ body.dark-mode .pdf-meta {
     border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
+/* Breaking News Ticker CSS */
+.news-ticker-bar {
+    background-color: var(--secondary); /* #ff6b00 */
+    color: var(--white);
+    height: 44px;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 99;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.ticker-badge {
+    background: #0f1c3f;
+    color: var(--white);
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+    z-index: 101;
+    position: relative;
+    box-shadow: 6px 0 15px rgba(0, 0, 0, 0.15);
+    white-space: nowrap;
+    gap: 8px;
+}
+
+.ticker-badge i {
+    animation: pulse-icon 1.5s infinite;
+}
+
+.ticker-content-wrap {
+    flex: 1;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.ticker-content {
+    display: flex;
+    white-space: nowrap;
+    position: absolute;
+    will-change: transform;
+    animation: ticker-slide 28s linear infinite;
+    gap: 50px;
+    padding-left: 20px;
+}
+
+.ticker-content:hover {
+    animation-play-state: paused;
+}
+
+.ticker-content a {
+    color: var(--white);
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: var(--transition);
+}
+
+.ticker-content a:hover {
+    opacity: 0.9;
+    text-decoration: underline;
+}
+
+.ticker-date {
+    background: rgba(255, 255, 255, 0.2);
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+@keyframes ticker-slide {
+    0% {
+        transform: translate3d(100%, 0, 0);
+    }
+    100% {
+        transform: translate3d(-100%, 0, 0);
+    }
+}
+
+@keyframes pulse-icon {
+    0% {
+        transform: scale(1);
+        opacity: 1;
+    }
+    50% {
+        transform: scale(1.15);
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Adjust dark mode */
+body.dark-mode .ticker-badge {
+    background: #070d19 !important;
+}
+
 
 
 
