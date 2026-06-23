@@ -560,6 +560,9 @@ header.scrolled .logo img {
         transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
         z-index: 1000;
         border: 1px solid var(--border-color);
+        display: flex;
+        flex-direction: column;
+        gap: 0;
     }
 
     .nav-menu li.dropdown:hover .dropdown-menu {
