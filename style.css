@@ -535,6 +535,129 @@ header.scrolled .logo img {
     color: var(--primary);
 }
 
+/* ==========================================================================
+   Dropdown Menu Styles
+   ========================================================================== */
+.nav-menu li.dropdown {
+    position: relative;
+}
+
+/* For Desktop Dropdown */
+@media (min-width: 992px) {
+    .nav-menu .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 50%;
+        transform: translateX(-50%) translateY(15px);
+        background-color: var(--white);
+        min-width: 220px;
+        box-shadow: var(--shadow-lg);
+        border-radius: 12px;
+        padding: 12px 0;
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+        transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+        z-index: 1000;
+        border: 1px solid var(--border-color);
+    }
+
+    .nav-menu li.dropdown:hover .dropdown-menu {
+        opacity: 1;
+        visibility: visible;
+        pointer-events: auto;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    .nav-menu .dropdown-menu li {
+        width: 100%;
+        padding: 0;
+    }
+
+    .nav-menu .dropdown-menu a {
+        display: block;
+        padding: 10px 20px;
+        font-size: 0.95rem;
+        font-weight: 500;
+        color: var(--text-main);
+        transition: var(--transition);
+        white-space: nowrap;
+    }
+
+    .nav-menu .dropdown-menu a::after {
+        display: none; /* Disable the underline animation on dropdown links */
+    }
+
+    .nav-menu .dropdown-menu a:hover {
+        background-color: rgba(0, 92, 230, 0.05);
+        color: var(--primary);
+        padding-left: 24px;
+    }
+}
+
+/* For Mobile Dropdown */
+@media (max-width: 991.98px) {
+    .nav-menu .dropdown-menu {
+        display: block;
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        width: 100%;
+        background-color: rgba(0, 0, 0, 0.02);
+        border-radius: 8px;
+        margin-top: 8px;
+        padding: 0;
+    }
+
+    .nav-menu li.dropdown.active .dropdown-menu {
+        max-height: 300px; /* high enough to contain links */
+        padding: 8px 0;
+    }
+
+    .nav-menu .dropdown-menu li {
+        text-align: center;
+        width: 100%;
+    }
+
+    .nav-menu .dropdown-menu a {
+        display: block;
+        padding: 10px 0;
+        font-size: 1rem;
+        color: var(--text-muted);
+    }
+
+    .nav-menu .dropdown-menu a::after {
+        display: none;
+    }
+    
+    .nav-menu .dropdown-toggle i {
+        transition: transform 0.3s ease;
+    }
+    
+    .nav-menu li.dropdown.active .dropdown-toggle i {
+        transform: rotate(180deg);
+    }
+}
+
+/* Dark mode overrides for dropdown menu */
+body.dark-mode .nav-menu .dropdown-menu {
+    background-color: #1e1e1e;
+    border-color: #333;
+}
+@media (max-width: 991.98px) {
+    body.dark-mode .nav-menu .dropdown-menu {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+}
+body.dark-mode .nav-menu .dropdown-menu a {
+    color: #e0e0e0;
+}
+body.dark-mode .nav-menu .dropdown-menu a:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--primary);
+}
+
+
 .header-actions {
     display: flex;
     align-items: center;
@@ -1214,6 +1337,27 @@ header.scrolled .logo img {
     
     .header-actions .btn {
         display: none;
+    }
+    
+    .mobile-nav-actions {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 85%;
+        margin-top: 30px;
+        margin-bottom: 30px;
+    }
+    
+    .mobile-nav-actions .btn {
+        display: flex !important;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        padding: 12px 24px;
+        font-weight: 600;
+        font-size: 1rem;
+        border-radius: 8px;
+        text-decoration: none;
     }
     
     .hero {
@@ -3664,11 +3808,16 @@ body.dark-mode .pdf-meta {
     border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
+/* Mobile Nav Actions (Desktop default) */
+.mobile-nav-actions {
+    display: none;
+}
+
 /* Breaking News Ticker CSS */
 .news-ticker-bar {
     background-color: #0f1c3f; /* Navy Blue */
     color: var(--white);
-    height: 28px;
+    height: 32px; /* Slightly taller for better readability/UX */
     display: flex;
     align-items: center;
     overflow: hidden;
@@ -3681,12 +3830,12 @@ body.dark-mode .pdf-meta {
 .ticker-badge {
     background: var(--secondary); /* Orange */
     color: var(--white);
-    padding: 0 12px;
+    padding: 0 14px;
     height: 100%;
     display: flex;
     align-items: center;
     font-weight: 700;
-    font-size: 0.72rem;
+    font-size: 0.75rem;
     letter-spacing: 0.5px;
     z-index: 101;
     position: relative;
@@ -3703,19 +3852,22 @@ body.dark-mode .pdf-meta {
     flex: 1;
     overflow: hidden;
     height: 100%;
-    display: flex;
-    align-items: center;
     position: relative;
+    display: block; /* Prevents flex collapse on mobile browsers */
 }
 
 .ticker-content {
     display: flex;
+    align-items: center;
     white-space: nowrap;
     position: absolute;
+    left: 0;
+    top: 50%;
+    width: max-content;
     will-change: transform;
-    animation: ticker-slide 28s linear infinite;
-    gap: 40px;
-    padding-left: 20px;
+    animation: ticker-slide 30s linear infinite;
+    gap: 50px;
+    padding-left: 100%; /* Starts scrolling exactly from the right edge */
 }
 
 .ticker-content:hover {
@@ -3725,7 +3877,7 @@ body.dark-mode .pdf-meta {
 .ticker-content a {
     color: var(--white);
     font-weight: 500;
-    font-size: 0.8rem;
+    font-size: 0.82rem;
     text-decoration: none;
     display: flex;
     align-items: center;
@@ -3734,24 +3886,25 @@ body.dark-mode .pdf-meta {
 }
 
 .ticker-content a:hover {
-    opacity: 0.9;
-    text-decoration: underline;
+    color: var(--secondary);
+    text-decoration: none;
 }
 
 .ticker-date {
-    background: rgba(255, 255, 255, 0.2);
-    padding: 1px 5px;
+    background: rgba(255, 255, 255, 0.15);
+    padding: 2px 6px;
     border-radius: 4px;
-    font-size: 0.7rem;
+    font-size: 0.72rem;
     font-weight: 600;
+    color: #e2e8f0;
 }
 
 @keyframes ticker-slide {
     0% {
-        transform: translate3d(100%, 0, 0);
+        transform: translate3d(0, -50%, 0);
     }
     100% {
-        transform: translate3d(-100%, 0, 0);
+        transform: translate3d(-100%, -50%, 0);
     }
 }
 

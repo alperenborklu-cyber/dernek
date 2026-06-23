@@ -56,7 +56,15 @@
             </a>
             <nav class="nav-menu">
                 <ul>
-                    <li><a href="hakkimizda" class="active">Kurumsal</a></li>
+                    <li class="dropdown">
+                        <a href="hakkimizda" class="dropdown-toggle active">Kurumsal <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="hakkimizda">Hakkımızda</a></li>
+                            <li><a href="hakkimizda#misyon-vizyon">Misyon & Vizyon</a></li>
+                            <li><a href="iletisim">Şubelerimiz</a></li>
+                            <li><a href="hakkimizda#yonetim-kurulu">Yönetim Kurulu</a></li>
+                        </ul>
+                    </li>
                     <li><a href="projelerimiz">Projelerimiz</a></li>
                     <li><a href="haberler">Haberler</a></li>
                     <li><a href="blog">Blog</a></li>
@@ -104,86 +112,6 @@
                     <p>Derneğimiz, engelli bireylerin çalışma hayatında karşılaştığı sorunlara çözüm üretmek, ayrımcılıkla mücadele etmek ve toplumsal farkındalığı artırmak için kararlılıkla çalışmaktadır. “Gönül Köprüsü” isminin hakkını veren dayanışma anlayışıyla, engelli kamu çalışanlarının sesi olmayı ve onları geleceğe güvenle taşımayı hedeflemektedir.</p>
                 </div>
                 <div class="about-image">
-                    <video autoplay muted loop playsinline class="about-video" style="width: 100%; height: 380px; object-fit: cover; object-position: center center; border-radius: 24px; box-shadow: var(--shadow-lg);">
-                        <source src="mixkit-child-in-an-electric-wheelchair-25501-hd-ready.mp4" type="video/mp4">
-                    </video>
-                </div>
-            </div>
-
-            <!-- Mission & Vision Cards -->
-            <div class="mission-vision-grid" style="margin-bottom: 60px;">
-                <div class="mv-card" style="text-align: left; display: flex; flex-direction: column; align-items: flex-start;">
-                    <div class="icon-box" style="margin: 0 0 24px 0;">
-                        <i class="fa-solid fa-eye"></i>
-                    </div>
-                    <h3>Vizyonumuz</h3>
-                    <p style="color: var(--text-muted); line-height: 1.6;">Engelli bireylerin fiziksel, psikolojik ve sosyal tüm engellerinin kaldırıldığı; eşit fırsatlara sahip olduğu, hak ettiği değeri gördüğü ve karar mekanizmalarında aktif rol aldığı kapsayıcı ve adil bir toplum oluşturmak.</p>
-                </div>
-                <div class="mv-card" style="text-align: left; display: flex; flex-direction: column; align-items: flex-start;">
-                    <div class="icon-box" style="margin: 0 0 24px 0;">
-                        <i class="fa-solid fa-bullseye"></i>
-                    </div>
-                    <h3>Misyonumuz</h3>
-                    <ul style="list-style: none; padding: 0; margin: 0; text-align: left; width: 100%;">
-                        <li style="margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start; color: var(--text-muted); line-height: 1.6;">
-                            <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 4px; font-size: 0.9rem; flex-shrink: 0;"></i>
-                            <span>Kamuda çalışan engelli memur ve işçilerin yasal haklarını korumak ve geliştirmek.</span>
-                        </li>
-                        <li style="margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start; color: var(--text-muted); line-height: 1.6;">
-                            <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 4px; font-size: 0.9rem; flex-shrink: 0;"></i>
-                            <span>Çalışma hayatındaki sorunları tespit edip kalıcı çözümler üretmek.</span>
-                        </li>
-                        <li style="margin-bottom: 12px; display: flex; gap: 10px; align-items: flex-start; color: var(--text-muted); line-height: 1.6;">
-                            <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 4px; font-size: 0.9rem; flex-shrink: 0;"></i>
-                            <span>Engelli bireylerin mesleki gelişimini ve sosyal uyumunu destekleyen projeler hayata geçirmek.</span>
-                        </li>
-                        <li style="margin-bottom: 0; display: flex; gap: 10px; align-items: flex-start; color: var(--text-muted); line-height: 1.6;">
-                            <i class="fa-solid fa-circle-check" style="color: var(--primary); margin-top: 4px; font-size: 0.9rem; flex-shrink: 0;"></i>
-                            <span>Toplumda farkındalık oluşturarak önyargıları yıkmak ve gönül köprüleri kurmak.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-            
-            <!-- Values Section -->
-            <div class="section-header" style="text-align: center; justify-content: center; margin-bottom: 40px; margin-top: 80px;">
-                <h2 style="font-size: 2.3rem;">Temel <span>Değerlerimiz</span></h2>
-            </div>
-            
-            <div class="mission-vision-grid" style="grid-template-columns: repeat(3, 1fr);">
-                <div class="mv-card" style="text-align: center; align-items: center;">
-                    <div class="icon-box" style="background-color: rgba(255, 107, 0, 0.1); color: var(--secondary);">
-                        <i class="fa-solid fa-scale-balanced"></i>
-                    </div>
-                    <h3>Eşitlik ve Adalet</h3>
-                    <p>Her bireyin eşit haklara sahip olduğuna inanıyor ve her türlü ayrımcılığın karşısında duruyoruz.</p>
-                </div>
-                <div class="mv-card" style="text-align: center; align-items: center;">
-                    <div class="icon-box" style="background-color: rgba(40, 167, 69, 0.1); color: #28a745;">
-                        <i class="fa-solid fa-universal-access"></i>
-                    </div>
-                    <h3>Erişilebilirlik</h3>
-                    <p>Bilgiye, mekana ve teknolojiye erişimi engelli bireyler için temel bir insan hakkı olarak görüyoruz.</p>
-                </div>
-                <div class="mv-card" style="text-align: center; align-items: center;">
-                    <div class="icon-box" style="background-color: rgba(0, 82, 204, 0.1); color: var(--primary);">
-                        <i class="fa-solid fa-handshake-angle"></i>
-                    </div>
-                    <h3>Şeffaflık ve Güven</h3>
-                    <p>Projelerimizi ve yönetim süreçlerimizi açık, denetlenebilir ve dürüst ilkelerle yürütüyoruz.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Board of Directors / Team -->
-    <section class="team-section" style="background-color: var(--white); border-top: 1px solid var(--border-color);">
-        <div class="container">
-            <div class="section-header" style="text-align: center; justify-content: center; margin-bottom: 40px;">
-                <h2 style="font-size: 2.5rem;">Yönetim <span>Kurulumuz</span></h2>
-            </div>
-            <div class="team-hierarchy">
-                <!-- Row 1: Başkan (1 Person) -->
                 <div class="team-row row-1">
                     <!-- Erhan Özcan -->
                     <div class="team-card">

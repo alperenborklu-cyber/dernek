@@ -104,6 +104,17 @@ document.addEventListener('DOMContentLoaded', () => {
     const navMenu = document.querySelector('.nav-menu');
     
     if (mobileMenuBtn) {
+        // Inject mobile action buttons dynamically
+        if (navMenu && !navMenu.querySelector('.mobile-nav-actions')) {
+            const mobileActions = document.createElement('div');
+            mobileActions.className = 'mobile-nav-actions';
+            mobileActions.innerHTML = `
+                <a href="bagis-yap" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                <a href="uyelik" class="btn btn-primary">Üye Ol</a>
+            `;
+            navMenu.appendChild(mobileActions);
+        }
+
         mobileMenuBtn.addEventListener('click', () => {
             navMenu.classList.toggle('active');
             
@@ -118,6 +129,18 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
+    // 3.5. Dropdown Toggle Logic for Mobile
+    const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    dropdownToggles.forEach(toggle => {
+        toggle.addEventListener('click', (e) => {
+            if (window.innerWidth < 992) {
+                e.preventDefault();
+                const parent = toggle.parentElement;
+                parent.classList.toggle('active');
+            }
+        });
+    });
 
     // 4. Accordion Logic for Mevzuat page
     const accordionHeaders = document.querySelectorAll('.accordion-header');
