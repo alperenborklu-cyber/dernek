@@ -3668,31 +3668,31 @@ body.dark-mode .pdf-meta {
 .news-ticker-bar {
     background-color: var(--secondary); /* #ff6b00 */
     color: var(--white);
-    height: 44px;
+    height: 28px;
     display: flex;
     align-items: center;
     overflow: hidden;
     position: relative;
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     z-index: 99;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .ticker-badge {
     background: #0f1c3f;
     color: var(--white);
-    padding: 0 20px;
+    padding: 0 12px;
     height: 100%;
     display: flex;
     align-items: center;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.72rem;
     letter-spacing: 0.5px;
     z-index: 101;
     position: relative;
-    box-shadow: 6px 0 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 4px 0 10px rgba(0, 0, 0, 0.15);
     white-space: nowrap;
-    gap: 8px;
+    gap: 6px;
 }
 
 .ticker-badge i {
@@ -3714,7 +3714,7 @@ body.dark-mode .pdf-meta {
     position: absolute;
     will-change: transform;
     animation: ticker-slide 28s linear infinite;
-    gap: 50px;
+    gap: 40px;
     padding-left: 20px;
 }
 
@@ -3725,11 +3725,11 @@ body.dark-mode .pdf-meta {
 .ticker-content a {
     color: var(--white);
     font-weight: 500;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     text-decoration: none;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 6px;
     transition: var(--transition);
 }
 
@@ -3740,9 +3740,9 @@ body.dark-mode .pdf-meta {
 
 .ticker-date {
     background: rgba(255, 255, 255, 0.2);
-    padding: 3px 8px;
-    border-radius: 6px;
-    font-size: 0.78rem;
+    padding: 1px 5px;
+    border-radius: 4px;
+    font-size: 0.7rem;
     font-weight: 600;
 }
 
@@ -3761,7 +3761,7 @@ body.dark-mode .pdf-meta {
         opacity: 1;
     }
     50% {
-        transform: scale(1.15);
+        transform: scale(1.12);
         opacity: 0.8;
     }
     100% {
