@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yönetici Paneli - Engelli Memur & İşçi Derneği</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../logo.webp">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="admin-container">
+        <!-- Sidebar -->
+        <aside class="admin-sidebar">
+            <div class="brand">
+                <img src="../logo.webp" alt="Dernek Logo">
+                <span>Yönetici Paneli</span>
+            </div>
+            
+            <ul class="admin-menu">
+                <li class="admin-menu-item active">
+                    <a href="dashboard.html"><i class="fa-solid fa-gauge"></i> Yönetim Paneli</a>
+                </li>
+                <li class="admin-menu-item">
+                    <a href="../index.html"><i class="fa-solid fa-house"></i> Ana Sayfaya Dön</a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <i class="fa-solid fa-user-shield"></i>
+                    <div class="user-details">
+                        <span class="user-name">Yönetici</span>
+                        <span class="user-role">Süper Admin</span>
+                    </div>
+                </div>
+                <ul class="admin-menu">
+                    <li class="admin-menu-item">
+                        <a href="#" id="logoutBtn" style="color: #f87171;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Çıkış Yap</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <h1>Sistem Yönetim Paneli</h1>
+                <div class="header-right">
+                    <button class="theme-toggle-btn" id="themeTogglePortal" title="Gece Modu">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="admin-content">
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card stat-primary">
+                        <div class="stat-info">
+                            <span class="stat-title">Aktif Üye Sayısı</span>
+                            <span class="stat-value" id="statTotalMembers">0</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
+                    </div>
+                    
+                    <div class="stat-card stat-warning">
+                        <div class="stat-info">
+                            <span class="stat-title">Bekleyen Başvuru</span>
+                            <span class="stat-value" id="statPendingApps">0</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-user-clock"></i></div>
+                    </div>
+                    
+                    <div class="stat-card stat-danger">
+                        <div class="stat-info">
+                            <span class="stat-title">Yorum Onayları</span>
+                            <span class="stat-value" id="statPendingComments">0</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-comment-dots"></i></div>
+                    </div>
+
+                    <div class="stat-card stat-success">
+                        <div class="stat-info">
+                            <span class="stat-title">Duyurular</span>
+                            <span class="stat-value" id="statActiveAnnouncements">0</span>
+                        </div>
+                        <div class="stat-icon"><i class="fa-solid fa-bullhorn"></i></div>
+                    </div>
+                </div>
+
+                <!-- Tabs Navigation -->
+                <div class="tabs-navigation">
+                    <button class="tab-btn active" data-tab="applications">
+                        <i class="fa-solid fa-file-signature"></i> Başvurular
+                    </button>
+                    <button class="tab-btn" data-tab="comments">
+                        <i class="fa-solid fa-comments"></i> Yorum Onayları
+                    </button>
+                    <button class="tab-btn" data-tab="announcements">
+                        <i class="fa-solid fa-bullhorn"></i> Duyuru Yayınla
+                    </button>
+                    <button class="tab-btn" data-tab="suggestions">
+                        <i class="fa-solid fa-inbox"></i> Gelen Kutusu
+                    </button>
+                </div>
+
+                <!-- Tab: Applications -->
+                <div class="tab-content active" id="applicationsTab">
+                    <div class="admin-card">
+                        <h3><i class="fa-solid fa-user-clock" style="color: var(--primary);"></i> Bekleyen Üyelik Başvuruları</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Aşağıda derneğe üye olmak amacıyla online kayıt formunu dolduran adayların başvuruları listelenmiştir. Detayları inceleyip onaylayabilir veya silebilirsiniz.
+                        </p>
+                        
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Ad Soyad</th>
+                                        <th>T.C. Kimlik</th>
+                                        <th>Engel Tanısı</th>
+                                        <th>Telefon</th>
+                                        <th>Eğitim</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="applicationsTableBody">
+                                    <!-- Dynamic -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Comments -->
+                <div class="tab-content" id="commentsTab">
+                    <div class="admin-card">
+                        <h3><i class="fa-solid fa-comments-dollar" style="color: #ef4444;"></i> Onay Bekleyen Yorumlar</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Üyelerin haberler veya duyurular altında yayınlamak istedikleri yorumların onayı bu sekmeden gerçekleştirilmektedir.
+                        </p>
+                        
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Yazan Üye</th>
+                                        <th>Hedef Sayfa/Duyuru</th>
+                                        <th>Yorum İçeriği</th>
+                                        <th>Tarih</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="commentsTableBody">
+                                    <!-- Dynamic -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Publish Announcements -->
+                <div class="tab-content" id="announcementsTab">
+                    <div class="admin-card" style="max-width: 800px;">
+                        <h3><i class="fa-solid fa-bullhorn" style="color: var(--secondary);"></i> Yeni Duyuru / Bildiri Yayınla</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Buradan yayınlayacağınız duyuru ve kararlar üye portalı kontrol panelinde tüm üyeler için anında görüntülenecektir.
+                        </p>
+                        
+                        <div class="alert-success" id="annSuccessAlert">
+                            <i class="fa-solid fa-circle-check"></i> Duyuru başarıyla yayınlandı ve üyelere iletildi!
+                        </div>
+
+                        <form id="publishAnnouncementForm" class="admin-form">
+                            <div class="form-group">
+                                <label for="annTitle">Duyuru Başlığı</label>
+                                <input type="text" id="annTitle" class="form-control" placeholder="Duyurunun ana başlığı" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="annContent">Duyuru Metni / İçerik</label>
+                                <textarea id="annContent" class="form-control" rows="6" placeholder="Üyelere iletilecek mesaj detayları..." style="resize: none;" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fa-solid fa-paper-plane"></i> Duyuruyu Yayınla
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Tab: Suggestions -->
+                <div class="tab-content" id="suggestionsTab">
+                    <div class="admin-card">
+                        <h3><i class="fa-solid fa-inbox" style="color: #10b981;"></i> Üye Talep & Öneri Kutusu (Gelen Kutusu)</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Üyelerin portallarından dernek yönetimine gönderdikleri dilek, talep ve şikayetlerin listesidir.
+                        </p>
+                        
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Gönderen</th>
+                                        <th>Konu / Başlık</th>
+                                        <th>Mesaj Detayı</th>
+                                        <th>Tarih</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="suggestionsTableBody">
+                                    <!-- Dynamic -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/auth-shared.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

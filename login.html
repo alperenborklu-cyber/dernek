@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giriş Yap - Engelli Memur & İşçi Derneği</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.webp">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .login-section {
+            min-height: calc(100vh - 150px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 80px 24px;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            position: relative;
+        }
+
+        .dark-mode .login-section {
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+        }
+
+        .login-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 48px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: var(--glass-shadow), 0 20px 40px -15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: var(--transition);
+        }
+
+        .login-header img {
+            height: 70px;
+            margin-bottom: 20px;
+        }
+
+        .login-header h2 {
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .login-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 8px;
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-wrapper i {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            background-color: var(--white);
+            color: var(--text-main);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .dark-mode .form-control {
+            background-color: #1e293b;
+            border-color: #334155;
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 92, 230, 0.15);
+        }
+
+        .form-control:focus + i {
+            color: var(--primary);
+        }
+
+        .login-btn {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+            font-weight: 600;
+            margin-top: 10px;
+            justify-content: center;
+        }
+
+        .alert {
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            margin-bottom: 24px;
+            display: none;
+            text-align: left;
+        }
+
+        .alert-danger {
+            background-color: #fee2e2;
+            color: #ef4444;
+            border: 1px solid #fca5a5;
+        }
+
+        .dark-mode .alert-danger {
+            background-color: rgba(239, 68, 68, 0.15);
+            color: #fca5a5;
+            border-color: rgba(239, 68, 68, 0.3);
+        }
+
+        .test-accounts-info {
+            background-color: rgba(0, 92, 230, 0.05);
+            border: 1px dashed rgba(0, 92, 230, 0.3);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 32px;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        .test-accounts-info h4 {
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .test-accounts-info ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .test-accounts-info li {
+            margin-bottom: 4px;
+            color: var(--text-main);
+        }
+
+        .test-accounts-info code {
+            background-color: var(--border-color);
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.85rem;
+        }
+
+        .dark-mode .test-accounts-info code {
+            background-color: #334155;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-container">
+            <i class="fa-solid fa-wheelchair loader-wheelchair"></i>
+            <i class="fa-solid fa-person-walking loader-walking"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index.html" class="logo">
+                <img src="logo.webp" alt="Engelli Memur & İşçi Derneği Logo">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Kurumsal <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="yonetim-kurulu.html">Yönetim Kurulu</a></li>
+                            <li><a href="hakkimizda.html">Hakkımızda</a></li>
+                            <li><a href="misyon-vizyon.html">Misyon & Vizyon</a></li>
+                            <li><a href="iletisim.html">Şubelerimiz</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="projelerimiz.html">Projelerimiz</a></li>
+                    <li><a href="haberler.html">Haberler</a></li>
+                    <li><a href="blog.html">Blog</a></li>
+                    <li><a href="mevzuat.html">Mevzuat</a></li>
+                    <li><a href="dernege-uye-ol.html">Derneğe Üye Ol</a></li>
+                    <li><a href="iletisim.html">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="bagis-yap.html" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                <a href="uyelik.html" class="btn btn-primary">Üye Ol</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Login Section -->
+    <section class="login-section">
+        <div class="login-card">
+            <div class="login-header">
+                <img src="logo.webp" alt="Dernek Logo">
+                <h2>Hoş Geldiniz</h2>
+                <p>Dernek Portalına erişmek için bilgilerinizi giriniz.</p>
+            </div>
+            
+            <div id="loginAlert" class="alert alert-danger"></div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="email">E-Posta Adresi</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="email" class="form-control" placeholder="eposta@dernek.org.tr" required>
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Şifre</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                        <i class="fa-solid fa-lock"></i>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn btn-primary login-btn">
+                    Giriş Yap <i class="fa-solid fa-arrow-right-to-bracket" style="margin-left: 8px;"></i>
+                </button>
+            </form>
+            
+            <div class="test-accounts-info">
+                <h4><i class="fa-solid fa-circle-info"></i> Test Giriş Bilgileri</h4>
+                <ul>
+                    <li><strong>Yönetici:</strong> <code>admin@dernek.org.tr</code> / <code>admin123</code></li>
+                    <li><strong>Onaylı Üye:</strong> <code>uye@dernek.org.tr</code> / <code>uye123</code></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="js/auth-shared.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const alertBox = document.getElementById('loginAlert');
+            
+            alertBox.style.display = 'none';
+            
+            const result = login(email, password);
+            if (result.success) {
+                if (result.role === 'admin') {
+                    window.location.href = 'admin/dashboard.html';
+                } else {
+                    window.location.href = 'member/dashboard.html';
+                }
+            } else {
+                alertBox.textContent = result.message;
+                alertBox.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

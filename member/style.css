@@ -1,0 +1,437 @@
+/* member/style.css - Üye Portalı Özel Tasarım Sistemi */
+
+:root {
+    --primary: #005ce6;
+    --primary-light: #3d8bff;
+    --primary-dark: #003fa3;
+    --secondary: #ff6b00;
+    --white: #ffffff;
+    --bg-color: #f8fafc;
+    --text-main: #1e293b;
+    --text-muted: #64748b;
+    --border-color: #e2e8f0;
+    --card-bg: #ffffff;
+    --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    
+    /* Portal Dark Mode Specifics (Injected into body.dark-mode) */
+    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.03);
+    --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+}
+
+body.dark-mode {
+    --bg-color: #0f172a;
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --border-color: #334155;
+    --card-bg: #1e293b;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-main);
+    margin: 0;
+    padding: 0;
+    transition: var(--transition);
+}
+
+.portal-container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar Styling */
+.portal-sidebar {
+    width: 280px;
+    background-color: #0b1a30;
+    color: #ffffff;
+    display: flex;
+    flex-direction: column;
+    padding: 32px 24px;
+    border-right: 1px solid rgba(255,255,255,0.05);
+    transition: var(--transition);
+}
+
+.portal-sidebar .brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 48px;
+}
+
+.portal-sidebar .brand img {
+    height: 48px;
+}
+
+.portal-sidebar .brand span {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 1.25rem;
+    letter-spacing: -0.5px;
+}
+
+.portal-menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.portal-menu-item a {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 14px 18px;
+    color: #94a3b8;
+    border-radius: 12px;
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.portal-menu-item.active a,
+.portal-menu-item a:hover {
+    color: #ffffff;
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
+.portal-menu-item.active a {
+    background-color: var(--primary);
+}
+
+.sidebar-footer {
+    margin-top: auto;
+}
+
+.sidebar-user {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background-color: rgba(255, 255, 255, 0.04);
+    border-radius: 16px;
+    margin-bottom: 16px;
+}
+
+.sidebar-user i {
+    font-size: 2rem;
+    color: var(--primary-light);
+}
+
+.sidebar-user .user-details {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.sidebar-user .user-name {
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: #ffffff;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.sidebar-user .user-role {
+    font-size: 0.75rem;
+    color: #94a3b8;
+}
+
+/* Main Content Area */
+.portal-main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+}
+
+.portal-header {
+    background-color: var(--card-bg);
+    border-bottom: 1px solid var(--border-color);
+    padding: 20px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: var(--transition);
+}
+
+.portal-header h1 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.5rem;
+    margin: 0;
+    color: var(--text-main);
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+/* Dark mode toggle icon in dashboard */
+.theme-toggle-btn {
+    background: none;
+    border: 1px solid var(--border-color);
+    color: var(--text-main);
+    padding: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.theme-toggle-btn:hover {
+    background-color: var(--border-color);
+}
+
+.portal-content {
+    padding: 40px;
+    max-width: 1200px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Card System */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 32px;
+}
+
+@media (max-width: 992px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    .portal-container {
+        flex-direction: column;
+    }
+    .portal-sidebar {
+        width: 100%;
+        padding: 20px;
+    }
+}
+
+.portal-card {
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 20px;
+    padding: 28px;
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 32px;
+    transition: var(--transition);
+}
+
+.portal-card h3 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 1.25rem;
+    font-family: 'Outfit', sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Digital ID Card Styling */
+.digital-id-card {
+    width: 100%;
+    max-width: 380px;
+    height: 220px;
+    background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+    border-radius: 20px;
+    color: #ffffff;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.25);
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: var(--transition);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.digital-id-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 92, 230, 0.3);
+}
+
+.digital-id-card .chip {
+    width: 40px;
+    height: 30px;
+    background: linear-gradient(135deg, #f1c40f 0%, #f39c12 100%);
+    border-radius: 6px;
+    margin-bottom: 12px;
+}
+
+.digital-id-card .logo-watermark {
+    position: absolute;
+    right: -20px;
+    bottom: -20px;
+    font-size: 10rem;
+    color: rgba(255, 255, 255, 0.03);
+    pointer-events: none;
+}
+
+.id-card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.id-card-header .logo-mini {
+    height: 32px;
+}
+
+.id-card-body {
+    margin-top: 12px;
+}
+
+.id-card-body .member-name {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    margin-bottom: 4px;
+}
+
+.id-card-body .member-no {
+    font-family: monospace;
+    font-size: 0.85rem;
+    opacity: 0.8;
+}
+
+.id-card-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    font-size: 0.75rem;
+    margin-top: 16px;
+}
+
+.id-card-footer span {
+    display: block;
+    opacity: 0.7;
+    margin-bottom: 2px;
+}
+
+.id-card-footer strong {
+    font-size: 0.88rem;
+}
+
+.id-card-barcode {
+    height: 25px;
+    opacity: 0.8;
+}
+
+/* Announcements styling */
+.announcement-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.announcement-item {
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 16px;
+}
+
+.announcement-item:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.announcement-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-bottom: 6px;
+}
+
+.announcement-title {
+    font-weight: 600;
+    color: var(--text-main);
+    font-size: 1rem;
+    margin-bottom: 6px;
+}
+
+.announcement-content {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+/* Forms styling in portal */
+.portal-form .form-group {
+    margin-bottom: 20px;
+}
+
+.portal-form label {
+    display: block;
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: var(--text-main);
+    margin-bottom: 8px;
+}
+
+.portal-form .form-control {
+    width: 100%;
+    padding: 12px;
+    font-size: 0.95rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    background-color: var(--card-bg);
+    color: var(--text-main);
+    outline: none;
+    transition: var(--transition);
+}
+
+.portal-form .form-control:focus {
+    border-color: var(--primary);
+}
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-primary {
+    background-color: var(--primary);
+    color: #ffffff;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-danger {
+    background-color: #ef4444;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #dc2626;
+}
+
+.alert-success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border: 1px solid #badbcc;
+    padding: 14px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    margin-bottom: 20px;
+    display: none;
+}

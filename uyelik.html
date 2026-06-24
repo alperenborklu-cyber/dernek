@@ -608,6 +608,7 @@
     </footer>
 
     <!-- Scripts -->
+    <script src="js/auth-shared.js"></script>
     <script src="script.js"></script>
 
     <!-- Page Specific Script for Multi-step Wizard and Validation -->
@@ -858,16 +859,81 @@
                 e.preventDefault();
                 
                 if (validateStep(4)) {
-                    document.getElementById('sumName').textContent = document.getElementById('fullName').value.trim();
-                    document.getElementById('sumType').textContent = "Asil Üye";
+                    const fullNameVal = document.getElementById('fullName').value.trim();
+                    const tcNoVal = document.getElementById('tcNo').value.trim();
+                    const birthPlaceVal = document.getElementById('birthPlace').value.trim();
+                    const birthDateVal = document.getElementById('birthDate').value;
+                    const fatherNameVal = document.getElementById('fatherName').value.trim();
+                    const motherNameVal = document.getElementById('motherName').value.trim();
+                    const maritalStatusVal = document.getElementById('maritalStatus').value;
+                    const bloodGroupVal = document.getElementById('bloodGroup').value;
+                    const disabilityTypeVal = document.getElementById('disabilityType').value.trim();
+                    const disabilityRatioVal = document.getElementById('disabilityRatio').value.trim();
+                    const genderVal = document.querySelector('input[name="gender"]:checked') ? document.querySelector('input[name="gender"]:checked').value : 'Belirtilmedi';
                     
-                    document.getElementById('sumPhone').textContent = document.getElementById('phone').value.trim();
-                    document.getElementById('sumEmail').textContent = document.getElementById('email').value.trim();
-                    document.getElementById('sumCity').textContent = "Belirtilmedi";
+                    const phoneVal = document.getElementById('phone').value.trim();
+                    const emailVal = document.getElementById('email').value.trim();
+                    const educationLevelVal = document.getElementById('educationLevel').value;
+                    const addressVal = document.getElementById('address').value.trim();
                     
-                    const disType = document.getElementById('disabilityType').value.trim();
-                    const disRatio = document.getElementById('disabilityRatio').value.trim();
-                    document.getElementById('sumDisability').textContent = `Evet (${disType} - %${disRatio})`;
+                    // Optional Step 3 inputs
+                    const workplaceNameVal = document.getElementById('workplaceName') ? document.getElementById('workplaceName').value.trim() : '';
+                    const jobTitleVal = document.getElementById('jobTitle') ? document.getElementById('jobTitle').value.trim() : '';
+                    const professionVal = document.getElementById('profession') ? document.getElementById('profession').value.trim() : '';
+                    const otherAssociationsVal = document.getElementById('otherAssociations') ? document.getElementById('otherAssociations').value.trim() : '';
+                    const workAddressVal = document.getElementById('workAddress') ? document.getElementById('workAddress').value.trim() : '';
+                    const employmentStatusVal = document.getElementById('employmentStatus') ? document.getElementById('employmentStatus').value.trim() : '';
+
+                    // Save to local storage
+                    const members = JSON.parse(localStorage.getItem("members") || "[]");
+                    
+                    // Generate unique member number prefix (simulate pending number)
+                    const pendingNo = `UD-${new Date().getFullYear()}-${String(members.length + 1).padStart(4, '0')}`;
+                    
+                    const newApplicant = {
+                        email: emailVal,
+                        password: "123456", // Default temporary password
+                        fullName: fullNameVal,
+                        tcNo: tcNoVal,
+                        birthPlace: birthPlaceVal,
+                        birthDate: birthDateVal,
+                        fatherName: fatherNameVal,
+                        motherName: motherNameVal,
+                        maritalStatus: maritalStatusVal,
+                        bloodGroup: bloodGroupVal,
+                        disabilityType: disabilityTypeVal,
+                        disabilityRatio: disabilityRatioVal,
+                        gender: genderVal,
+                        phone: phoneVal,
+                        education: educationLevelVal,
+                        address: addressVal,
+                        workplace: workplaceNameVal,
+                        jobTitle: jobTitleVal,
+                        profession: professionVal,
+                        otherAssociations: otherAssociationsVal,
+                        workAddress: workAddressVal,
+                        employmentStatus: employmentStatusVal,
+                        memberNo: pendingNo,
+                        duesDebt: 360,
+                        status: "pending"
+                    };
+                    
+                    members.push(newApplicant);
+                    localStorage.setItem("members", JSON.stringify(members));
+
+                    document.getElementById('sumName').textContent = fullNameVal;
+                    document.getElementById('sumType').textContent = "Asil Üye Başvurusu (Onay Bekliyor)";
+                    
+                    document.getElementById('sumPhone').textContent = phoneVal;
+                    document.getElementById('sumEmail').textContent = emailVal;
+                    document.getElementById('sumCity').textContent = birthPlaceVal;
+                    document.getElementById('sumDisability').textContent = `Evet (${disabilityTypeVal} - %${disabilityRatioVal})`;
+
+                    // Update success panel descriptions to show login details
+                    const successP = document.querySelector('.success-p');
+                    if (successP) {
+                        successP.innerHTML = `Başvurunuz başarıyla kaydedilmiştir. Dernek yönetim kurulu başvurunuzu onayladıktan sonra portalımıza giriş yapabilirsiniz.<br><br><strong>Geçici Giriş Şifreniz:</strong> <code>123456</code> (Onay sonrası bu şifreyle giriş yapabilirsiniz)`;
+                    }
 
                     form.style.display = 'none';
                     document.getElementById('formProgressBar').style.display = 'none';

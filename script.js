@@ -14,6 +14,32 @@ document.addEventListener('DOMContentLoaded', () => {
     // 2. Sticky Header & Top Bar Logic
     const header = document.getElementById('header');
     if (header) {
+        // Oturum durumuna göre header butonlarını düzenleyelim
+        const session = localStorage.getItem("dernek_session") ? JSON.parse(localStorage.getItem("dernek_session")) : null;
+        const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+        const prefix = isSubDir ? '../' : '';
+
+        const headerActions = header.querySelector('.header-actions');
+        if (headerActions) {
+            if (session) {
+                const dashboardUrl = session.role === 'admin' ? `${prefix}admin/dashboard.html` : `${prefix}member/dashboard.html`;
+                const panelText = session.role === 'admin' ? 'Yönetim Paneli' : 'Üye Paneli';
+                headerActions.innerHTML = `
+                    <a href="${prefix}bagis-yap.html" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                    <a href="${dashboardUrl}" class="btn btn-primary"><i class="fa-solid fa-gauge"></i> ${panelText}</a>
+                    <button class="btn btn-danger btn-logout-trigger" style="padding: 10px; margin-left: 8px; border-radius: 50%; width: 44px; height: 44px; display: inline-flex; align-items: center; justify-content: center; background-color: #ef4444; color: white; border: none; cursor: pointer;" title="Çıkış Yap"><i class="fa-solid fa-arrow-right-from-bracket"></i></button>
+                    <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+                `;
+            } else {
+                headerActions.innerHTML = `
+                    <a href="${prefix}bagis-yap.html" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                    <a href="${prefix}login.html" class="btn btn-secondary" style="margin-right: 8px;"><i class="fa-solid fa-arrow-right-to-bracket"></i> Giriş Yap</a>
+                    <a href="${prefix}uyelik.html" class="btn btn-primary">Üye Ol</a>
+                    <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+                `;
+            }
+        }
+
         // Create and prepend top bar
         const topBar = document.createElement('div');
         topBar.className = 'header-top-bar';
@@ -102,18 +128,41 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Mobile Menu Toggle
     const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
     const navMenu = document.querySelector('.nav-menu');
+    const session = localStorage.getItem("dernek_session") ? JSON.parse(localStorage.getItem("dernek_session")) : null;
+    const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+    const prefix = isSubDir ? '../' : '';
     
     if (mobileMenuBtn) {
         // Inject mobile action buttons dynamically
         if (navMenu && !navMenu.querySelector('.mobile-nav-actions')) {
             const mobileActions = document.createElement('div');
             mobileActions.className = 'mobile-nav-actions';
-            mobileActions.innerHTML = `
-                <a href="bagis-yap" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
-                <a href="uyelik" class="btn btn-primary">Üye Ol</a>
-            `;
+            if (session) {
+                const dashboardUrl = session.role === 'admin' ? `${prefix}admin/dashboard.html` : `${prefix}member/dashboard.html`;
+                const panelText = session.role === 'admin' ? 'Yönetim Paneli' : 'Üye Paneli';
+                mobileActions.innerHTML = `
+                    <a href="${prefix}bagis-yap.html" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                    <a href="${dashboardUrl}" class="btn btn-primary"><i class="fa-solid fa-gauge"></i> ${panelText}</a>
+                    <a href="#" class="btn btn-danger btn-logout-trigger-mobile" style="background-color: #ef4444; color: white;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Çıkış Yap</a>
+                `;
+            } else {
+                mobileActions.innerHTML = `
+                    <a href="${prefix}bagis-yap.html" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                    <a href="${prefix}login.html" class="btn btn-secondary"><i class="fa-solid fa-arrow-right-to-bracket"></i> Giriş Yap</a>
+                    <a href="${prefix}uyelik.html" class="btn btn-primary">Üye Ol</a>
+                `;
+            }
             navMenu.appendChild(mobileActions);
         }
+
+        // Attach logout trigger event listener
+        document.querySelectorAll('.btn-logout-trigger, .btn-logout-trigger-mobile').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                localStorage.removeItem("dernek_session");
+                window.location.href = `${prefix}index.html`;
+            });
+        });
 
         mobileMenuBtn.addEventListener('click', () => {
             navMenu.classList.toggle('active');
@@ -330,6 +379,122 @@ document.addEventListener('DOMContentLoaded', () => {
                 playVideo1();
             }
         });
+    }
+
+    // 11. Dynamic News Page Comment System
+    const newsDetailContent = document.querySelector('.news-detail-content');
+    if (newsDetailContent) {
+        // Identify the page ID (filename without ext)
+        const pathParts = window.location.pathname.split('/');
+        const pageId = pathParts[pathParts.length - 1].replace('.html', '') || 'general-news';
+
+        // Render Comments Widget Wrapper
+        const commentsWrapper = document.createElement('div');
+        commentsWrapper.className = 'comments-widget-container';
+        commentsWrapper.style.marginTop = '48px';
+        commentsWrapper.style.paddingTop = '32px';
+        commentsWrapper.style.borderTop = '1px solid var(--border-color)';
+
+        // Render functions
+        const renderComments = () => {
+            const comments = JSON.parse(localStorage.getItem('comments') || '[]');
+            const pageComments = comments.filter(c => c.targetId === pageId && c.status === 'approved');
+            
+            let listHtml = '';
+            if (pageComments.length === 0) {
+                listHtml = `<p class="no-comments-msg" style="color: var(--text-muted); font-size: 0.95rem; font-style: italic; margin-bottom: 24px;">Bu habere henüz yorum yapılmamış. İlk yorumu siz yapın!</p>`;
+            } else {
+                listHtml = pageComments.map(c => `
+                    <div class="comment-item" style="background: var(--white); padding: 18px; border-radius: 12px; margin-bottom: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-sm);">
+                        <div class="comment-header" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                            <strong style="color: var(--text-main); font-size: 0.95rem;"><i class="fa-solid fa-user-circle" style="color: var(--primary); margin-right: 6px;"></i> ${c.authorName}</strong>
+                            <span style="font-size: 0.8rem; color: var(--text-muted);">${c.date}</span>
+                        </div>
+                        <p style="color: var(--text-main); font-size: 0.92rem; margin: 0; line-height: 1.5;">${c.content}</p>
+                    </div>
+                `).join('');
+            }
+
+            const currentUser = localStorage.getItem('dernek_session') ? JSON.parse(localStorage.getItem('dernek_session')) : null;
+            const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+            const prefix = isSubDir ? '../' : '';
+            let formHtml = '';
+
+            if (currentUser && currentUser.role === 'member') {
+                formHtml = `
+                    <form id="commentSubmitForm" style="margin-top: 24px; display: flex; flex-direction: column; gap: 12px;">
+                        <h4 style="font-size: 1.1rem; color: var(--text-main); font-family: var(--font-heading); margin-bottom: 4px;">Bir Yorum Bırakın</h4>
+                        <div style="display: flex; align-items: center; gap: 8px; font-size: 0.88rem; color: var(--text-muted); margin-bottom: 4px;">
+                            <span><i class="fa-solid fa-user"></i> Yazan: <strong>${currentUser.fullName}</strong></span>
+                        </div>
+                        <div style="position: relative;">
+                            <textarea id="commentText" class="form-control" rows="3" placeholder="Yorumunuzu buraya yazın..." style="padding: 12px; border-radius: 12px; font-size: 0.92rem; width: 100%; min-height: 80px; resize: vertical;" required></textarea>
+                        </div>
+                        <div id="commentAlert" style="display: none; padding: 10px 14px; border-radius: 8px; font-size: 0.88rem; background-color: #d1e7dd; color: #0f5132; border: 1px solid #badbcc; margin-bottom: 8px;"></div>
+                        <button type="submit" class="btn btn-primary" style="align-self: flex-start; padding: 10px 20px;"><i class="fa-solid fa-paper-plane" style="margin-right: 8px;"></i> Yorum Gönder</button>
+                    </form>
+                `;
+            } else if (currentUser && currentUser.role === 'admin') {
+                formHtml = `
+                    <div style="background-color: rgba(0, 92, 230, 0.05); border: 1px solid rgba(0, 92, 230, 0.2); padding: 16px; border-radius: 12px; margin-top: 24px; font-size: 0.9rem; color: var(--text-main);">
+                        <i class="fa-solid fa-shield-halved" style="color: var(--primary); margin-right: 8px;"></i> Yönetici olarak giriş yaptınız. Yorumları onaylamak için lütfen <a href="${prefix}admin/dashboard.html" style="color: var(--primary); font-weight: 600; text-decoration: underline;">Yönetim Paneline</a> gidin.
+                    </div>
+                `;
+            } else {
+                formHtml = `
+                    <div style="background-color: var(--bg-color); border: 1px solid var(--border-color); padding: 16px; border-radius: 12px; margin-top: 24px; text-align: center; font-size: 0.92rem; color: var(--text-muted);">
+                        <i class="fa-solid fa-lock" style="margin-right: 6px;"></i> Yorum yazabilmek için lütfen <a href="${prefix}login.html" style="color: var(--primary); font-weight: 600; text-decoration: underline;">giriş yapınız</a>.
+                    </div>
+                `;
+            }
+
+            commentsWrapper.innerHTML = `
+                <h3 style="font-size: 1.5rem; color: var(--text-main); font-family: var(--font-heading); margin-bottom: 20px; display: flex; align-items: center; justify-content: space-between;">
+                    Yorumlar 
+                    <span style="font-size: 1rem; padding: 4px 10px; background-color: var(--border-color); border-radius: 20px; color: var(--text-muted); font-weight: 500;">${pageComments.length}</span>
+                </h3>
+                <div class="comments-list-wrapper">
+                    ${listHtml}
+                </div>
+                ${formHtml}
+            `;
+
+            // Attach form submission listener
+            const form = commentsWrapper.querySelector('#commentSubmitForm');
+            if (form) {
+                form.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    const text = commentsWrapper.querySelector('#commentText').value.trim();
+                    if (!text) return;
+
+                    const allComments = JSON.parse(localStorage.getItem('comments') || '[]');
+                    const newComment = {
+                        id: 'comm-' + Date.now(),
+                        targetId: pageId,
+                        authorName: currentUser.fullName,
+                        authorEmail: currentUser.email,
+                        content: text,
+                        date: new Date().toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
+                        status: 'pending'
+                    };
+
+                    allComments.push(newComment);
+                    localStorage.setItem('comments', JSON.stringify(allComments));
+
+                    commentsWrapper.querySelector('#commentText').value = '';
+                    const alertBox = commentsWrapper.querySelector('#commentAlert');
+                    alertBox.textContent = 'Yorumunuz başarıyla gönderildi! Yönetici onayından sonra yayınlanacaktır.';
+                    alertBox.style.display = 'block';
+                    
+                    setTimeout(() => {
+                        alertBox.style.display = 'none';
+                    }, 4000);
+                });
+            }
+        };
+
+        renderComments();
+        newsDetailContent.appendChild(commentsWrapper);
     }
 });
 

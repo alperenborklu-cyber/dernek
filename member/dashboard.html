@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Üye Portalı - Engelli Memur & İşçi Derneği</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../logo.webp">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="portal-container">
+        <!-- Sidebar -->
+        <aside class="portal-sidebar">
+            <div class="brand">
+                <img src="../logo.webp" alt="Dernek Logo">
+                <span>Üye Portalı</span>
+            </div>
+            
+            <ul class="portal-menu">
+                <li class="portal-menu-item active">
+                    <a href="dashboard.html"><i class="fa-solid fa-gauge"></i> Kontrol Paneli</a>
+                </li>
+                <li class="portal-menu-item">
+                    <a href="profile.html"><i class="fa-solid fa-user-gear"></i> Profil Bilgilerim</a>
+                </li>
+                <li class="portal-menu-item">
+                    <a href="../index.html"><i class="fa-solid fa-house"></i> Ana Sayfaya Dön</a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-footer">
+                <div class="sidebar-user">
+                    <i class="fa-solid fa-user-circle"></i>
+                    <div class="user-details">
+                        <span class="user-name">Yükleniyor...</span>
+                        <span class="user-role">Üye</span>
+                    </div>
+                </div>
+                <ul class="portal-menu">
+                    <li class="portal-menu-item">
+                        <a href="#" id="logoutBtn" style="color: #f87171;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Çıkış Yap</a>
+                    </li>
+                </ul>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="portal-main">
+            <!-- Header -->
+            <header class="portal-header">
+                <h1>Kontrol Paneli</h1>
+                <div class="header-right">
+                    <button class="theme-toggle-btn" id="themeTogglePortal" title="Gece Modu">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <div class="portal-content">
+                <div class="dashboard-grid">
+                    
+                    <!-- Left Column -->
+                    <div class="left-col">
+                        <!-- Card 1: Dijital Kimlik Kartı -->
+                        <div class="portal-card">
+                            <h3><i class="fa-solid fa-id-card" style="color: var(--primary);"></i> Dijital Üye Kartınız</h3>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                                Dernek etkinliklerinde ve üye avantajlarından yararlanırken bu dijital kartı kullanabilirsiniz.
+                            </p>
+                            
+                            <!-- Premium Digital ID Card -->
+                            <div class="digital-id-card">
+                                <div class="logo-watermark"><i class="fa-solid fa-wheelchair"></i></div>
+                                <div class="id-card-header">
+                                    <img src="../logo.webp" alt="Logo Mini" class="logo-mini">
+                                    <div style="text-align: right;">
+                                        <span style="font-family: 'Outfit'; font-weight: 800; font-size: 0.9rem; letter-spacing: 0.5px;">GÖNÜL KÖPRÜSÜ</span>
+                                        <div style="font-size: 0.55rem; letter-spacing: 1px; opacity: 0.8;">ENGELLİ MEMUR & İŞÇİ DERNEĞİ</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="id-card-body">
+                                    <div class="member-name" id="cardMemberName">Ad Soyad</div>
+                                    <div class="member-no" id="cardMemberNo">UD-2026-0000</div>
+                                </div>
+                                
+                                <div class="id-card-footer">
+                                    <div>
+                                        <span>T.C. KİMLİK</span>
+                                        <strong id="cardMemberTc">123*****123</strong>
+                                    </div>
+                                    <div>
+                                        <span>KAN GRUBU</span>
+                                        <strong id="cardMemberBlood">A Rh (+)</strong>
+                                    </div>
+                                    <div>
+                                        <span>ENGEL DURUMU</span>
+                                        <strong id="cardMemberDisability">%45 - Bedensel</strong>
+                                    </div>
+                                    <div>
+                                        <!-- Simulated barcode -->
+                                        <img src="https://barcode.tec-it.com/barcode.ashx?data=GOKODERNEK2026&code=Code128&translate-esc=true" alt="Barkod" class="id-card-barcode">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Card 2: Üyelere Özel Duyurular -->
+                        <div class="portal-card">
+                            <h3><i class="fa-solid fa-bullhorn" style="color: var(--secondary);"></i> Dernek İçi Duyurular</h3>
+                            <div class="announcement-list" id="announcementsList">
+                                <!-- Dynamic List -->
+                                <p>Duyurular yükleniyor...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="right-col">
+                        <!-- Card 3: Aidat Durumu -->
+                        <div class="portal-card">
+                            <h3><i class="fa-solid fa-credit-card" style="color: #10b981;"></i> Aidat & Borç Bilgisi</h3>
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                                <div>
+                                    <span style="font-size: 0.88rem; color: var(--text-muted);">2026 Yıllık Aidat Borcu</span>
+                                    <div id="duesDebtAmount" style="font-size: 2rem; font-weight: 800; color: #ef4444; margin-top: 4px;">0 TL</div>
+                                </div>
+                                <button class="btn btn-primary" id="payDuesBtn"><i class="fa-solid fa-wallet"></i> Şimdi Öde</button>
+                            </div>
+                            <p style="font-size: 0.82rem; color: var(--text-muted); margin: 0;">
+                                * Dernek tüzüğü gereğince yıllık aidatların her yılın Haziran ayı sonuna kadar ödenmesi gerekmektedir.
+                            </p>
+                        </div>
+
+                        <!-- Card 4: Talep / Öneri Gönderme -->
+                        <div class="portal-card">
+                            <h3><i class="fa-solid fa-paper-plane" style="color: var(--primary);"></i> Yönetime Mesaj Gönder</h3>
+                            <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px;">
+                                Dernek yönetim kuruluna iletmek istediğiniz talep, şikayet, öneri veya isteklerinizi aşağıdaki formdan gönderebilirsiniz.
+                            </p>
+                            
+                            <div class="alert-success" id="suggestionAlert">
+                                <i class="fa-solid fa-circle-check"></i> Mesajınız yönetim kuruluna başarıyla iletilmiştir.
+                            </div>
+                            
+                            <form id="suggestionForm" class="portal-form">
+                                <div class="form-group">
+                                    <label for="sugSubject">Konu / Başlık</label>
+                                    <input type="text" id="sugSubject" class="form-control" placeholder="Örn: Hak Talebi, Ulaşım Yardımı" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="sugMessage">Mesajınız</label>
+                                    <textarea id="sugMessage" class="form-control" rows="4" placeholder="Açıklamanızı detaylıca buraya yazın..." style="resize: none;" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; justify-content: center;">
+                                    Gönder <i class="fa-solid fa-paper-plane" style="margin-left: 6px;"></i>
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../js/auth-shared.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
