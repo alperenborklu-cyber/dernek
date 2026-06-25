@@ -118,6 +118,9 @@
                     <button class="tab-btn" data-tab="suggestions">
                         <i class="fa-solid fa-inbox"></i> Gelen Kutusu
                     </button>
+                    <button class="tab-btn" data-tab="projects">
+                        <i class="fa-solid fa-briefcase"></i> Proje Ekle
+                    </button>
                 </div>
 
                 <!-- Tab: Applications -->
@@ -226,6 +229,54 @@
                                 </tbody>
                             </table>
                         </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Projects Management -->
+                <div class="tab-content" id="projectsTab">
+                    <div class="admin-card" style="max-width: 800px;">
+                        <h3><i class="fa-solid fa-briefcase" style="color: var(--primary);"></i> Yeni Proje Tanımla</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Buradan oluşturacağınız projeler, "Projelerimiz" sayfasında anında ve dinamik olarak listelenecektir.
+                        </p>
+                        
+                        <div class="alert-success" id="projSuccessAlert" style="display: none; padding: 12px; background-color: #d1fae5; color: #065f46; border-radius: 8px; margin-bottom: 20px;">
+                            <i class="fa-solid fa-circle-check"></i> Proje başarıyla eklendi!
+                        </div>
+
+                        <form id="addProjectForm" class="admin-form">
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="projTitle" style="display: block; margin-bottom: 8px; font-weight: 500;">Proje Adı</label>
+                                <input type="text" id="projTitle" class="form-control" placeholder="Örn: Engelsiz İstihdam Buluşması" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="projCategory" style="display: block; margin-bottom: 8px; font-weight: 500;">Kategori</label>
+                                <select id="projCategory" class="form-control" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                                    <option value="accessibility">Erişilebilirlik</option>
+                                    <option value="education">Eğitim & Kariyer</option>
+                                    <option value="social">Sosyal & Spor</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="projStatus" style="display: block; margin-bottom: 8px; font-weight: 500;">Durum</label>
+                                <select id="projStatus" class="form-control" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                                    <option value="ongoing">Devam Ediyor</option>
+                                    <option value="completed">Tamamlandı</option>
+                                    <option value="planned">Planlanıyor</option>
+                                </select>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="projImage" style="display: block; margin-bottom: 8px; font-weight: 500;">Resim URL / Görsel</label>
+                                <input type="text" id="projImage" class="form-control" placeholder="Görsel yolu veya boş bırakın" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="projDesc" style="display: block; margin-bottom: 8px; font-weight: 500;">Açıklama</label>
+                                <textarea id="projDesc" class="form-control" rows="5" placeholder="Proje ayrıntıları ve amacı..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); resize: none;" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="padding: 12px 24px; background-color: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                                <i class="fa-solid fa-plus"></i> Projeyi Ekle
+                            </button>
+                        </form>
                     </div>
                 </div>
 

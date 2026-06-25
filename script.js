@@ -496,5 +496,69 @@ document.addEventListener('DOMContentLoaded', () => {
         renderComments();
         newsDetailContent.appendChild(commentsWrapper);
     }
+
+    // News Slider Logic
+    const track = document.querySelector('.news-slider-track');
+    const prevBtn = document.querySelector('.news-slider-container .prev-btn');
+    const nextBtn = document.querySelector('.news-slider-container .next-btn');
+    const dots = document.querySelectorAll('.slider-dots .dot');
+
+    if (track && dots.length > 0) {
+        let currentSlide = 0;
+
+        const updateSlider = (index) => {
+            const card = track.querySelector('.news-card');
+            if (!card) return;
+            const cardWidth = card.getBoundingClientRect().width;
+            const gap = 30; // matching CSS gap
+            let offset = index * (cardWidth + gap);
+            
+            // Adjust offset limits
+            const containerWidth = track.parentElement.getBoundingClientRect().width;
+            const trackWidth = track.scrollWidth;
+            if (offset > trackWidth - containerWidth) {
+                offset = trackWidth - containerWidth;
+            }
+            if (offset < 0) offset = 0;
+
+            track.style.transform = `translateX(-${offset}px)`;
+
+            dots.forEach(d => d.classList.remove('active'));
+            if (dots[index]) dots[index].classList.add('active');
+            currentSlide = index;
+        };
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', () => {
+                let nextIdx = (currentSlide + 1) % dots.length;
+                updateSlider(nextIdx);
+            });
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', () => {
+                let prevIdx = (currentSlide - 1 + dots.length) % dots.length;
+                updateSlider(prevIdx);
+            });
+        }
+
+        dots.forEach((dot, idx) => {
+            dot.addEventListener('click', () => {
+                updateSlider(idx);
+            });
+        });
+
+        // Resize support
+        window.addEventListener('resize', () => {
+            updateSlider(currentSlide);
+        });
+
+        // Optional: Auto slide every 5 seconds
+        setInterval(() => {
+            let nextIdx = (currentSlide + 1) % dots.length;
+            updateSlider(nextIdx);
+        }, 5000);
+    }
 });
+
 

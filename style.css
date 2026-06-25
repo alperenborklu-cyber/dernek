@@ -3453,7 +3453,7 @@ textarea.form-control {
 
 .stat-number {
     font-family: var(--font-heading);
-    font-size: 3rem;
+    font-size: 1.8rem;
     font-weight: 800;
     color: var(--primary);
     margin-bottom: 8px;
@@ -3461,7 +3461,7 @@ textarea.form-control {
 }
 
 .stat-label {
-    font-size: 1rem;
+    font-size: 0.6rem;
     font-weight: 600;
     color: var(--text-main);
     text-transform: uppercase;
@@ -3931,6 +3931,88 @@ body.dark-mode .news-ticker-bar {
     background-color: #070d19 !important;
 }
 
-
-
-
+/* ==========================================================================
+   News Slider Styles
+   ========================================================================== */
+.news-slider-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding: 20px 0;
+}
+.news-slider-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 30px;
+}
+.news-slider-track .news-card {
+    flex: 0 0 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+}
+@media (max-width: 992px) {
+    .news-slider-track .news-card {
+        flex: 0 0 calc(50% - 15px);
+        max-width: calc(50% - 15px);
+    }
+}
+@media (max-width: 768px) {
+    .news-slider-track .news-card {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+.news-slider-container .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: var(--white);
+    border: 1px solid var(--border-color);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: var(--shadow-sm);
+    z-index: 10;
+    transition: var(--transition);
+}
+.news-slider-container .slider-btn:hover {
+    background-color: var(--primary);
+    color: var(--white);
+    border-color: var(--primary);
+}
+.news-slider-container .prev-btn {
+    left: 10px;
+}
+.news-slider-container .next-btn {
+    right: 10px;
+}
+.slider-dots {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 30px;
+}
+.slider-dots .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: var(--border-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+.slider-dots .dot.active {
+    background-color: var(--primary);
+    transform: scale(1.2);
+}
+body.dark-mode .news-slider-container .slider-btn {
+    background-color: var(--dark-card);
+    border-color: var(--dark-border);
+    color: white;
+}
+body.dark-mode .news-slider-container .slider-btn:hover {
+    background-color: var(--primary);
+    border-color: var(--primary);
+}

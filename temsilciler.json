@@ -1,0 +1,812 @@
+[
+  {
+    "no": "1.",
+    "il": "ADANA",
+    "ad_soyad": "MUHİTTİN KARADAĞ",
+    "telefon": "0 533 213 72 99",
+    "kurum": "DSİ Büro Memuru Bilgi İşl.Lojman ve Kamplarİşleri",
+    "dogum": "28.03 1977",
+    "engel": "44 % Nöroloji Ortopedi",
+    "ilgi_alani": "muhittinkaradağ@hotmail.com"
+  },
+  {
+    "no": "2.",
+    "il": "ADIYAMAN",
+    "ad_soyad": "SİNAN BİLGİÇ",
+    "telefon": "0 533 497 54 37",
+    "kurum": "İl Milli Eğİtİm  Müd. Rehberlik Şube Teknik Hiz.Sınıfı",
+    "dogum": "1973",
+    "engel": "% 50 Ortopedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "3.",
+    "il": "AFYON",
+    "ad_soyad": "NURİ SERTKAYA",
+    "telefon": "0 530 601 07 39",
+    "kurum": "MALİ İŞLER ŞEFİ  DEMİRYOLLARI AFYON",
+    "dogum": "18.05.1905",
+    "engel": "% 46",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "4-",
+    "il": "AĞRI",
+    "ad_soyad": "CEMAL ÖZCAN",
+    "telefon": "0 539 952 81 11",
+    "kurum": "Milli Eğitim Müdürlüğü  Şef",
+    "dogum": "1974",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "5.",
+    "il": "AKSARAY",
+    "ad_soyad": "BAYRAM BAKIRTAŞ",
+    "telefon": "0 530 655 00 83",
+    "kurum": "PTT de Çalışıyor",
+    "dogum": "22.09.1982",
+    "engel": "% 56 Ortopedi",
+    "ilgi_alani": "bayrambakirtaş@hotmailcom"
+  },
+  {
+    "no": "6.",
+    "il": "ANKARA",
+    "ad_soyad": "İDRİS  GÖKÇE",
+    "telefon": "0 546 873 45 20",
+    "kurum": "SSK KAMU GÖREVLERİ EMEKLİLİK İŞLERİ",
+    "dogum": "09.10.1973",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "7.",
+    "il": "AMASYA",
+    "ad_soyad": "NECİP KURT",
+    "telefon": "0 539 372 72 72",
+    "kurum": "Amasya Sabuncuoğlu Eğitim Araştırma Hastanesi",
+    "dogum": "15.5 1977",
+    "engel": "% 40",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "8.",
+    "il": "ANTALYA",
+    "ad_soyad": "MUAMMER DEMİRÖZ",
+    "telefon": "0 544 322 76 34",
+    "kurum": "İl Defterdarlığı  vhki Memur",
+    "dogum": "20.04.1970",
+    "engel": "% 90  Görme",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "9.",
+    "il": "ARDAHAN",
+    "ad_soyad": "ZAFER GÖKÇE",
+    "telefon": "0 505 138 97 20",
+    "kurum": "EMEKLİ",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "10.",
+    "il": "ARTVİN",
+    "ad_soyad": "GÜLAY  ALKAN",
+    "telefon": "0 546 282 70 68",
+    "kurum": "E Ü A.Ş Derirer HES işletme müd. Yar.",
+    "dogum": "25.10.1978",
+    "engel": "% 55",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "11.",
+    "il": "AYDIN",
+    "ad_soyad": "MANSUR KANER",
+    "telefon": "0 536 275 91 64",
+    "kurum": "Aydın Efeler Belediyesi Hizmetli",
+    "dogum": "10.07 1981",
+    "engel": "% 51",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "12.",
+    "il": "BALIKESİR",
+    "ad_soyad": "MUSTAFA NESİPOĞULLARI",
+    "telefon": "0 535 317 49 89",
+    "kurum": "TCDD  Balıkesir Gar Gişe Memuru",
+    "dogum": "15.02.1970",
+    "engel": "Özel Çocuğu var",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "13.",
+    "il": "BARTIN ---",
+    "ad_soyad": "MUSA TOPRAK",
+    "telefon": "0 538 667 26 62",
+    "kurum": "Şehit Mustafa Yaman İmamhatip Lisesi Hizmetli",
+    "dogum": "15.04.1985",
+    "engel": "% 40 Epilesi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "14.",
+    "il": "BATMAN ---",
+    "ad_soyad": "CEMAL ÇİÇEK",
+    "telefon": "0 542 483 30 80",
+    "kurum": "LOJİSTİK MEMUR  DEMİRYOLLARI",
+    "dogum": "01.01.1965",
+    "engel": "% 40  Ortopedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "15.",
+    "il": "BAYBURT",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "16.",
+    "il": "BİLECİK  ----",
+    "ad_soyad": "BURCU KORGU",
+    "telefon": "0 551 860 21 70",
+    "kurum": "Bilecik Valilik  Vhki",
+    "dogum": "08.09.1992",
+    "engel": "% 62",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "17.",
+    "il": "BİNGÖL",
+    "ad_soyad": "BAHATTİN  TÜZ",
+    "telefon": "0 533 512 01 42",
+    "kurum": "Bingöl SSK Müdür",
+    "dogum": "19.11.1979",
+    "engel": "% 60 Ortapedi",
+    "ilgi_alani": "Gençlik Sporda Okçuluk Antrenörlüğü Yapıyor"
+  },
+  {
+    "no": "18.",
+    "il": "BİTLİS",
+    "ad_soyad": "MEHMET ÇOLAKOĞLU",
+    "telefon": "0 532 069 65 13",
+    "kurum": "MEMUR",
+    "dogum": "23.02.1973",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "19.",
+    "il": "BOLU",
+    "ad_soyad": "MEHMET ŞAKİR KAPLAN",
+    "telefon": "0 533 525 30 10",
+    "kurum": "BOLU İL ÖZEL İDARESİ  ŞEF",
+    "dogum": "20.12.1977",
+    "engel": "% 48 ORTOPEDİ",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "20.",
+    "il": "BURDUR",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "21.",
+    "il": "BURSA",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "22.",
+    "il": "ÇANAKKALE",
+    "ad_soyad": "AKİF TELLİ",
+    "telefon": "0 544 207 29 46",
+    "kurum": "İl Sağlık Müdürlüğünde vhki olarak -",
+    "dogum": "1986",
+    "engel": "% 61 Görme Engelli",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "23.",
+    "il": "ÇANKIRI",
+    "ad_soyad": "MUZAFFER YILDIRIM",
+    "telefon": "0 501 112 42 18",
+    "kurum": "TCDD ÇANKIRI  MAKAS FABRİKA Dağıtıcı",
+    "dogum": "03.06.1965",
+    "engel": "% 40",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "24.",
+    "il": "ÇORUM",
+    "ad_soyad": "HASAN KÖSEOĞLU",
+    "telefon": "0 532 509 59 48",
+    "kurum": "İl Sağlık Müdürlüğü vhki olarak   çalışıyo",
+    "dogum": "04.01 1980",
+    "engel": "% 43 Ortapedi",
+    "ilgi_alani": "Spor Müsabakalarını Çok Seviyor"
+  },
+  {
+    "no": "25.",
+    "il": "DENİZLİ",
+    "ad_soyad": "NİHAT BEDİR",
+    "telefon": "0 536 844 30 37",
+    "kurum": "Hazine ve Maliye Bak. İLTİLAFLI İşler Şb",
+    "dogum": "16101976",
+    "engel": "% 42 Ortapedi",
+    "ilgi_alani": "Hukuk ve Mevzuat Alandı Katkı Verebilirim\nHaccettepe İktisadi Siyaset  Bilimi Kamu Yönetmi"
+  },
+  {
+    "no": "26.",
+    "il": "DİYARBAKIR",
+    "ad_soyad": "SÜLEYMAN  TEKİN",
+    "telefon": "0 535 545 09 71",
+    "kurum": "HASTANEDE TEKNİSYEN",
+    "dogum": "",
+    "engel": "Ortopedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "27.",
+    "il": "DÜZCE",
+    "ad_soyad": "KADRİYE POLAT KIĞKIL",
+    "telefon": "0 543 817 07 59",
+    "kurum": "EV HANIMI",
+    "dogum": "01.01.1990",
+    "engel": "",
+    "ilgi_alani": "Özel Çocuğu var"
+  },
+  {
+    "no": "28.",
+    "il": "EDİRNE",
+    "ad_soyad": "ALİ  YULAFCI",
+    "telefon": "0 530 682 28 57",
+    "kurum": "TCDD YOLLARI  15.BAKIM MÜD.  BÜRO ŞEFİ",
+    "dogum": "01.02.1971",
+    "engel": "Ortopedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "29.",
+    "il": "ELAZIĞ",
+    "ad_soyad": "MUHAMMED  ALİ   ÖDEMİŞ",
+    "telefon": "0 539 372 72 72",
+    "kurum": "FELSEFE ÖĞRETMENİ",
+    "dogum": "",
+    "engel": "% 45",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "30.",
+    "il": "ERZİNCAN",
+    "ad_soyad": "AYTEKİN DALMIŞ",
+    "telefon": "0 538 239 85 14",
+    "kurum": "ARAÇ BAKIM DEPO ŞEFLİĞİ  İŞÇİ",
+    "dogum": "12.01.1970",
+    "engel": "%40 Ortopedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "31.",
+    "il": "ERZURUM",
+    "ad_soyad": "EMRAH KARATEPE",
+    "telefon": "0 532 461 49 29",
+    "kurum": "MİLLİ EĞİTİM MÜDÜRLÜĞÜ - MEMUR",
+    "dogum": "18.02.1985",
+    "engel": "% 45",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "32.",
+    "il": "ESKİŞEHİR",
+    "ad_soyad": "ERCAN  GÜNER",
+    "telefon": "0 533 683 84 86",
+    "kurum": "ANADOLU  ÜNİVERSİTEDEN      EMEKLİ",
+    "dogum": "15.11.1969",
+    "engel": "% 90 GÖRME ENGELLİ",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "33.",
+    "il": "GAZİANTEP",
+    "ad_soyad": "MEHMET ENDER ÖKTEN",
+    "telefon": "0 543 266 45 24",
+    "kurum": "ÖĞRETMEN",
+    "dogum": "05.03.1977",
+    "engel": "% 100 Görme Engelli",
+    "ilgi_alani": "PDR Sosyal Diyalog"
+  },
+  {
+    "no": "34.",
+    "il": "GİRESUN",
+    "ad_soyad": "AYLA  AKGÜL",
+    "telefon": "0 507 419 47 08",
+    "kurum": "HASTANEDE ÇALIŞIYOR",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "35.",
+    "il": "GÜMÜŞHANE",
+    "ad_soyad": "ÇOŞKUN TUNCER",
+    "telefon": "0 537 459 61 61",
+    "kurum": "HASTANE  ÇALIŞIYOR",
+    "dogum": "20.08.1977",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "36.",
+    "il": "HAKKARİ",
+    "ad_soyad": "NASİF ARSLAN",
+    "telefon": "0 553 536 98 87",
+    "kurum": "SAĞLIK SEN ŞUBE BAŞKANI",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "37.",
+    "il": "HATAY",
+    "ad_soyad": "AHMET  BESLEME",
+    "telefon": "0 530 973 35 37",
+    "kurum": "DEMİRYOLLARI",
+    "dogum": "19.06.1974",
+    "engel": "ORTOPEDİ",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "38.",
+    "il": "IĞDIR",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "39.",
+    "il": "ISPARTA",
+    "ad_soyad": "İSMAİL ÇELİK BAŞ",
+    "telefon": "0 541 932 52 32",
+    "kurum": "ÖĞRETMEN",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": "PROJECİ"
+  },
+  {
+    "no": "40.",
+    "il": "İSTANBUL",
+    "ad_soyad": "SAMİ TOPÇU",
+    "telefon": "0 532 223 16 86",
+    "kurum": "İl Deftardarlığı  Gelir Uzmanı",
+    "dogum": "01.02.1979",
+    "engel": "%  92 GÖRME",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "41.",
+    "il": "İZMİR",
+    "ad_soyad": "BAYRAM KORKMAZ",
+    "telefon": "0 542 727 83 73",
+    "kurum": "ATATÜRK EĞİTİM HASTANESİ MEMUR",
+    "dogum": "16.02.1976",
+    "engel": "% 55 Ortapedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "42.",
+    "il": "K.MARAŞ",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "43.",
+    "il": "KARABÜK",
+    "ad_soyad": "NİHAT CEYLAN",
+    "telefon": "0 505 300 54 47",
+    "kurum": "KARABÜK ÜNİVERSİTESİ",
+    "dogum": "12.07.1967",
+    "engel": "% 50 Ortapedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "44.",
+    "il": "KARAMAN",
+    "ad_soyad": "ŞÜKRÜ ARIKAN",
+    "telefon": "0 544 850 87 17",
+    "kurum": "ÖĞRETMEN",
+    "dogum": "1979",
+    "engel": "% 44 Diyebet Epilepsi",
+    "ilgi_alani": "Ney Üflüyor Konservatuar Okuyor"
+  },
+  {
+    "no": "45.",
+    "il": "KARS",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "46.",
+    "il": "KASTAMONU",
+    "ad_soyad": "CİHAN SARI AHMETOĞLU",
+    "telefon": "0 546 977 19 96",
+    "kurum": "MEB. ÖĞRETMEN",
+    "dogum": "11.01.1999",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "47.",
+    "il": "KAYSERİ",
+    "ad_soyad": "MÜRSEL TEKİN",
+    "telefon": "0 542 418 20 94",
+    "kurum": "AVUKAT           TARIM İL MÜDÜRLÜĞÜ",
+    "dogum": "11.01.1972",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "48.",
+    "il": "KİLİS",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "49.",
+    "il": "KIRIKKALE",
+    "ad_soyad": "MURAT  ERKOÇ",
+    "telefon": "0 533 506 47 76",
+    "kurum": "TCDD EMEKLİ KIRIKKALE",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "50",
+    "il": "KIRKLARELİ",
+    "ad_soyad": "ERKAN KANATLI",
+    "telefon": "0 541 428 88 02",
+    "kurum": "MEB İnece ortaokulu Okul Müdürü",
+    "dogum": "1981",
+    "engel": "% 46",
+    "ilgi_alani": "Türkiye Sakatlar Derneği"
+  },
+  {
+    "no": "51.",
+    "il": "KIRŞEHİR",
+    "ad_soyad": "MEHMET  GÖÇMEN",
+    "telefon": "0 532 556 02 08",
+    "kurum": "İL MİLLİ EĞİTİMDE ÖĞRETMEN",
+    "dogum": "26 09 .1974",
+    "engel": "% 48",
+    "ilgi_alani": "Malül Gaziler Derneği"
+  },
+  {
+    "no": "52.",
+    "il": "KOCAELİ",
+    "ad_soyad": "MUSTAFA  KORKMAZ",
+    "telefon": "0 544 267 31 90",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "53.",
+    "il": "KONYA",
+    "ad_soyad": "DİLEK KAYA",
+    "telefon": "0 544 254 42 49",
+    "kurum": "HASTANEDE",
+    "dogum": "",
+    "engel": "% 55 Görme Engelli",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "54.",
+    "il": "KÜTAHYA",
+    "ad_soyad": "BAHATTİN  ULUTAŞ",
+    "telefon": "0 507 687 87 65",
+    "kurum": "MEMUR",
+    "dogum": "27.06.1990",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "55.",
+    "il": "MALATYA",
+    "ad_soyad": "MUHARREM UĞUR DOLU",
+    "telefon": "0 507 399 79 80",
+    "kurum": "ÖĞRETMEN",
+    "dogum": "05.08.1990",
+    "engel": "% 42 ORTOPEDİ",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "56.",
+    "il": "MANİSA",
+    "ad_soyad": "AKIN AYDIN YALÇIN",
+    "telefon": "0 537 066 80 28",
+    "kurum": "Manisa İl Sağlık Müdürlüğü Vkki",
+    "dogum": "21.06.1986",
+    "engel": "% 90",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "57.",
+    "il": "MARDİN",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "58.",
+    "il": "MERSİN",
+    "ad_soyad": "HASAN IŞIK",
+    "telefon": "0 507 917 27 26",
+    "kurum": "Meslek ve Tek.Anadolu Lisesi Öğretmen Md.Yar",
+    "dogum": "25.11.1982",
+    "engel": "% 92 Fiziksel ve Kronik",
+    "ilgi_alani": "Akdeniz Belediyesi Kent Konseyi Körleri Eğitim Derneği\nTürkiye Görme Engelliler Derneği"
+  },
+  {
+    "no": "59.",
+    "il": "MUĞLA",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "60.",
+    "il": "MUŞ",
+    "ad_soyad": "MESUT  CEYLAN",
+    "telefon": "0 532 227 99 59",
+    "kurum": "MİLLİ EĞİTİM MÜDÜRLÜĞÜ -  ŞEF",
+    "dogum": "10.05.1989",
+    "engel": "% 48",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "61.",
+    "il": "NEVŞEHİR",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "62.",
+    "il": "NİĞDE",
+    "ad_soyad": "ALİ   ŞAHİNER",
+    "telefon": "0 538 659 13 65",
+    "kurum": "LOJİSTİK ŞEFLİĞİ NİĞDE   MEMUR",
+    "dogum": "15.06.1973",
+    "engel": "% 55 ORTOPEDİ",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "63.",
+    "il": "ORDU",
+    "ad_soyad": "SEDAT  ELLİCE",
+    "telefon": "0 537 987 11 04",
+    "kurum": "İl Milli Eğitim Müdürlüğü \nFATSA",
+    "dogum": "3051974",
+    "engel": "% 40 Görme Engelli",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "64.",
+    "il": "OSMANİYE",
+    "ad_soyad": "YUSUF  SARI",
+    "telefon": "0 506 402 75 93",
+    "kurum": "TCDD  YOLLARI   MEMUR",
+    "dogum": "01.06.1978",
+    "engel": "% 45 Ortapedik",
+    "ilgi_alani": "Cihannüma -Kitap Okumak Seyahat Etmek"
+  },
+  {
+    "no": "65.",
+    "il": "RİZE",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "66.",
+    "il": "SAKARYA",
+    "ad_soyad": "YASİN AVCI",
+    "telefon": "0 533 439 42 14",
+    "kurum": "Sakarya Orman Bölge Müfdürlüğü Bil.işletme",
+    "dogum": "09.09.1985",
+    "engel": "% 63 Ortopedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "67.",
+    "il": "SAMSUN",
+    "ad_soyad": "SİNAN TÜNCER",
+    "telefon": "0 532 783 02 52",
+    "kurum": "Orman İşletme Müdürlüğü Bilgisayar İşletmeni",
+    "dogum": "22.06.1985",
+    "engel": "% 65 Ortopedi",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "68.",
+    "il": "ŞANLIURFA",
+    "ad_soyad": "MEHMET  YILDIZ",
+    "telefon": "0 543 767 18 71",
+    "kurum": "MEB Öğretmen Harran kapı İmam Hatip Müd. Yar.",
+    "dogum": "08.03.1983",
+    "engel": "% 40 Ortedik",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "69.",
+    "il": "SİİRT",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "70.",
+    "il": "SİNOP",
+    "ad_soyad": "RASİM KAYA",
+    "telefon": "0 536 933 32 41",
+    "kurum": "Milli Eğitim Müdürlüğü",
+    "dogum": "02.03.1980",
+    "engel": "50",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "71.",
+    "il": "SİVAS",
+    "ad_soyad": "SALİH GÜLTEKİN",
+    "telefon": "0 506 122 32 74",
+    "kurum": "MİLLİ EĞİTİM MÜDRLÜĞÜ  ÖĞRETMEN",
+    "dogum": "02.12.1994",
+    "engel": "% 90 Görme",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "72.",
+    "il": "ŞIRNAK",
+    "ad_soyad": "MEHMET  HALİL FATİH",
+    "telefon": "0 542 519 73 73",
+    "kurum": "MEB Tekniker Şef",
+    "dogum": "1984",
+    "engel": "% 40 Böbrek",
+    "ilgi_alani": "Spor Yapmak"
+  },
+  {
+    "no": "73.",
+    "il": "TEKİRDAĞ",
+    "ad_soyad": "KIVANÇ KARAKAŞ",
+    "telefon": "0 544 674 98 59",
+    "kurum": "Tapu ve Kadastro Genel Müd. Tapu Müd.Bilgi İşt",
+    "dogum": "10.07.1985",
+    "engel": "% 68 Kronik Kas Hastalığı",
+    "ilgi_alani": "Tügaç, Kızılay , Kırım Türkleri Derneği \nTürkiye Sakatlar Derneği  TSD Üyesi"
+  },
+  {
+    "no": "74.",
+    "il": "TOKAT",
+    "ad_soyad": "AHMET  AKBULUT",
+    "telefon": "0 541 312 89 09",
+    "kurum": "MEMUR",
+    "dogum": "20.06.1989",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "75.",
+    "il": "TRABZON",
+    "ad_soyad": "YUSUF ŞAFAK",
+    "telefon": "0 541 229 67 23",
+    "kurum": "Rehberlik Araştırma Merkezi PSİKOLOJİK Danışman",
+    "dogum": "1981",
+    "engel": "% 95 Görme Engelli",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "76.",
+    "il": "TUNCELİ",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "77.",
+    "il": "UŞAK",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "78.",
+    "il": "VAN",
+    "ad_soyad": "KASIM EMEK",
+    "telefon": "0 543 474 67 75",
+    "kurum": "Diyanet Personeli Müftülükte İdari İşler -",
+    "dogum": "05.12.1979",
+    "engel": "% 42",
+    "ilgi_alani": "Ortezini Kendi Yapıyor İşaret Dili Kuran Eğitimi veriyor"
+  },
+  {
+    "no": "79.",
+    "il": "YALOVA",
+    "ad_soyad": "HAMDULLAH GÖK",
+    "telefon": "0 554 985 25 83",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "80.",
+    "il": "YOZGAT",
+    "ad_soyad": "MUSTAFA  BERKE",
+    "telefon": "0 544 544 66 42",
+    "kurum": "EMEKLİ DEMİRYOLLARI",
+    "dogum": "10.10.1966",
+    "engel": "% 70",
+    "ilgi_alani": ""
+  },
+  {
+    "no": "81.",
+    "il": "ZONGULDAK",
+    "ad_soyad": "",
+    "telefon": "",
+    "kurum": "",
+    "dogum": "",
+    "engel": "",
+    "ilgi_alani": ""
+  }
+]

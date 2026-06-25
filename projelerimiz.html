@@ -56,20 +56,28 @@
             </a>
             <nav class="nav-menu">
                 <ul>
+                    <li><a href="index">Anasayfa</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Hakkımızda <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="hakkimizda">Hakkımızda</a></li>
+                            <li><a href="misyon-vizyon">Misyon & Vizyon</a></li>
+                            <li><a href="mevzuat">Mevzuat</a></li>
+                            <li><a href="engelli-haklari">Engelli Hakları</a></li>
+                        </ul>
+                    </li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle">Kurumsal <i class="fa-solid fa-chevron-down"></i></a>
                         <ul class="dropdown-menu">
                             <li><a href="yonetim-kurulu">Yönetim Kurulu</a></li>
-                            <li><a href="hakkimizda">Hakkımızda</a></li>
-                            <li><a href="misyon-vizyon">Misyon & Vizyon</a></li>
-                            <li><a href="iletisim">Şubelerimiz</a></li>
+                            <li><a href="denetim-kurulu">Denetim Kurulu</a></li>
+                            <li><a href="subelerimiz">Şubelerimiz</a></li>
+                            <li><a href="temsilcilerimiz">Dernek İl Temsilcilerimiz</a></li>
                         </ul>
                     </li>
                     <li><a href="projelerimiz" class="active">Projelerimiz</a></li>
                     <li><a href="haberler">Haberler</a></li>
                     <li><a href="blog">Blog</a></li>
-                    <li><a href="mevzuat">Mevzuat</a></li>
-                    <li><a href="dernege-uye-ol">Derneğe Üye Ol</a></li>
                     <li><a href="iletisim">İletişim</a></li>
                 </ul>
             </nav>
@@ -289,29 +297,63 @@
     <!-- Filter Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // Load Dynamic Projects from localStorage
+            const projectsGrid = document.querySelector('.projects-grid');
+            if (projectsGrid) {
+                const localProjects = JSON.parse(localStorage.getItem('projects') || '[]');
+                localProjects.forEach(proj => {
+                    const card = document.createElement('article');
+                    card.className = 'project-card';
+                    card.setAttribute('data-category', proj.category);
+                    
+                    const statusLabel = proj.status === 'ongoing' ? 'Devam Ediyor' : (proj.status === 'completed' ? 'Tamamlandı' : 'Planlanıyor');
+                    const statusClass = proj.status; // ongoing, completed, planned
+                    
+                    card.innerHTML = `
+                        <div class="project-img-wrapper">
+                            <span class="project-status ${statusClass}">${statusLabel}</span>
+                            <img src="${proj.image || 'project_disabled_transport.webp'}" alt="${proj.title}">
+                        </div>
+                        <div class="project-body">
+                            <span class="project-category">${proj.categoryName || 'Erişilebilirlik'}</span>
+                            <h3>${proj.title}</h3>
+                            <p>${proj.description}</p>
+                        </div>
+                        <div class="project-footer">
+                            <a href="#" class="project-link">Detayları Gör <i class="fa-solid fa-arrow-right"></i></a>
+                        </div>
+                    `;
+                    projectsGrid.appendChild(card);
+                });
+            }
+
             const filterButtons = document.querySelectorAll('.filter-btn');
-            const projectCards = document.querySelectorAll('.project-card');
+            
+            const attachFilters = () => {
+                const projectCards = document.querySelectorAll('.project-card');
+                filterButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        filterButtons.forEach(btn => btn.classList.remove('active'));
+                        button.classList.add('active');
 
-            filterButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    filterButtons.forEach(btn => btn.classList.remove('active'));
-                    button.classList.add('active');
+                        const filterValue = button.getAttribute('data-filter');
 
-                    const filterValue = button.getAttribute('data-filter');
-
-                    projectCards.forEach(card => {
-                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                            card.style.display = 'flex';
-                            card.style.opacity = '0';
-                            setTimeout(() => {
-                                card.style.opacity = '1';
-                            }, 50);
-                        } else {
-                            card.style.display = 'none';
-                        }
+                        projectCards.forEach(card => {
+                            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                                card.style.display = 'flex';
+                                card.style.opacity = '0';
+                                setTimeout(() => {
+                                    card.style.opacity = '1';
+                                }, 50);
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
                     });
                 });
-            });
+            };
+
+            attachFilters();
         });
     </script>
 </body>

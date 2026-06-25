@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İl Temsilcilerimiz | Engelli Memur & İşçi Derneği</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.webp">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+    
+    <style>
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 40px auto;
+            position: relative;
+        }
+        .search-box {
+            width: 100%;
+            padding: 16px 24px 16px 50px;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 50px;
+            background-color: var(--white);
+            color: var(--text-main);
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: var(--shadow-sm);
+        }
+        .search-box:focus {
+            border-color: var(--primary);
+            box-shadow: var(--shadow-md);
+        }
+        .search-icon {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+            font-size: 1.2rem;
+        }
+        
+        .temsilci-table-wrap {
+            background-color: var(--white);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: var(--shadow-md);
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+        .temsilci-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+        .temsilci-table th,
+        .temsilci-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .temsilci-table th {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            color: var(--text-main);
+            background-color: rgba(0, 92, 230, 0.03);
+        }
+        .temsilci-table tr:hover {
+            background-color: rgba(0, 92, 230, 0.01);
+        }
+        .badge-il {
+            background-color: rgba(0, 92, 230, 0.1);
+            color: var(--primary);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-block;
+        }
+        .tel-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .tel-link:hover {
+            text-decoration: underline;
+        }
+        body.dark-mode .temsilci-table-wrap {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+        }
+        body.dark-mode .temsilci-table th {
+            color: white;
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+        body.dark-mode .temsilci-table td {
+            color: var(--text-muted);
+            border-bottom-color: var(--dark-border);
+        }
+        body.dark-mode .search-box {
+            background-color: var(--dark-card);
+            border-color: var(--dark-border);
+            color: white;
+        }
+        .no-results {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-container">
+            <i class="fa-solid fa-wheelchair loader-wheelchair"></i>
+            <i class="fa-solid fa-person-walking loader-walking"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index" class="logo">
+                <img src="logo.webp" alt="Engelli Memur & İşçi Derneği Logo">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index">Anasayfa</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Hakkımızda <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="hakkimizda">Hakkımızda</a></li>
+                            <li><a href="misyon-vizyon">Misyon & Vizyon</a></li>
+                            <li><a href="mevzuat">Mevzuat</a></li>
+                            <li><a href="engelli-haklari">Engelli Hakları</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle active">Kurumsal <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="yonetim-kurulu">Yönetim Kurulu</a></li>
+                            <li><a href="denetim-kurulu">Denetim Kurulu</a></li>
+                            <li><a href="subelerimiz">Şubelerimiz</a></li>
+                            <li><a href="temsilcilerimiz" class="active">Dernek İl Temsilcilerimiz</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="projelerimiz">Projelerimiz</a></li>
+                    <li><a href="haberler">Haberler</a></li>
+                    <li><a href="blog">Blog</a></li>
+                    <li><a href="iletisim">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="bagis-yap" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                <a href="uyelik" class="btn btn-primary">Üye Ol</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <!-- Breaking News Ticker -->
+        <div class="news-ticker-bar">
+            <div class="ticker-badge"><i class="fa-solid fa-bullhorn"></i> DUYURULAR</div>
+            <div class="ticker-content-wrap">
+                <div class="ticker-content">
+                    <a href="haber-kamp-tesekkur-belgesi"><span class="ticker-date">[17.06.2026]</span> Eğitim Kampımızda Değerli Üyelerimize Teşekkür Belgeleri Takdim Edildi</a>
+                    <a href="haber-sivil-toplum-rehberlik-bulusmasi"><span class="ticker-date">[16.06.2026]</span> Ankara Sivil Toplum Rehberlik Buluşması</a>
+                    <a href="haber-il-baskanlari-toplantisi"><span class="ticker-date">[15.06.2026]</span> Genişletilmiş İl Başkanları Toplantısı Gerçekleştirildi</a>
+                    <a href="haber-aile-sosyal-mudur-ziyaret"><span class="ticker-date">[14.06.2026]</span> Aile ve Sosyal Hizmetler İl Müdürü Sn. Cüneyd Özdemir'e Ziyaret</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Subpage Hero -->
+    <section class="subpage-hero">
+        <div class="container">
+            <h1>Dernek İl <span>Temsilcilerimiz</span></h1>
+            <p>Türkiye genelinde illerimizde faaliyet gösteren temsilcilerimizin listesi ve iletişim bilgileri.</p>
+        </div>
+    </section>
+
+    <!-- Table of Representatives -->
+    <section style="padding: 80px 0; background-color: var(--bg-color);">
+        <div class="container">
+            
+            <div class="search-container">
+                <i class="fa-solid fa-magnifying-glass search-icon"></i>
+                <input type="text" id="temsilciSearch" class="search-box" placeholder="İl veya temsilci adı arayın...">
+            </div>
+
+            <div class="temsilci-table-wrap">
+                <table class="temsilci-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">No</th>
+                            <th>İl</th>
+                            <th>Temsilci Adı Soyadı</th>
+                            <th>Telefon</th>
+                            <th>Kurumu / Unvanı</th>
+                            <th>Engel ve Oranı</th>
+                        </tr>
+                    </thead>
+                    <tbody id="temsilciTableBody">
+                        <!-- Dynamic content loaded from js/temsilciler.js -->
+                    </tbody>
+                </table>
+                <div class="no-results" id="noResults">Aradığınız kriterlere uygun temsilci bulunamadı.</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="fancy-footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo-text">Gönül Köprüsü<span>.</span></div>
+                    <p class="footer-desc">Türkiye'nin öncü engelsiz yaşam kuruluşu. Engelli bireylerin toplumsal yaşama katılımını, erişilebilirliğini ve haklarını destekliyoruz. Engelsiz bir gelecek inşa etmek için yanınızdayız.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Engelli Memur & İşçi Derneği. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JS Files -->
+    <script src="js/temsilciler.js"></script>
+    <script src="script.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const tbody = document.getElementById('temsilciTableBody');
+            const searchInput = document.getElementById('temsilciSearch');
+            const noResults = document.getElementById('noResults');
+            
+            let data = window.temsilcilerData || [];
+
+            const renderData = (filterText = '') => {
+                const query = filterText.toLowerCase().trim();
+                let html = '';
+                let visibleCount = 0;
+
+                data.forEach((item, index) => {
+                    const il = item.il.toLowerCase();
+                    const ad = item.ad_soyad.toLowerCase();
+                    
+                    if (!query || il.includes(query) || ad.includes(query)) {
+                        visibleCount++;
+                        html += `
+                            <tr>
+                                <td><strong>${item.no || (index + 1) + '.'}</strong></td>
+                                <td><span class="badge-il">${item.il}</span></td>
+                                <td><strong>${item.ad_soyad}</strong></td>
+                                <td><a href="tel:${item.telefon.replace(/\s+/g, '')}" class="tel-link"><i class="fa-solid fa-phone"></i> ${item.telefon}</a></td>
+                                <td><small>${item.kurum}</small></td>
+                                <td><span style="font-size: 0.9rem;">${item.engel || '-'}</span></td>
+                            </tr>
+                        `;
+                    }
+                });
+
+                tbody.innerHTML = html;
+                
+                if (visibleCount === 0) {
+                    noResults.style.display = 'block';
+                } else {
+                    noResults.style.display = 'none';
+                }
+            };
+
+            renderData();
+
+            if (searchInput) {
+                searchInput.addEventListener('input', (e) => {
+                    renderData(e.target.value);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -261,4 +261,51 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "../index.html";
         });
     }
+
+    // 11. Proje Ekleme Formu Dinleyicisi
+    const addProjectForm = document.getElementById("addProjectForm");
+    if (addProjectForm) {
+        addProjectForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const title = document.getElementById("projTitle").value.trim();
+            const category = document.getElementById("projCategory").value;
+            const status = document.getElementById("projStatus").value;
+            const image = document.getElementById("projImage").value.trim();
+            const description = document.getElementById("projDesc").value.trim();
+            const alertBox = document.getElementById("projSuccessAlert");
+
+            if (!title || !description) return;
+
+            const categoryNames = {
+                "accessibility": "Erişilebilirlik",
+                "education": "Eğitim & Kariyer",
+                "social": "Sosyal & Spor"
+            };
+
+            const projects = JSON.parse(localStorage.getItem("projects") || "[]");
+            const newProj = {
+                id: "proj-" + Date.now(),
+                title: title,
+                category: category,
+                categoryName: categoryNames[category] || "Erişilebilirlik",
+                status: status,
+                image: image || "../project_disabled_transport.webp",
+                description: description
+            };
+
+            projects.push(newProj);
+            localStorage.setItem("projects", JSON.stringify(projects));
+
+            // Form Sıfırla
+            addProjectForm.reset();
+            
+            // Başarı Mesajı Göster
+            if (alertBox) {
+                alertBox.style.display = "block";
+                setTimeout(() => {
+                    alertBox.style.display = "none";
+                }, 4000);
+            }
+        });
+    }
 });
