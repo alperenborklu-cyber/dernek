@@ -58,7 +58,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     </div>
                     <div class="top-bar-socials">
                         <a href="#" target="_blank" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
-                        <a href="#" target="_blank" title="X (Twitter)" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://x.com/GnlKprsu" target="_blank" title="X (Twitter)" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
                         <a href="#" target="_blank" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                         <a href="#" target="_blank" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
                     </div>
@@ -507,21 +507,8 @@ document.addEventListener('DOMContentLoaded', () => {
         let currentSlide = 0;
 
         const updateSlider = (index) => {
-            const card = track.querySelector('.news-card');
-            if (!card) return;
-            const cardWidth = card.getBoundingClientRect().width;
-            const gap = 30; // matching CSS gap
-            let offset = index * (cardWidth + gap);
-            
-            // Adjust offset limits
-            const containerWidth = track.parentElement.getBoundingClientRect().width;
-            const trackWidth = track.scrollWidth;
-            if (offset > trackWidth - containerWidth) {
-                offset = trackWidth - containerWidth;
-            }
-            if (offset < 0) offset = 0;
-
-            track.style.transform = `translateX(-${offset}px)`;
+            const offset = index * 100;
+            track.style.transform = `translateX(-${offset}%)`;
 
             dots.forEach(d => d.classList.remove('active'));
             if (dots[index]) dots[index].classList.add('active');

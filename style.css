@@ -3932,87 +3932,139 @@ body.dark-mode .news-ticker-bar {
 }
 
 /* ==========================================================================
-   News Slider Styles
+   News Slider Styles (Visual Image Banner Slider)
    ========================================================================== */
 .news-slider-container {
     position: relative;
     overflow: hidden;
     width: 100%;
-    padding: 20px 0;
+    height: 500px;
+    border-radius: 20px;
+    box-shadow: var(--shadow-lg);
+    background-color: #000;
 }
 .news-slider-track {
     display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    gap: 30px;
+    height: 100%;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
-.news-slider-track .news-card {
-    flex: 0 0 calc(33.333% - 20px);
-    max-width: calc(33.333% - 20px);
+.news-slide {
+    flex: 0 0 100%;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: flex-end;
+    padding: 60px;
+    box-sizing: border-box;
+    position: relative;
 }
-@media (max-width: 992px) {
-    .news-slider-track .news-card {
-        flex: 0 0 calc(50% - 15px);
-        max-width: calc(50% - 15px);
-    }
+.news-slide-content {
+    max-width: 650px;
+    color: var(--white);
+    text-align: left;
+    z-index: 2;
 }
-@media (max-width: 768px) {
-    .news-slider-track .news-card {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
+.news-slide-category {
+    background-color: var(--primary);
+    color: var(--white);
+    padding: 6px 12px;
+    border-radius: 30px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    display: inline-block;
+    margin-bottom: 12px;
+}
+.news-slide-date {
+    font-size: 0.9rem;
+    color: rgba(255, 255, 255, 0.75);
+    margin-left: 15px;
+    display: inline-block;
+}
+.news-slide-title {
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+    color: #ffffff;
+}
+.news-slide-desc {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+    margin-bottom: 24px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.6);
 }
 .news-slider-container .slider-btn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background-color: var(--white);
-    border: 1px solid var(--border-color);
-    width: 44px;
-    height: 44px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    width: 48px;
+    height: 48px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--shadow-md);
     z-index: 10;
     transition: var(--transition);
+    color: var(--text-main);
 }
 .news-slider-container .slider-btn:hover {
     background-color: var(--primary);
     color: var(--white);
-    border-color: var(--primary);
 }
 .news-slider-container .prev-btn {
-    left: 10px;
+    left: 20px;
 }
 .news-slider-container .next-btn {
-    right: 10px;
+    right: 20px;
 }
 .slider-dots {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     justify-content: center;
     gap: 10px;
-    margin-top: 30px;
+    z-index: 10;
 }
 .slider-dots .dot {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background-color: var(--border-color);
+    background-color: rgba(255, 255, 255, 0.4);
     cursor: pointer;
     transition: var(--transition);
 }
 .slider-dots .dot.active {
-    background-color: var(--primary);
+    background-color: var(--white);
     transform: scale(1.2);
 }
-body.dark-mode .news-slider-container .slider-btn {
-    background-color: var(--dark-card);
-    border-color: var(--dark-border);
-    color: white;
-}
-body.dark-mode .news-slider-container .slider-btn:hover {
-    background-color: var(--primary);
-    border-color: var(--primary);
+@media (max-width: 768px) {
+    .news-slider-container {
+        height: 400px;
+    }
+    .news-slide {
+        padding: 30px;
+    }
+    .news-slide-title {
+        font-size: 1.5rem;
+    }
+    .news-slide-desc {
+        font-size: 0.9rem;
+        margin-bottom: 15px;
+    }
+    .news-slider-container .slider-btn {
+        width: 36px;
+        height: 36px;
+    }
 }
