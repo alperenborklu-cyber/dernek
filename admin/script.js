@@ -198,6 +198,9 @@ document.addEventListener("DOMContentLoaded", () => {
             const title = document.getElementById("annTitle").value.trim();
             const category = document.getElementById("annCategory").value;
             const image = document.getElementById("annImage").value.trim();
+            const image1 = document.getElementById("annImage1").value.trim();
+            const image2 = document.getElementById("annImage2").value.trim();
+            const image3 = document.getElementById("annImage3").value.trim();
             const content = document.getElementById("annContent").value.trim();
             const alertBox = document.getElementById("annSuccessAlert");
             const editId = editAnnIdInput ? editAnnIdInput.value : "";
@@ -213,6 +216,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     announcements[idx].title = title;
                     announcements[idx].category = category;
                     announcements[idx].image = image || "";
+                    announcements[idx].image1 = image1 || "";
+                    announcements[idx].image2 = image2 || "";
+                    announcements[idx].image3 = image3 || "";
                     announcements[idx].content = content;
                     localStorage.setItem("announcements", JSON.stringify(announcements));
                     
@@ -227,6 +233,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     category: category,
                     content: content,
                     image: image || "",
+                    image1: image1 || "",
+                    image2: image2 || "",
+                    image3: image3 || "",
                     date: new Date().toISOString().split('T')[0]
                 };
                 announcements.unshift(newAnn); // En üste ekle
@@ -234,6 +243,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 
                 alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla yayınlandı!';
                 announcementForm.reset();
+                resetAnnForm(); // Ek resim önizlemelerini de siler
             }
 
             alertBox.style.display = "block";
@@ -251,10 +261,24 @@ document.addEventListener("DOMContentLoaded", () => {
         if (submitAnnBtn) submitAnnBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Yayınla';
         if (cancelEditAnnBtn) cancelEditAnnBtn.style.display = "none";
         if (annFormTitle) annFormTitle.innerHTML = '<i class="fa-solid fa-bullhorn" style="color: var(--secondary);"></i> Yeni Haber / Duyuru Yayınla';
+        
+        // Ana resim önizleme sıfırla
         const previewContainer = document.getElementById("annImagePreviewContainer");
         if (previewContainer) previewContainer.style.display = "none";
         const previewImg = document.getElementById("annImagePreview");
         if (previewImg) previewImg.src = "";
+
+        // Ek resim önizleme sıfırla
+        for (let i = 1; i <= 3; i++) {
+            const extraContainer = document.getElementById(`annImage${i}PreviewContainer`);
+            if (extraContainer) extraContainer.style.display = "none";
+            const extraImg = document.getElementById(`annImage${i}Preview`);
+            if (extraImg) extraImg.src = "";
+            const extraInput = document.getElementById(`annImage${i}`);
+            if (extraInput) extraInput.value = "";
+            const extraFileInput = document.getElementById(`annImage${i}File`);
+            if (extraFileInput) extraFileInput.value = "";
+        }
     };
 
     if (cancelEditAnnBtn) {
@@ -316,6 +340,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("annTitle").value = ann.title;
                     document.getElementById("annCategory").value = ann.category || "Kurumsal";
                     document.getElementById("annImage").value = ann.image || "";
+                    document.getElementById("annImage1").value = ann.image1 || "";
+                    document.getElementById("annImage2").value = ann.image2 || "";
+                    document.getElementById("annImage3").value = ann.image3 || "";
                     document.getElementById("annContent").value = ann.content;
                     if (editAnnIdInput) editAnnIdInput.value = ann.id;
 
@@ -326,6 +353,19 @@ document.addEventListener("DOMContentLoaded", () => {
                         if (previewContainer) previewContainer.style.display = "block";
                     } else {
                         if (previewContainer) previewContainer.style.display = "none";
+                    }
+
+                    // Ek resimler için önizlemeler
+                    for (let i = 1; i <= 3; i++) {
+                        const extraContainer = document.getElementById(`annImage${i}PreviewContainer`);
+                        const extraImg = document.getElementById(`annImage${i}Preview`);
+                        const val = ann[`image${i}`];
+                        if (val) {
+                            if (extraImg) extraImg.src = val;
+                            if (extraContainer) extraContainer.style.display = "block";
+                        } else {
+                            if (extraContainer) extraContainer.style.display = "none";
+                        }
                     }
 
                     if (submitAnnBtn) submitAnnBtn.innerHTML = '<i class="fa-solid fa-save"></i> Değişiklikleri Kaydet';
@@ -525,6 +565,9 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     handleFileSelect("annImageFile", "annImage", "annImagePreviewContainer", "annImagePreview");
+    handleFileSelect("annImage1File", "annImage1", "annImage1PreviewContainer", "annImage1Preview");
+    handleFileSelect("annImage2File", "annImage2", "annImage2PreviewContainer", "annImage2Preview");
+    handleFileSelect("annImage3File", "annImage3", "annImage3PreviewContainer", "annImage3Preview");
     handleFileSelect("projImageFile", "projImage", "projImagePreviewContainer", "projImagePreview");
 
     // Silme Butonları Olayı
@@ -546,5 +589,8 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     registerRemoveImageHandler("removeAnnImageBtn", "annImage", "annImagePreviewContainer", "annImagePreview", "annImageFile");
+    registerRemoveImageHandler("removeAnnImage1Btn", "annImage1", "annImage1PreviewContainer", "annImage1Preview", "annImage1File");
+    registerRemoveImageHandler("removeAnnImage2Btn", "annImage2", "annImage2PreviewContainer", "annImage2Preview", "annImage2File");
+    registerRemoveImageHandler("removeAnnImage3Btn", "annImage3", "annImage3PreviewContainer", "annImage3Preview", "annImage3File");
     registerRemoveImageHandler("removeProjImageBtn", "projImage", "projImagePreviewContainer", "projImagePreview", "projImageFile");
 });

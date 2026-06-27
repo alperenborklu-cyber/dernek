@@ -183,6 +183,80 @@
                 imagePath = imagePath.substring(3);
             }
 
+            // Ek resim tanımları
+            const extraImages = {
+                1: ann.image1,
+                2: ann.image2,
+                3: ann.image3
+            };
+            const usedImages = { 1: false, 2: false, 3: false };
+
+            // Paragrafları dönüştürürken placeholder'ları yakalayalım
+            let bodyHTML = '';
+            const paragraphs = ann.content.split('\n');
+
+            paragraphs.forEach(para => {
+                let paraText = para.trim();
+                if (!paraText) return;
+
+                // [RESIM1], [RESIM2], [RESIM3] tespiti
+                let foundImage = false;
+                for (let i = 1; i <= 3; i++) {
+                    const placeholder = `[RESIM${i}]`;
+                    if (paraText.includes(placeholder)) {
+                        const imgUrl = extraImages[i];
+                        if (imgUrl) {
+                            let cleanImgUrl = imgUrl;
+                            if (cleanImgUrl.startsWith('../')) {
+                                cleanImgUrl = cleanImgUrl.substring(3);
+                            }
+                            // Placeholder'ı içeren paragrafı resim olarak render et
+                            bodyHTML += `
+                                <div class="news-inline-image" style="margin: 28px 0; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
+                                    <img src="${cleanImgUrl}" style="width: 100%; height: auto; max-height: 480px; object-fit: cover; display: block;" alt="Haber Detay Görseli ${i}">
+                                </div>
+                            `;
+                            usedImages[i] = true;
+                        }
+                        foundImage = true;
+                        break;
+                    }
+                }
+
+                if (!foundImage) {
+                    bodyHTML += `<p style="margin-bottom: 20px;">${paraText}</p>`;
+                }
+            });
+
+            // Kullanılmayan ek resimler varsa en alta galeri olarak ekleyelim
+            let galleryHTML = '';
+            let hasUnusedImages = false;
+            for (let i = 1; i <= 3; i++) {
+                if (extraImages[i] && !usedImages[i]) {
+                    hasUnusedImages = true;
+                    let cleanImgUrl = extraImages[i];
+                    if (cleanImgUrl.startsWith('../')) {
+                        cleanImgUrl = cleanImgUrl.substring(3);
+                    }
+                    galleryHTML += `
+                        <div style="flex: 1 1 250px; max-width: 350px; border-radius: 12px; overflow: hidden; box-shadow: var(--shadow-sm); border: 1px solid var(--border-color);">
+                            <img src="${cleanImgUrl}" style="width: 100%; height: 200px; object-fit: cover; display: block;" alt="Galeri Görseli ${i}">
+                        </div>
+                    `;
+                }
+            }
+
+            if (hasUnusedImages) {
+                bodyHTML += `
+                    <div style="margin-top: 40px; border-top: 1px solid var(--border-color); padding-top: 30px;">
+                        <h4 style="font-family: 'Outfit', sans-serif; font-size: 1.15rem; margin-bottom: 16px; color: var(--text-main);">Haber Görselleri</h4>
+                        <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                            ${galleryHTML}
+                        </div>
+                    </div>
+                `;
+            }
+
             container.innerHTML = `
                 <img src="${imagePath}" alt="${ann.title}" class="main-img" style="width: 100%; border-radius: 20px; margin-bottom: 24px; max-height: 480px; object-fit: cover;">
                 <div class="news-meta" style="margin-bottom: 20px; display: flex; gap: 15px; color: var(--text-muted); font-size: 0.9rem;">
@@ -191,7 +265,7 @@
                 </div>
                 <h1 style="font-size: 2.2rem; font-family: 'Outfit', sans-serif; font-weight: 800; margin-bottom: 24px; color: var(--text-main); line-height: 1.3;">${ann.title}</h1>
                 <div class="news-body-text" style="font-size: 1.05rem; line-height: 1.8; color: var(--text-main); text-align: justify;">
-                    ${ann.content.split('\n').map(para => `<p style="margin-bottom: 20px;">${para}</p>`).join('')}
+                    ${bodyHTML}
                 </div>
             `;
         });
