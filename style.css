@@ -4130,3 +4130,17 @@ body.dark-mode .news-ticker-bar {
         height: 36px;
     }
 }
+
+/* Featured Instagram Reel Styles */
+.instagram-reel-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 20px 35px rgba(225, 48, 108, 0.3) !important;
+    border-color: #e1306c !important;
+}
+.instagram-reel-card:hover .play-btn {
+    transform: scale(1.1);
+}
+.instagram-reel-card:hover .reel-overlay {
+    background: rgba(0, 0, 0, 0.4) !important;
+}
+
