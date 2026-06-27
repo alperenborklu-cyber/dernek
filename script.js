@@ -590,7 +590,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (newsGrid) {
         const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
         // Duyuruları en yeni üstte olacak şekilde ekleyelim
-        announcements.forEach(ann => {
+        announcements.slice().reverse().forEach(ann => {
             let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
             if (imagePath.startsWith('../')) {
                 imagePath = imagePath.substring(3);
@@ -651,7 +651,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (sliderTrack) {
         const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
         // Kaydırıcıya (Slider) duyuruları en yeni ilk slayt olacak şekilde ekleyelim
-        announcements.forEach(ann => {
+        announcements.slice().reverse().forEach(ann => {
             let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
             if (imagePath.startsWith('../')) {
                 imagePath = imagePath.substring(3);
