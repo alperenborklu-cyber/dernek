@@ -16,6 +16,9 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
     
+    <!-- Cropper.js CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css">
+    
     <!-- Styles -->
     <link rel="stylesheet" href="style.css">
 </head>
@@ -489,7 +492,49 @@
     </div>
 
     <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.js"></script>
     <script src="../js/auth-shared.js"></script>
     <script src="script.js"></script>
+
+    <!-- Image Cropping Modal -->
+    <div id="cropperModal" style="display: none; position: fixed; inset: 0; background: rgba(0, 0, 0, 0.75); z-index: 99999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px);">
+        <div style="background: var(--card-bg); border-radius: 20px; border: 1px solid var(--border-color); width: 100%; max-width: 600px; padding: 24px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); display: flex; flex-direction: column; gap: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 12px;">
+                <h3 style="font-family: 'Outfit', sans-serif; font-size: 1.25rem; margin: 0; color: var(--text-main); display: flex; align-items: center; gap: 8px;">
+                    <i class="fa-solid fa-crop-simple" style="color: var(--primary);"></i> Görseli Kırp & Ayarla
+                </h3>
+                <button type="button" id="closeCropperModalBtn" style="background: none; border: none; font-size: 1.2rem; color: var(--text-muted); cursor: pointer; padding: 4px;"><i class="fa-solid fa-times"></i></button>
+            </div>
+            
+            <!-- Image Area -->
+            <div style="width: 100%; height: 350px; background: #000; border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center;">
+                <img id="cropperImage" src="" style="max-width: 100%; max-height: 100%; display: block;">
+            </div>
+
+            <!-- Aspect Ratio Selector & Controls -->
+            <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+                <div style="display: flex; gap: 6px; align-items: center;">
+                    <label for="cropperAspectRatio" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">En-Boy Oranı:</label>
+                    <select id="cropperAspectRatio" style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-size: 0.8rem; outline: none;">
+                        <option value="1.5">1.5 : 1 (Kartlar İçin İdeal)</option>
+                        <option value="1.7777777777777777">16 : 9 (Geniş Ekran)</option>
+                        <option value="1">1 : 1 (Kare)</option>
+                        <option value="NaN">Serbest</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 8px;">
+                    <button type="button" id="cropperZoomInBtn" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px; box-shadow: none;" title="Yakınlaştır"><i class="fa-solid fa-magnifying-glass-plus"></i></button>
+                    <button type="button" id="cropperZoomOutBtn" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px; box-shadow: none;" title="Uzaklaştır"><i class="fa-solid fa-magnifying-glass-minus"></i></button>
+                    <button type="button" id="cropperRotateBtn" class="btn btn-secondary" style="padding: 8px 12px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 4px; box-shadow: none;" title="Döndür"><i class="fa-solid fa-rotate"></i></button>
+                </div>
+            </div>
+
+            <!-- Footer Buttons -->
+            <div style="display: flex; justify-content: flex-end; gap: 12px; border-top: 1px solid var(--border-color); padding-top: 16px;">
+                <button type="button" id="cropperCancelBtn" class="btn btn-secondary" style="padding: 10px 20px;">İptal</button>
+                <button type="button" id="cropperSaveBtn" class="btn btn-primary" style="padding: 10px 20px; background-color: var(--primary); color: white;"><i class="fa-solid fa-check"></i> Kırp ve Kaydet</button>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

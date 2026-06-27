@@ -560,7 +560,37 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Göz At Dosya Okuyucu Fonksiyonları (FileReader & Base64)
+    // Göz At Dosya Okuyucu Fonksiyonları (FileReader & Base64 & Cropper.js)
+    let activeCropper = null;
+    const cropperModal = document.getElementById("cropperModal");
+    const cropperImage = document.getElementById("cropperImage");
+    const cropperAspectRatioSelect = document.getElementById("cropperAspectRatio");
+
+    // Close modal function
+    const closeCropperModal = () => {
+        if (cropperModal) cropperModal.style.display = "none";
+        if (activeCropper) {
+            activeCropper.destroy();
+            activeCropper = null;
+        }
+    };
+
+    // Modal kapatma dinleyicileri
+    document.getElementById("closeCropperModalBtn")?.addEventListener("click", closeCropperModal);
+    document.getElementById("cropperCancelBtn")?.addEventListener("click", closeCropperModal);
+
+    // Yakınlaştır / Uzaklaştır / Döndür butonları
+    document.getElementById("cropperZoomInBtn")?.addEventListener("click", () => activeCropper?.zoom(0.1));
+    document.getElementById("cropperZoomOutBtn")?.addEventListener("click", () => activeCropper?.zoom(-0.1));
+    document.getElementById("cropperRotateBtn")?.addEventListener("click", () => activeCropper?.rotate(45));
+
+    // En-Boy oranı değiştirici
+    cropperAspectRatioSelect?.addEventListener("change", (e) => {
+        if (activeCropper) {
+            activeCropper.setAspectRatio(parseFloat(e.target.value));
+        }
+    });
+
     const handleFileSelect = (fileInputId, textInputId, previewContainerId, previewImgId) => {
         const fileInput = document.getElementById(fileInputId);
         const textInput = document.getElementById(textInputId);
@@ -574,10 +604,46 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const reader = new FileReader();
                 reader.onload = (event) => {
-                    const base64String = event.target.result;
-                    if (textInput) textInput.value = base64String;
-                    if (previewImg) previewImg.src = base64String;
-                    if (previewContainer) previewContainer.style.display = "block";
+                    const rawImgUrl = event.target.result;
+                    
+                    // Modalı aç ve görseli yükle
+                    if (cropperModal && cropperImage) {
+                        cropperImage.src = rawImgUrl;
+                        cropperModal.style.display = "flex";
+
+                        // En boy oranını 1.5 varsayılanına eşitle
+                        if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "1.5";
+
+                        // Varsa önceki cropper'ı temizle
+                        if (activeCropper) activeCropper.destroy();
+
+                        // Cropper.js başlat
+                        activeCropper = new Cropper(cropperImage, {
+                            aspectRatio: 1.5,
+                            viewMode: 1,
+                            background: false,
+                            autoCropArea: 1,
+                            responsive: true
+                        });
+
+                        // Kaydet butonu dinleyicisini BU input için sıfırlayıp yeniden bağla
+                        const saveBtn = document.getElementById("cropperSaveBtn");
+                        const newSaveBtn = saveBtn.cloneNode(true);
+                        saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+                        newSaveBtn.addEventListener("click", () => {
+                            if (activeCropper) {
+                                // Seçilen alanı kesip Base64 veri yolunu al (Boyutu optimize etmek için 0.85 kalite)
+                                const croppedDataUrl = activeCropper.getCroppedCanvas().toDataURL('image/jpeg', 0.85);
+                                
+                                if (textInput) textInput.value = croppedDataUrl;
+                                if (previewImg) previewImg.src = croppedDataUrl;
+                                if (previewContainer) previewContainer.style.display = "block";
+                                
+                                closeCropperModal();
+                            }
+                        });
+                    }
                 };
                 reader.readAsDataURL(file);
             });
