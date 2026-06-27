@@ -74,7 +74,7 @@
                 
                 <!-- Stats Grid -->
                 <div class="stats-grid">
-                    <div class="stat-card stat-primary">
+                    <div class="stat-card stat-primary" style="cursor: pointer;" onclick="const btn = document.querySelector('.tab-btn[data-tab=\'applications\']'); if (btn) btn.click();">
                         <div class="stat-info">
                             <span class="stat-title">Aktif Üye Sayısı</span>
                             <span class="stat-value" id="statTotalMembers">0</span>
@@ -82,7 +82,7 @@
                         <div class="stat-icon"><i class="fa-solid fa-users"></i></div>
                     </div>
                     
-                    <div class="stat-card stat-warning">
+                    <div class="stat-card stat-warning" style="cursor: pointer;" onclick="const btn = document.querySelector('.tab-btn[data-tab=\'applications\']'); if (btn) btn.click();">
                         <div class="stat-info">
                             <span class="stat-title">Bekleyen Başvuru</span>
                             <span class="stat-value" id="statPendingApps">0</span>
@@ -90,7 +90,7 @@
                         <div class="stat-icon"><i class="fa-solid fa-user-clock"></i></div>
                     </div>
                     
-                    <div class="stat-card stat-danger">
+                    <div class="stat-card stat-danger" style="cursor: pointer;" onclick="const btn = document.querySelector('.tab-btn[data-tab=\'comments\']'); if (btn) btn.click();">
                         <div class="stat-info">
                             <span class="stat-title">Yorum Onayları</span>
                             <span class="stat-value" id="statPendingComments">0</span>
@@ -98,7 +98,7 @@
                         <div class="stat-icon"><i class="fa-solid fa-comment-dots"></i></div>
                     </div>
 
-                    <div class="stat-card stat-success">
+                    <div class="stat-card stat-success" style="cursor: pointer;" onclick="const btn = document.querySelector('.tab-btn[data-tab=\'announcements\']'); if (btn) btn.click();">
                         <div class="stat-info">
                             <span class="stat-title">Duyurular</span>
                             <span class="stat-value" id="statActiveAnnouncements">0</span>
@@ -116,7 +116,7 @@
                         <i class="fa-solid fa-comments"></i> Yorum Onayları
                     </button>
                     <button class="tab-btn" data-tab="announcements">
-                        <i class="fa-solid fa-bullhorn"></i> Duyuru Yayınla
+                        <i class="fa-solid fa-bullhorn"></i> Haber / Duyuru Yayınla
                     </button>
                     <button class="tab-btn" data-tab="suggestions">
                         <i class="fa-solid fa-inbox"></i> Gelen Kutusu
@@ -187,9 +187,9 @@
                 <!-- Tab: Publish Announcements -->
                 <div class="tab-content" id="announcementsTab">
                     <div class="admin-card" style="max-width: 800px;">
-                        <h3><i class="fa-solid fa-bullhorn" style="color: var(--secondary);"></i> Yeni Duyuru / Bildiri Yayınla</h3>
+                        <h3><i class="fa-solid fa-bullhorn" style="color: var(--secondary);"></i> Yeni Haber / Duyuru Yayınla</h3>
                         <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
-                            Buradan yayınlayacağınız duyuru ve kararlar üye portalı kontrol panelinde tüm üyeler için anında görüntülenecektir.
+                            Buradan yayınlayacağınız haber ve duyurular hem genel web sitesinde hem de üye portalında anında görüntülenecektir.
                         </p>
                         
                         <div class="alert-success" id="annSuccessAlert">
@@ -197,34 +197,50 @@
                         </div>
 
                         <form id="publishAnnouncementForm" class="admin-form">
+                            <input type="hidden" id="editAnnId" value="">
                             <div class="form-group">
-                                <label for="annTitle">Duyuru Başlığı</label>
-                                <input type="text" id="annTitle" class="form-control" placeholder="Duyurunun ana başlığı" required>
+                                <label for="annTitle">Haber / Duyuru Başlığı</label>
+                                <input type="text" id="annTitle" class="form-control" placeholder="Haber veya duyuru ana başlığı" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="annCategory">Kategori</label>
+                                <select id="annCategory" class="form-control" style="width: 100%; padding: 12px; border-radius: 10px; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-main); outline: none;">
+                                    <option value="Kurumsal">Kurumsal</option>
+                                    <option value="Erişilebilirlik">Erişilebilirlik</option>
+                                    <option value="Eğitim">Eğitim & İstihdam</option>
+                                    <option value="Sosyal">Spor & Sosyal</option>
+                                </select>
                             </div>
                             <div class="form-group">
                                 <label for="annImage">Görsel / Resim URL (İsteğe Bağlı)</label>
                                 <input type="text" id="annImage" class="form-control" placeholder="Örn: ../cover-kamp-istisare-toplantisi.webp veya boş bırakın">
                             </div>
                             <div class="form-group">
-                                <label for="annContent">Duyuru Metni / İçerik</label>
-                                <textarea id="annContent" class="form-control" rows="6" placeholder="Üyelere iletilecek mesaj detayları..." style="resize: none;" required></textarea>
+                                <label for="annContent">İçerik / Detay</label>
+                                <textarea id="annContent" class="form-control" rows="6" placeholder="Yayınlanacak haber veya mesaj detayları..." style="resize: none;" required></textarea>
                             </div>
-                            <button type="submit" class="btn btn-primary">
-                                <i class="fa-solid fa-paper-plane"></i> Duyuruyu Yayınla
-                            </button>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <button type="submit" class="btn btn-primary" id="submitAnnBtn">
+                                    <i class="fa-solid fa-paper-plane"></i> Yayınla
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="cancelEditAnnBtn" style="display: none; padding: 12px 24px; font-weight: 600; border-radius: 10px; border: none; cursor: pointer; transition: var(--transition);">
+                                    <i class="fa-solid fa-times"></i> Düzenlemeyi İptal Et
+                                </button>
+                            </div>
                         </form>
                     </div>
 
                     <div class="admin-card" style="margin-top: 32px;">
-                        <h3><i class="fa-solid fa-list" style="color: var(--primary);"></i> Yayınlanmış Duyurular</h3>
+                        <h3><i class="fa-solid fa-list" style="color: var(--primary);"></i> Yayınlanmış Haberler & Duyurular</h3>
                         <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
-                            Daha önce yayınlanmış olan duyuruları aşağıdan görüntüleyebilir veya silebilirsiniz.
+                            Daha önce yayınlanmış olan haber ve duyuruları aşağıdan görüntüleyebilir, düzenleyebilir veya silebilirsiniz.
                         </p>
                         <div class="table-responsive">
                              <table class="admin-table">
                                  <thead>
                                      <tr>
-                                         <th>Duyuru Başlığı</th>
+                                         <th>Başlık</th>
+                                         <th>Kategori</th>
                                          <th>Tarih</th>
                                          <th>Görsel</th>
                                          <th>İşlemler</th>

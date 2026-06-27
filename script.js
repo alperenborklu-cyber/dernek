@@ -603,7 +603,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="news-date">${ann.date}</span>
                 </div>
                 <div class="news-content">
-                    <span class="news-category">Duyuru</span>
+                    <span class="news-category">${ann.category || 'Kurumsal'}</span>
                     <h3>${ann.title}</h3>
                     <p>${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
                     <a href="member/dashboard.html" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
@@ -611,6 +611,39 @@ document.addEventListener('DOMContentLoaded', () => {
             `;
             newsGrid.insertBefore(card, newsGrid.firstChild);
         });
+
+        // Haber Listesi Filtreleme Mantığı (Public haberler.html için)
+        const filterButtons = document.querySelectorAll('.filter-container .filter-btn');
+        if (filterButtons.length > 0) {
+            filterButtons.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterButtons.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filterText = btn.textContent.trim().toLowerCase();
+                    const cards = newsGrid.querySelectorAll('.news-card');
+
+                    cards.forEach(card => {
+                        const categoryEl = card.querySelector('.news-category');
+                        if (!categoryEl) return;
+                        
+                        const categoryText = categoryEl.textContent.trim().toLowerCase();
+                        
+                        if (filterText === 'hepsi') {
+                            card.style.display = 'block';
+                        } else if (filterText === 'eğitim & i̇stihdam' && (categoryText.includes('eğitim') || categoryText.includes('istihdam'))) {
+                            card.style.display = 'block';
+                        } else if (filterText === 'spor & sosyal' && (categoryText.includes('spor') || categoryText.includes('sosyal'))) {
+                            card.style.display = 'block';
+                        } else if (categoryText.includes(filterText) || filterText.includes(categoryText)) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
     }
 
     const sliderTrack = document.querySelector('.news-slider-track');
@@ -628,7 +661,7 @@ document.addEventListener('DOMContentLoaded', () => {
             slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url('${imagePath}')`;
             slide.innerHTML = `
                 <div class="news-slide-content">
-                    <span class="news-slide-category">Duyuru</span>
+                    <span class="news-slide-category">${ann.category || 'Kurumsal'}</span>
                     <span class="news-slide-date">${ann.date}</span>
                     <h3 class="news-slide-title">${ann.title}</h3>
                     <p class="news-slide-desc">${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>

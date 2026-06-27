@@ -185,38 +185,77 @@ document.addEventListener("DOMContentLoaded", () => {
         `).join('');
     };
 
-    // 8. Yeni Duyuru Ekleme
+    // 8. Yeni Duyuru Ekleme ve Güncelleme
     const announcementForm = document.getElementById("publishAnnouncementForm");
+    const editAnnIdInput = document.getElementById("editAnnId");
+    const submitAnnBtn = document.getElementById("submitAnnBtn");
+    const cancelEditAnnBtn = document.getElementById("cancelEditAnnBtn");
+    const annFormTitle = document.querySelector("#announcementsTab h3");
+
     if (announcementForm) {
         announcementForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const title = document.getElementById("annTitle").value.trim();
+            const category = document.getElementById("annCategory").value;
             const image = document.getElementById("annImage").value.trim();
             const content = document.getElementById("annContent").value.trim();
             const alertBox = document.getElementById("annSuccessAlert");
+            const editId = editAnnIdInput ? editAnnIdInput.value : "";
 
             if (!title || !content) return;
 
             const announcements = JSON.parse(localStorage.getItem("announcements") || "[]");
-            const newAnn = {
-                id: "ann-" + Date.now(),
-                title: title,
-                content: content,
-                image: image || "",
-                date: new Date().toISOString().split('T')[0]
-            };
 
-            announcements.unshift(newAnn); // En üste ekle
-            localStorage.setItem("announcements", JSON.stringify(announcements));
-            
-            announcementForm.reset();
+            if (editId) {
+                // Güncelleme Modu
+                const idx = announcements.findIndex(ann => ann.id === editId);
+                if (idx !== -1) {
+                    announcements[idx].title = title;
+                    announcements[idx].category = category;
+                    announcements[idx].image = image || "";
+                    announcements[idx].content = content;
+                    localStorage.setItem("announcements", JSON.stringify(announcements));
+                    
+                    alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla güncellendi!';
+                    resetAnnForm();
+                }
+            } else {
+                // Yeni Kayıt Modu
+                const newAnn = {
+                    id: "ann-" + Date.now(),
+                    title: title,
+                    category: category,
+                    content: content,
+                    image: image || "",
+                    date: new Date().toISOString().split('T')[0]
+                };
+                announcements.unshift(newAnn); // En üste ekle
+                localStorage.setItem("announcements", JSON.stringify(announcements));
+                
+                alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla yayınlandı!';
+                announcementForm.reset();
+            }
+
             alertBox.style.display = "block";
-            
             setTimeout(() => {
                 alertBox.style.display = "none";
             }, 3000);
 
             renderAll();
+        });
+    }
+
+    const resetAnnForm = () => {
+        if (announcementForm) announcementForm.reset();
+        if (editAnnIdInput) editAnnIdInput.value = "";
+        if (submitAnnBtn) submitAnnBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Yayınla';
+        if (cancelEditAnnBtn) cancelEditAnnBtn.style.display = "none";
+        if (annFormTitle) annFormTitle.innerHTML = '<i class="fa-solid fa-bullhorn" style="color: var(--secondary);"></i> Yeni Haber / Duyuru Yayınla';
+    };
+
+    if (cancelEditAnnBtn) {
+        cancelEditAnnBtn.addEventListener("click", () => {
+            resetAnnForm();
         });
     }
 
@@ -228,16 +267,18 @@ document.addEventListener("DOMContentLoaded", () => {
         const announcements = JSON.parse(localStorage.getItem("announcements") || "[]");
 
         if (announcements.length === 0) {
-            tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Yayınlanmış duyuru bulunmamaktadır.</td></tr>`;
+            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Yayınlanmış haber veya duyuru bulunmamaktadır.</td></tr>`;
             return;
         }
 
         tableBody.innerHTML = announcements.map(ann => `
             <tr>
                 <td><strong>${ann.title}</strong></td>
+                <td><span class="badge badge-approved" style="background-color: rgba(0, 92, 230, 0.1); color: var(--primary);">${ann.category || 'Kurumsal'}</span></td>
                 <td>${ann.date}</td>
                 <td>${ann.image ? `<img src="${ann.image}" style="height: 40px; max-width: 80px; object-fit: cover; border-radius: 4px;" alt="Görsel">` : '<span style="color: var(--text-muted); font-size: 0.85rem;">Görsel Yok</span>'}</td>
                 <td>
+                    <button class="btn btn-warning btn-sm btn-edit-announcement" data-id="${ann.id}" style="background-color: #f59e0b; color: white;"><i class="fa-solid fa-edit"></i> Düzenle</button>
                     <button class="btn btn-danger btn-sm btn-delete-announcement" data-id="${ann.id}"><i class="fa-solid fa-trash"></i> Sil</button>
                 </td>
             </tr>
@@ -251,7 +292,35 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allAnnouncements = JSON.parse(localStorage.getItem("announcements") || "[]");
                     const updatedAnnouncements = allAnnouncements.filter(ann => ann.id !== id);
                     localStorage.setItem("announcements", JSON.stringify(updatedAnnouncements));
+                    // Düzenlenen duyuru silinirse formu sıfırla
+                    if (editAnnIdInput && editAnnIdInput.value === id) {
+                        resetAnnForm();
+                    }
                     renderAll();
+                }
+            });
+        });
+
+        // Duyuru Düzenleme Olayı
+        document.querySelectorAll(".btn-edit-announcement").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.getAttribute("data-id");
+                const allAnnouncements = JSON.parse(localStorage.getItem("announcements") || "[]");
+                const ann = allAnnouncements.find(a => a.id === id);
+
+                if (ann) {
+                    document.getElementById("annTitle").value = ann.title;
+                    document.getElementById("annCategory").value = ann.category || "Kurumsal";
+                    document.getElementById("annImage").value = ann.image || "";
+                    document.getElementById("annContent").value = ann.content;
+                    if (editAnnIdInput) editAnnIdInput.value = ann.id;
+
+                    if (submitAnnBtn) submitAnnBtn.innerHTML = '<i class="fa-solid fa-save"></i> Değişiklikleri Kaydet';
+                    if (cancelEditAnnBtn) cancelEditAnnBtn.style.display = "inline-flex";
+                    if (annFormTitle) annFormTitle.innerHTML = '<i class="fa-solid fa-edit" style="color: var(--secondary);"></i> Haberi / Duyuruyu Düzenle';
+
+                    // Form alanına yumuşak geçiş yap
+                    document.getElementById("publishAnnouncementForm").scrollIntoView({ behavior: 'smooth' });
                 }
             });
         });
