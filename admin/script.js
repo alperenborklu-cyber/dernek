@@ -198,9 +198,13 @@ document.addEventListener("DOMContentLoaded", () => {
             const title = document.getElementById("annTitle").value.trim();
             const category = document.getElementById("annCategory").value;
             const image = document.getElementById("annImage").value.trim();
+            const imagePosition = document.getElementById("annImagePosition").value;
             const image1 = document.getElementById("annImage1").value.trim();
+            const image1Position = document.getElementById("annImage1Position").value;
             const image2 = document.getElementById("annImage2").value.trim();
+            const image2Position = document.getElementById("annImage2Position").value;
             const image3 = document.getElementById("annImage3").value.trim();
+            const image3Position = document.getElementById("annImage3Position").value;
             const content = document.getElementById("annContent").value.trim();
             const alertBox = document.getElementById("annSuccessAlert");
             const editId = editAnnIdInput ? editAnnIdInput.value : "";
@@ -216,9 +220,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     announcements[idx].title = title;
                     announcements[idx].category = category;
                     announcements[idx].image = image || "";
+                    announcements[idx].imagePosition = imagePosition || "top";
                     announcements[idx].image1 = image1 || "";
+                    announcements[idx].image1Position = image1Position || "gallery";
                     announcements[idx].image2 = image2 || "";
+                    announcements[idx].image2Position = image2Position || "gallery";
                     announcements[idx].image3 = image3 || "";
+                    announcements[idx].image3Position = image3Position || "gallery";
                     announcements[idx].content = content;
                     localStorage.setItem("announcements", JSON.stringify(announcements));
                     
@@ -233,9 +241,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     category: category,
                     content: content,
                     image: image || "",
+                    imagePosition: imagePosition || "top",
                     image1: image1 || "",
+                    image1Position: image1Position || "gallery",
                     image2: image2 || "",
+                    image2Position: image2Position || "gallery",
                     image3: image3 || "",
+                    image3Position: image3Position || "gallery",
                     date: new Date().toISOString().split('T')[0]
                 };
                 announcements.unshift(newAnn); // En üste ekle
@@ -267,6 +279,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (previewContainer) previewContainer.style.display = "none";
         const previewImg = document.getElementById("annImagePreview");
         if (previewImg) previewImg.src = "";
+        const imagePosSelect = document.getElementById("annImagePosition");
+        if (imagePosSelect) imagePosSelect.value = "top";
 
         // Ek resim önizleme sıfırla
         for (let i = 1; i <= 3; i++) {
@@ -278,6 +292,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (extraInput) extraInput.value = "";
             const extraFileInput = document.getElementById(`annImage${i}File`);
             if (extraFileInput) extraFileInput.value = "";
+            const extraPosSelect = document.getElementById(`annImage${i}Position`);
+            if (extraPosSelect) extraPosSelect.value = "gallery";
         }
     };
 
@@ -340,9 +356,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("annTitle").value = ann.title;
                     document.getElementById("annCategory").value = ann.category || "Kurumsal";
                     document.getElementById("annImage").value = ann.image || "";
+                    document.getElementById("annImagePosition").value = ann.imagePosition || "top";
                     document.getElementById("annImage1").value = ann.image1 || "";
+                    document.getElementById("annImage1Position").value = ann.image1Position || "gallery";
                     document.getElementById("annImage2").value = ann.image2 || "";
+                    document.getElementById("annImage2Position").value = ann.image2Position || "gallery";
                     document.getElementById("annImage3").value = ann.image3 || "";
+                    document.getElementById("annImage3Position").value = ann.image3Position || "gallery";
                     document.getElementById("annContent").value = ann.content;
                     if (editAnnIdInput) editAnnIdInput.value = ann.id;
 

@@ -224,6 +224,13 @@
                                     <img id="annImagePreview" src="" style="width: 100%; height: 100%; object-fit: cover;">
                                     <button type="button" id="removeAnnImageBtn" style="position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;"><i class="fa-solid fa-times"></i></button>
                                 </div>
+                                <div style="margin-top: 8px;">
+                                    <label for="annImagePosition" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 500;">Görsel Konumu:</label>
+                                    <select id="annImagePosition" style="padding: 6px 12px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-size: 0.8rem; outline: none; margin-left: 6px;">
+                                        <option value="top">Haberin Üstünde (Varsayılan)</option>
+                                        <option value="bottom">Haberin En Altında</option>
+                                    </select>
+                                </div>
                             </div>
 
                             <!-- Ek Görseller Bölümü -->
@@ -232,11 +239,11 @@
                                     <i class="fa-solid fa-images" style="color: var(--primary);"></i> Ek Haber Görselleri (İsteğe Bağlı - En Fazla 3 Adet)
                                 </h4>
                                 <p style="font-size: 0.8rem; color: var(--text-muted); margin-bottom: 16px; line-height: 1.4;">
-                                    <strong>İpucu:</strong> Haber içeriğinde bu resimlerin görünmesini istediğiniz satıra sırasıyla <code>[RESIM1]</code>, <code>[RESIM2]</code>, <code>[RESIM3]</code> yazarak konumlarını serbestçe belirleyebilirsiniz. Yazmazsanız görseller en altta gösterilir.
+                                    <strong>İpucu:</strong> Görsel konumunu aşağıdaki açılır kutulardan seçebilir veya metin içerisinde çıkmasını istediğiniz satıra sırasıyla <code>[RESIM1]</code>, <code>[RESIM2]</code>, <code>[RESIM3]</code> yazarak elle de yerleşim yapabilirsiniz.
                                 </p>
                                 
                                 <!-- Ek Görsel 1 -->
-                                <div class="form-group" style="margin-bottom: 12px;">
+                                <div class="form-group" style="margin-bottom: 16px;">
                                     <label for="annImage1" style="font-size: 0.85rem;">Ek Görsel 1</label>
                                     <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 6px;">
                                         <input type="text" id="annImage1" class="form-control" placeholder="URL veya Göz At..." style="flex: 1; padding: 8px;">
@@ -245,14 +252,26 @@
                                             <input type="file" id="annImage1File" accept="image/*" style="display: none;">
                                         </label>
                                     </div>
-                                    <div id="annImage1PreviewContainer" style="display: none; margin-top: 6px; position: relative; width: 90px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
-                                        <img id="annImage1Preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
-                                        <button type="button" id="removeAnnImage1Btn" style="position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem;"><i class="fa-solid fa-times"></i></button>
+                                    <div style="display: flex; gap: 15px; align-items: center;">
+                                        <div id="annImage1PreviewContainer" style="display: none; position: relative; width: 90px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
+                                            <img id="annImage1Preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <button type="button" id="removeAnnImage1Btn" style="position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem;"><i class="fa-solid fa-times"></i></button>
+                                        </div>
+                                        <div>
+                                            <label for="annImage1Position" style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Konum:</label>
+                                            <select id="annImage1Position" style="padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-size: 0.78rem; outline: none;">
+                                                <option value="gallery">En Altta Galeri Olarak (Varsayılan)</option>
+                                                <option value="top">Metnin En Üstünde</option>
+                                                <option value="p1">1. Paragraftan Sonra</option>
+                                                <option value="p2">2. Paragraftan Sonra</option>
+                                                <option value="custom">Özel Yerleşim ([RESIM1] ile)</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
                                 <!-- Ek Görsel 2 -->
-                                <div class="form-group" style="margin-bottom: 12px;">
+                                <div class="form-group" style="margin-bottom: 16px;">
                                     <label for="annImage2" style="font-size: 0.85rem;">Ek Görsel 2</label>
                                     <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 6px;">
                                         <input type="text" id="annImage2" class="form-control" placeholder="URL veya Göz At..." style="flex: 1; padding: 8px;">
@@ -261,9 +280,21 @@
                                             <input type="file" id="annImage2File" accept="image/*" style="display: none;">
                                         </label>
                                     </div>
-                                    <div id="annImage2PreviewContainer" style="display: none; margin-top: 6px; position: relative; width: 90px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
-                                        <img id="annImage2Preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
-                                        <button type="button" id="removeAnnImage2Btn" style="position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem;"><i class="fa-solid fa-times"></i></button>
+                                    <div style="display: flex; gap: 15px; align-items: center;">
+                                        <div id="annImage2PreviewContainer" style="display: none; position: relative; width: 90px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
+                                            <img id="annImage2Preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <button type="button" id="removeAnnImage2Btn" style="position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem;"><i class="fa-solid fa-times"></i></button>
+                                        </div>
+                                        <div>
+                                            <label for="annImage2Position" style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Konum:</label>
+                                            <select id="annImage2Position" style="padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-size: 0.78rem; outline: none;">
+                                                <option value="gallery">En Altta Galeri Olarak (Varsayılan)</option>
+                                                <option value="top">Metnin En Üstünde</option>
+                                                <option value="p1">1. Paragraftan Sonra</option>
+                                                <option value="p2">2. Paragraftan Sonra</option>
+                                                <option value="custom">Özel Yerleşim ([RESIM2] ile)</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -277,9 +308,21 @@
                                             <input type="file" id="annImage3File" accept="image/*" style="display: none;">
                                         </label>
                                     </div>
-                                    <div id="annImage3PreviewContainer" style="display: none; margin-top: 6px; position: relative; width: 90px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
-                                        <img id="annImage3Preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
-                                        <button type="button" id="removeAnnImage3Btn" style="position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem;"><i class="fa-solid fa-times"></i></button>
+                                    <div style="display: flex; gap: 15px; align-items: center;">
+                                        <div id="annImage3PreviewContainer" style="display: none; position: relative; width: 90px; height: 60px; border-radius: 6px; overflow: hidden; border: 1px solid var(--border-color);">
+                                            <img id="annImage3Preview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                                            <button type="button" id="removeAnnImage3Btn" style="position: absolute; top: 2px; right: 2px; width: 16px; height: 16px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.65rem;"><i class="fa-solid fa-times"></i></button>
+                                        </div>
+                                        <div>
+                                            <label for="annImage3Position" style="font-size: 0.78rem; color: var(--text-muted); display: block; margin-bottom: 4px;">Konum:</label>
+                                            <select id="annImage3Position" style="padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main); font-size: 0.78rem; outline: none;">
+                                                <option value="gallery">En Altta Galeri Olarak (Varsayılan)</option>
+                                                <option value="top">Metnin En Üstünde</option>
+                                                <option value="p1">1. Paragraftan Sonra</option>
+                                                <option value="p2">2. Paragraftan Sonra</option>
+                                                <option value="custom">Özel Yerleşim ([RESIM3] ile)</option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

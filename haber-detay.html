@@ -183,48 +183,71 @@
                 imagePath = imagePath.substring(3);
             }
 
-            // Ek resim tanımları
+            // Ek resim tanımları ve konumları
             const extraImages = {
                 1: ann.image1,
                 2: ann.image2,
                 3: ann.image3
             };
+            const extraPositions = {
+                1: ann.image1Position || 'gallery',
+                2: ann.image2Position || 'gallery',
+                3: ann.image3Position || 'gallery'
+            };
             const usedImages = { 1: false, 2: false, 3: false };
 
-            // Paragrafları dönüştürürken placeholder'ları yakalayalım
+            // Helper to get formatted image element
+            const getInlineImgHTML = (index) => {
+                const imgUrl = extraImages[index];
+                if (!imgUrl) return '';
+                let cleanImgUrl = imgUrl;
+                if (cleanImgUrl.startsWith('../')) {
+                    cleanImgUrl = cleanImgUrl.substring(3);
+                }
+                usedImages[index] = true;
+                return `
+                    <div class="news-inline-image" style="margin: 28px 0; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
+                        <img src="${cleanImgUrl}" style="width: 100%; height: auto; max-height: 480px; object-fit: cover; display: block;" alt="Haber Görseli ${index}">
+                    </div>
+                `;
+            };
+
+            // Paragrafları dönüştürürken placeholder'ları yakalayalım ve konum seçeneklerine göre yerleştirelim
             let bodyHTML = '';
-            const paragraphs = ann.content.split('\n');
+            const paragraphs = ann.content.split('\n').map(p => p.trim()).filter(p => p);
 
-            paragraphs.forEach(para => {
-                let paraText = para.trim();
-                if (!paraText) return;
+            // Metnin en üstüne gelmesi gereken ek görseller
+            for (let i = 1; i <= 3; i++) {
+                if (extraImages[i] && extraPositions[i] === 'top') {
+                    bodyHTML += getInlineImgHTML(i);
+                }
+            }
 
+            paragraphs.forEach((paraText, index) => {
                 // [RESIM1], [RESIM2], [RESIM3] tespiti
-                let foundImage = false;
+                let foundPlaceholder = false;
                 for (let i = 1; i <= 3; i++) {
                     const placeholder = `[RESIM${i}]`;
                     if (paraText.includes(placeholder)) {
-                        const imgUrl = extraImages[i];
-                        if (imgUrl) {
-                            let cleanImgUrl = imgUrl;
-                            if (cleanImgUrl.startsWith('../')) {
-                                cleanImgUrl = cleanImgUrl.substring(3);
-                            }
-                            // Placeholder'ı içeren paragrafı resim olarak render et
-                            bodyHTML += `
-                                <div class="news-inline-image" style="margin: 28px 0; border-radius: 16px; overflow: hidden; box-shadow: var(--shadow-md); border: 1px solid var(--border-color);">
-                                    <img src="${cleanImgUrl}" style="width: 100%; height: auto; max-height: 480px; object-fit: cover; display: block;" alt="Haber Detay Görseli ${i}">
-                                </div>
-                            `;
-                            usedImages[i] = true;
-                        }
-                        foundImage = true;
+                        bodyHTML += getInlineImgHTML(i);
+                        foundPlaceholder = true;
                         break;
                     }
                 }
 
-                if (!foundImage) {
+                if (!foundPlaceholder) {
                     bodyHTML += `<p style="margin-bottom: 20px;">${paraText}</p>`;
+                }
+
+                // Paragraf sonrası yerleşimleri (p1 -> 1. paragraftan sonra, p2 -> 2. paragraftan sonra)
+                const currentParaNum = index + 1;
+                for (let i = 1; i <= 3; i++) {
+                    if (extraImages[i] && !usedImages[i]) {
+                        if ((extraPositions[i] === 'p1' && currentParaNum === 1) || 
+                            (extraPositions[i] === 'p2' && currentParaNum === 2)) {
+                            bodyHTML += getInlineImgHTML(i);
+                        }
+                    }
                 }
             });
 
@@ -257,8 +280,13 @@
                 `;
             }
 
+            // Ana Resmin Konumu (imagePosition === 'top' veya 'bottom')
+            const mainImgHTML = `<img src="${imagePath}" alt="${ann.title}" class="main-img" style="width: 100%; border-radius: 20px; margin-bottom: 24px; max-height: 480px; object-fit: cover;">`;
+            const mainImgTop = (ann.imagePosition || 'top') === 'top' ? mainImgHTML : '';
+            const mainImgBottom = (ann.imagePosition || 'top') === 'bottom' ? `<div style="margin-top: 30px;">${mainImgHTML}</div>` : '';
+
             container.innerHTML = `
-                <img src="${imagePath}" alt="${ann.title}" class="main-img" style="width: 100%; border-radius: 20px; margin-bottom: 24px; max-height: 480px; object-fit: cover;">
+                ${mainImgTop}
                 <div class="news-meta" style="margin-bottom: 20px; display: flex; gap: 15px; color: var(--text-muted); font-size: 0.9rem;">
                     <span><i class="fa-solid fa-tag" style="color: var(--primary);"></i> ${ann.category || 'Kurumsal'}</span>
                     <span><i class="fa-regular fa-calendar" style="color: var(--primary);"></i> ${ann.date}</span>
@@ -267,6 +295,7 @@
                 <div class="news-body-text" style="font-size: 1.05rem; line-height: 1.8; color: var(--text-main); text-align: justify;">
                     ${bodyHTML}
                 </div>
+                ${mainImgBottom}
             `;
         });
     </script>
