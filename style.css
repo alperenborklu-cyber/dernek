@@ -3963,10 +3963,10 @@ body.dark-mode .news-ticker-bar {
     position: relative;
 }
 .news-slide:nth-child(2) {
-    background-position: center 15%;
+    background-position: center 30%;
 }
 .news-slide:nth-child(3) {
-    background-position: center 15%;
+    background-position: center 30%;
 }
 .news-slide-content {
     max-width: 650px;
