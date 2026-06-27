@@ -251,6 +251,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (submitAnnBtn) submitAnnBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Yayınla';
         if (cancelEditAnnBtn) cancelEditAnnBtn.style.display = "none";
         if (annFormTitle) annFormTitle.innerHTML = '<i class="fa-solid fa-bullhorn" style="color: var(--secondary);"></i> Yeni Haber / Duyuru Yayınla';
+        const previewContainer = document.getElementById("annImagePreviewContainer");
+        if (previewContainer) previewContainer.style.display = "none";
+        const previewImg = document.getElementById("annImagePreview");
+        if (previewImg) previewImg.src = "";
     };
 
     if (cancelEditAnnBtn) {
@@ -314,6 +318,15 @@ document.addEventListener("DOMContentLoaded", () => {
                     document.getElementById("annImage").value = ann.image || "";
                     document.getElementById("annContent").value = ann.content;
                     if (editAnnIdInput) editAnnIdInput.value = ann.id;
+
+                    const previewContainer = document.getElementById("annImagePreviewContainer");
+                    const previewImg = document.getElementById("annImagePreview");
+                    if (ann.image) {
+                        if (previewImg) previewImg.src = ann.image;
+                        if (previewContainer) previewContainer.style.display = "block";
+                    } else {
+                        if (previewContainer) previewContainer.style.display = "none";
+                    }
 
                     if (submitAnnBtn) submitAnnBtn.innerHTML = '<i class="fa-solid fa-save"></i> Değişiklikleri Kaydet';
                     if (cancelEditAnnBtn) cancelEditAnnBtn.style.display = "inline-flex";
@@ -419,6 +432,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
             // Form Sıfırla
             addProjectForm.reset();
+            const projPreviewContainer = document.getElementById("projImagePreviewContainer");
+            if (projPreviewContainer) projPreviewContainer.style.display = "none";
+            const projPreviewImg = document.getElementById("projImagePreview");
+            if (projPreviewImg) projPreviewImg.src = "";
             
             // Başarı Mesajı Göster
             if (alertBox) {
@@ -482,4 +499,52 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // Göz At Dosya Okuyucu Fonksiyonları (FileReader & Base64)
+    const handleFileSelect = (fileInputId, textInputId, previewContainerId, previewImgId) => {
+        const fileInput = document.getElementById(fileInputId);
+        const textInput = document.getElementById(textInputId);
+        const previewContainer = document.getElementById(previewContainerId);
+        const previewImg = document.getElementById(previewImgId);
+
+        if (fileInput) {
+            fileInput.addEventListener("change", (e) => {
+                const file = e.target.files[0];
+                if (!file) return;
+
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const base64String = event.target.result;
+                    if (textInput) textInput.value = base64String;
+                    if (previewImg) previewImg.src = base64String;
+                    if (previewContainer) previewContainer.style.display = "block";
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    };
+
+    handleFileSelect("annImageFile", "annImage", "annImagePreviewContainer", "annImagePreview");
+    handleFileSelect("projImageFile", "projImage", "projImagePreviewContainer", "projImagePreview");
+
+    // Silme Butonları Olayı
+    const registerRemoveImageHandler = (removeBtnId, textInputId, previewContainerId, previewImgId, fileInputId) => {
+        const btn = document.getElementById(removeBtnId);
+        if (btn) {
+            btn.addEventListener("click", () => {
+                const textInput = document.getElementById(textInputId);
+                const previewContainer = document.getElementById(previewContainerId);
+                const previewImg = document.getElementById(previewImgId);
+                const fileInput = document.getElementById(fileInputId);
+
+                if (textInput) textInput.value = "";
+                if (previewImg) previewImg.src = "";
+                if (previewContainer) previewContainer.style.display = "none";
+                if (fileInput) fileInput.value = "";
+            });
+        }
+    };
+
+    registerRemoveImageHandler("removeAnnImageBtn", "annImage", "annImagePreviewContainer", "annImagePreview", "annImageFile");
+    registerRemoveImageHandler("removeProjImageBtn", "projImage", "projImagePreviewContainer", "projImagePreview", "projImageFile");
 });
