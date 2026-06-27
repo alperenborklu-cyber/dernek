@@ -1,13 +1,62 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // 1. Preloader logic
+    // 1. Preloader logic & Visual splash screen transition
     const preloader = document.getElementById('preloader');
     
-    // Simulate some loading time to show off the fancy preloader (Optional)
-    // Normally we just wait for 'load' event on window.
     window.addEventListener('load', () => {
         setTimeout(() => {
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
+            if (preloader) {
+                const loaderContainer = preloader.querySelector('.loader-container');
+                if (loaderContainer) {
+                    loaderContainer.style.transition = 'opacity 0.5s ease';
+                    loaderContainer.style.opacity = '0';
+                    setTimeout(() => {
+                        loaderContainer.style.display = 'none';
+                        
+                        // Create visual elements
+                        const visualDiv = document.createElement('div');
+                        visualDiv.className = 'preloader-visual';
+                        
+                        // Detect path depth to correct the visual image path if on subpages
+                        const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+                        const prefix = isSubDir ? '../' : '';
+                        
+                        visualDiv.innerHTML = `
+                            <img src="${prefix}gonul-koprusu-engelli-memur-ve-isci-dernegi.jpeg" alt="Gönül Köprüsü Görseli">
+                            <button class="skip-btn">Siteye Giriş Yap <i class="fa-solid fa-arrow-right"></i></button>
+                        `;
+                        preloader.appendChild(visualDiv);
+                        
+                        // Trigger reflow/animation
+                        setTimeout(() => {
+                            visualDiv.classList.add('active');
+                        }, 50);
+
+                        // Setup helper to close the intro screen
+                        const closeIntro = () => {
+                            preloader.style.opacity = '0';
+                            preloader.style.visibility = 'hidden';
+                            setTimeout(() => {
+                                preloader.style.display = 'none';
+                            }, 500);
+                        };
+
+                        // Auto close after 3.5 seconds
+                        const autoCloseTimeout = setTimeout(closeIntro, 3500);
+
+                        // Manual close on click
+                        const skipBtn = visualDiv.querySelector('.skip-btn');
+                        if (skipBtn) {
+                            skipBtn.addEventListener('click', () => {
+                                clearTimeout(autoCloseTimeout);
+                                closeIntro();
+                            });
+                        }
+                    }, 500);
+                } else {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                }
+            }
         }, 500); // Wait half a second for dramatic effect
     });
 
