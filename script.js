@@ -137,9 +137,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button id="text-decrease" title="Yazı Boyutunu Azalt" aria-label="Yazı Boyutunu Azalt"><i class="fa-solid fa-minus"></i> A</button>
                     </div>
                     <div class="top-bar-socials">
-                        <a href="#" target="_blank" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://www.facebook.com/profile.php?id=61580571335657" target="_blank" title="Facebook" aria-label="Facebook"><i class="fa-brands fa-facebook-f"></i></a>
                         <a href="https://x.com/GnlKprsu" target="_blank" title="X (Twitter)" aria-label="Twitter"><i class="fa-brands fa-x-twitter"></i></a>
-                        <a href="#" target="_blank" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.instagram.com/koprusu.gonul/" target="_blank" title="Instagram" aria-label="Instagram"><i class="fa-brands fa-instagram"></i></a>
                         <a href="#" target="_blank" title="YouTube" aria-label="YouTube"><i class="fa-brands fa-youtube"></i></a>
                     </div>
                 </div>
@@ -331,6 +331,14 @@ document.addEventListener('DOMContentLoaded', () => {
     document.body.appendChild(contactContainer);
     // 8. Stats Counter Animation
     const stats = document.querySelectorAll('.stat-number');
+    
+    // Update Kayıtlı Üye count dynamically based on registered members in localStorage
+    const memberStat = Array.from(stats).find(el => el.nextElementSibling && el.nextElementSibling.textContent.includes('Kayıtlı Üye'));
+    if (memberStat) {
+        const members = JSON.parse(localStorage.getItem('members') || '[]');
+        // We use base 1000 + number of registered members
+        memberStat.setAttribute('data-target', 1000 + members.length);
+    }
     
     const formatNumber = (num) => {
         if (num >= 10000) {
