@@ -308,4 +308,57 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // 12. Şifre Değiştirme Formu Dinleyicisi
+    const changePasswordForm = document.getElementById("changePasswordForm");
+    if (changePasswordForm) {
+        changePasswordForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const currentPassword = document.getElementById("currentPassword").value;
+            const newPassword = document.getElementById("newPassword").value;
+            const newPasswordConfirm = document.getElementById("newPasswordConfirm").value;
+            
+            const successAlert = document.getElementById("settingsSuccessAlert");
+            const errorAlert = document.getElementById("settingsErrorAlert");
+            
+            if (successAlert) successAlert.style.display = "none";
+            if (errorAlert) errorAlert.style.display = "none";
+            
+            const storedAdminPassword = localStorage.getItem("admin_password") || "admin123";
+            
+            if (currentPassword !== storedAdminPassword) {
+                if (errorAlert) {
+                    errorAlert.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Hata: Mevcut şifreniz yanlış!';
+                    errorAlert.style.display = "block";
+                }
+                return;
+            }
+            
+            if (newPassword !== newPasswordConfirm) {
+                if (errorAlert) {
+                    errorAlert.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Hata: Yeni şifreler eşleşmiyor!';
+                    errorAlert.style.display = "block";
+                }
+                return;
+            }
+            
+            if (newPassword.length < 6) {
+                if (errorAlert) {
+                    errorAlert.innerHTML = '<i class="fa-solid fa-circle-xmark"></i> Hata: Yeni şifre en az 6 karakter olmalıdır!';
+                    errorAlert.style.display = "block";
+                }
+                return;
+            }
+            
+            localStorage.setItem("admin_password", newPassword);
+            changePasswordForm.reset();
+            
+            if (successAlert) {
+                successAlert.style.display = "block";
+                setTimeout(() => {
+                    successAlert.style.display = "none";
+                }, 4000);
+            }
+        });
+    }
 });

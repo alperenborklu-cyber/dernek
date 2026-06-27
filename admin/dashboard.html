@@ -121,6 +121,9 @@
                     <button class="tab-btn" data-tab="projects">
                         <i class="fa-solid fa-briefcase"></i> Proje Ekle
                     </button>
+                    <button class="tab-btn" data-tab="settings">
+                        <i class="fa-solid fa-key"></i> Şifre Değiştir
+                    </button>
                 </div>
 
                 <!-- Tab: Applications -->
@@ -275,6 +278,41 @@
                             </div>
                             <button type="submit" class="btn btn-primary" style="padding: 12px 24px; background-color: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
                                 <i class="fa-solid fa-plus"></i> Projeyi Ekle
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Tab: Settings (Password Change) -->
+                <div class="tab-content" id="settingsTab">
+                    <div class="admin-card" style="max-width: 800px;">
+                        <h3><i class="fa-solid fa-key" style="color: var(--primary);"></i> Yönetici Şifresini Değiştir</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Güvenliğiniz için yönetici paneli giriş şifrenizi buradan değiştirebilirsiniz.
+                        </p>
+                        
+                        <div class="alert-success" id="settingsSuccessAlert" style="display: none; padding: 12px; background-color: #d1fae5; color: #065f46; border-radius: 8px; margin-bottom: 20px;">
+                            <i class="fa-solid fa-circle-check"></i> Şifreniz başarıyla güncellendi!
+                        </div>
+                        <div class="alert-danger" id="settingsErrorAlert" style="display: none; padding: 12px; background-color: #fee2e2; color: #b91c1c; border-radius: 8px; margin-bottom: 20px;">
+                            <i class="fa-solid fa-circle-xmark"></i> Hata oluştu. Lütfen bilgileri kontrol edin.
+                        </div>
+
+                        <form id="changePasswordForm" class="admin-form">
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="currentPassword" style="display: block; margin-bottom: 8px; font-weight: 500;">Mevcut Şifre</label>
+                                <input type="password" id="currentPassword" class="form-control" placeholder="Mevcut şifreniz" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="newPassword" style="display: block; margin-bottom: 8px; font-weight: 500;">Yeni Şifre</label>
+                                <input type="password" id="newPassword" class="form-control" placeholder="Yeni şifreniz" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="newPasswordConfirm" style="display: block; margin-bottom: 8px; font-weight: 500;">Yeni Şifre (Tekrar)</label>
+                                <input type="password" id="newPasswordConfirm" class="form-control" placeholder="Yeni şifrenizi tekrar girin" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary" style="padding: 12px 24px; background-color: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                                <i class="fa-solid fa-save"></i> Şifreyi Güncelle
                             </button>
                         </form>
                     </div>

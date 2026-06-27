@@ -80,8 +80,12 @@ function initializeDatabase() {
         localStorage.setItem("announcements", JSON.stringify(DEFAULT_ANNOUNCEMENTS));
         localStorage.setItem("comments", JSON.stringify(DEFAULT_COMMENTS));
         localStorage.setItem("suggestions", JSON.stringify(DEFAULT_SUGGESTIONS));
+        localStorage.setItem("admin_password", "admin123");
         localStorage.setItem("dernek_initialized", "true");
         console.log("Dernek LocalStorage Veritabanı Başlatıldı.");
+    }
+    if (!localStorage.getItem("admin_password")) {
+        localStorage.setItem("admin_password", "admin123");
     }
 }
 
@@ -96,7 +100,8 @@ function login(email, password) {
     initializeDatabase();
     
     // Admin kontrolü
-    if (email === "admin@dernek.org.tr" && password === "admin123") {
+    const storedAdminPassword = localStorage.getItem("admin_password") || "admin123";
+    if (email === "admin@dernek.org.tr" && password === storedAdminPassword) {
         const adminSession = { email: "admin@dernek.org.tr", role: "admin", fullName: "Sistem Yöneticisi" };
         localStorage.setItem("dernek_session", JSON.stringify(adminSession));
         return { success: true, role: "admin", user: adminSession };
