@@ -606,7 +606,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="news-category">${ann.category || 'Kurumsal'}</span>
                     <h3>${ann.title}</h3>
                     <p>${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
-                    <a href="member/dashboard.html" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="haber-detay.html?id=${ann.id}" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             `;
             newsGrid.insertBefore(card, newsGrid.firstChild);
@@ -665,7 +665,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <span class="news-slide-date">${ann.date}</span>
                     <h3 class="news-slide-title">${ann.title}</h3>
                     <p class="news-slide-desc">${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
-                    <a href="member/dashboard.html" class="btn btn-primary">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    <a href="haber-detay.html?id=${ann.id}" class="btn btn-primary">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             `;
             sliderTrack.insertBefore(slide, sliderTrack.firstChild);

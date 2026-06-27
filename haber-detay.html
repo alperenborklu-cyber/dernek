@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Haber Detayı | Gönül Köprüsü</title>
+
+    <!-- SEO Meta Etiketleri -->
+    <meta name="author" content="Engelli Memur & İşçi Derneği">
+    <meta name="robots" content="index, follow">
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="logo.webp">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;600;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="loader-container">
+            <i class="fa-solid fa-wheelchair loader-wheelchair"></i>
+            <i class="fa-solid fa-person-walking loader-walking"></i>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <a href="index" class="logo">
+                <img src="logo.webp" alt="Engelli Memur & İşçi Derneği Logo">
+            </a>
+            <nav class="nav-menu">
+                <ul>
+                    <li><a href="index">Anasayfa</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Hakkımızda <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="hakkimizda">Hakkımızda</a></li>
+                            <li><a href="misyon-vizyon">Misyon & Vizyon</a></li>
+                            <li><a href="mevzuat">Mevzuat</a></li>
+                            <li><a href="engelli-haklari">Engelli Hakları</a></li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle">Kurumsal <i class="fa-solid fa-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="yonetim-kurulu">Yönetim Kurulu</a></li>
+                            <li><a href="denetim-kurulu">Denetim Kurulu</a></li>
+                            <li><a href="temsilcilerimiz">Dernek İl Temsilcilerimiz</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="projelerimiz">Projelerimiz</a></li>
+                    <li><a href="haberler" class="active">Haberler</a></li>
+                    <li><a href="blog">Blog</a></li>
+                    <li><a href="iletisim">İletişim</a></li>
+                </ul>
+            </nav>
+            <div class="header-actions">
+                <a href="bagis-yap" class="btn btn-secondary"><i class="fa-solid fa-heart"></i> Bağış Yap</a>
+                <a href="uyelik" class="btn btn-primary">Üye Ol</a>
+                <button class="mobile-menu-btn"><i class="fa-solid fa-bars"></i></button>
+            </div>
+        </div>
+        <!-- Breaking News Ticker -->
+        <div class="news-ticker-bar">
+            <div class="ticker-badge"><i class="fa-solid fa-bullhorn"></i> DUYURULAR</div>
+            <div class="ticker-content-wrap">
+                <div class="ticker-content">
+                    <a href="haber-kamp-tesekkur-belgesi"><span class="ticker-date">[17.06.2026]</span> Eğitim Kampımızda Değerli Üyelerimize Teşekkür Belgeleri Takdim Edildi</a>
+                    <a href="haber-sivil-toplum-rehberlik-bulusmasi"><span class="ticker-date">[16.06.2026]</span> Ankara Sivil Toplum Rehberlik Buluşması</a>
+                    <a href="haber-il-baskanlari-toplantisi"><span class="ticker-date">[15.06.2026]</span> Genişletilmiş İl Başkanları Toplantısı Gerçekleştirildi</a>
+                    <a href="haber-aile-sosyal-mudur-ziyaret"><span class="ticker-date">[14.06.2026]</span> Aile ve Sosyal Hizmetler İl Müdürü Sn. Cüneyd Özdemir'e Ziyaret</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Subpage Hero -->
+    <section class="subpage-hero">
+        <div class="container">
+            <h2 class="subpage-title">Haber <span>Detayı</span></h2>
+            <p>Projelerimiz ve etkinliklerimizle engelleri kaldırmaya yönelik çalışmalarımızdan en son gelişmeler.</p>
+        </div>
+    </section>
+
+    <!-- Main Content Section -->
+    <section class="news-detail-section">
+        <div class="container">
+            <div class="news-detail-wrapper">
+                
+                <!-- Left: News Content -->
+                <div class="news-detail-content" id="dynamicNewsContent">
+                    <p style="text-align: center; padding: 40px; color: var(--text-muted);">Haber yükleniyor...</p>
+                </div>
+
+                <!-- Right: Sidebar -->
+                <div class="news-sidebar">
+                    <!-- Widget: Other News -->
+                    <div class="sidebar-widget">
+                        <h4>Diğer Haberler</h4>
+                        <div class="sidebar-news-list">
+                            <a href="haber-eti-maden-ziyaret" class="sidebar-news-item">
+                                <img src="cover-eti-maden.webp" alt="Eti Maden Ziyareti">
+                                <div class="sidebar-news-info">
+                                    <h5>Eti Maden Genel Müdür Yardımcısı Sn. Hüseyin Uyan'ı Ziyaret</h5>
+                                    <span>20 Haziran 2026</span>
+                                </div>
+                            </a>
+                            <a href="haber-sivil-toplum-calistayi" class="sidebar-news-item">
+                                <img src="cover-sivil-toplum-calistayi.webp" alt="Sivil Toplum Çalıştayı">
+                                <div class="sidebar-news-info">
+                                    <h5>Ankara Sivil Topluma Rehberlik Çalıştayı'na Katılım</h5>
+                                    <span>19 Haziran 2026</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Widget: CTA -->
+                    <div class="sidebar-widget cta-widget">
+                        <h4>Destek Olun</h4>
+                        <p>Projelerimizin daha fazla kişiye ulaşması ve şehirlerimizin erişilebilir hale gelmesi için siz de bize destek olabilirsiniz.</p>
+                        <a href="iletisim" class="btn btn-primary" style="background-color: var(--white); color: var(--primary);">Bize Ulaşın</a>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Fancy Footer -->
+    <footer class="fancy-footer">
+        <div class="container footer-container">
+            <div class="footer-top">
+                <div class="footer-brand">
+                    <div class="footer-logo-text">Gönül Köprüsü<span>.</span></div>
+                    <p class="footer-desc">Türkiye'nin öncü engelsiz yaşam kuruluşu. Engelli bireylerin toplumsal yaşama katılımını, erişilebilirliğini ve haklarını destekliyoruz. Engelsiz bir gelecek inşa etmek için yanınızdayız.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Engelli Memur & İşçi Derneği. Tüm hakları saklıdır.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/auth-shared.js"></script>
+    <script src="script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const id = urlParams.get('id');
+            const container = document.getElementById('dynamicNewsContent');
+            if (!container) return;
+
+            if (!id) {
+                container.innerHTML = `<h2 style="color: var(--primary);">Hata: Haber Bulunamadı</h2><p>Lütfen geçerli bir haber bağlantısı takip edin.</p>`;
+                return;
+            }
+
+            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            const ann = announcements.find(a => a.id === id);
+
+            if (!ann) {
+                container.innerHTML = `<h2 style="color: var(--primary);">Hata: Haber Bulunamadı</h2><p>Aradığınız haber yayından kaldırılmış olabilir.</p>`;
+                return;
+            }
+
+            document.title = `${ann.title} | Gönül Köprüsü`;
+
+            let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
+            if (imagePath.startsWith('../')) {
+                imagePath = imagePath.substring(3);
+            }
+
+            container.innerHTML = `
+                <img src="${imagePath}" alt="${ann.title}" class="main-img" style="width: 100%; border-radius: 20px; margin-bottom: 24px; max-height: 480px; object-fit: cover;">
+                <div class="news-meta" style="margin-bottom: 20px; display: flex; gap: 15px; color: var(--text-muted); font-size: 0.9rem;">
+                    <span><i class="fa-solid fa-tag" style="color: var(--primary);"></i> ${ann.category || 'Kurumsal'}</span>
+                    <span><i class="fa-regular fa-calendar" style="color: var(--primary);"></i> ${ann.date}</span>
+                </div>
+                <h1 style="font-size: 2.2rem; font-family: 'Outfit', sans-serif; font-weight: 800; margin-bottom: 24px; color: var(--text-main); line-height: 1.3;">${ann.title}</h1>
+                <div class="news-body-text" style="font-size: 1.05rem; line-height: 1.8; color: var(--text-main); text-align: justify;">
+                    ${ann.content.split('\n').map(para => `<p style="margin-bottom: 20px;">${para}</p>`).join('')}
+                </div>
+            `;
+        });
+    </script>
+</body>
+</html>
