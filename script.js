@@ -46,9 +46,9 @@ document.addEventListener('DOMContentLoaded', () => {
         topBar.innerHTML = `
             <div class="container top-bar-container">
                 <div class="top-bar-left">
-                    <span><i class="fa-solid fa-phone"></i> +90 (312) 444 03 93</span>
+                    <span><i class="fa-solid fa-phone"></i> 0 312 311 13 05</span>
                     <span><i class="fa-solid fa-envelope"></i> info@dernek.org.tr</span>
-                    <span><i class="fa-solid fa-location-dot"></i> Ankara, Türkiye</span>
+                    <span><i class="fa-solid fa-location-dot"></i> Behiçbey / Ankara</span>
                 </div>
                 <div class="top-bar-right">
                     <div class="accessibility-options">
@@ -241,10 +241,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactContainer = document.createElement('div');
     contactContainer.className = 'floating-contact-container';
     contactContainer.innerHTML = `
-        <a href="https://wa.me/905301234567" target="_blank" rel="noopener" class="floating-btn floating-whatsapp" data-tooltip="WhatsApp ile Ulaşın" aria-label="WhatsApp">
+        <a href="https://wa.me/905356657148" target="_blank" rel="noopener" class="floating-btn floating-whatsapp" data-tooltip="WhatsApp ile Ulaşın" aria-label="WhatsApp">
             <i class="fa-brands fa-whatsapp"></i>
         </a>
-        <a href="tel:+903124440393" class="floating-btn floating-phone" data-tooltip="Bizi Arayın" aria-label="Telefon">
+        <a href="tel:+903123111305" class="floating-btn floating-phone" data-tooltip="Bizi Arayın" aria-label="Telefon">
             <i class="fa-solid fa-phone"></i>
         </a>
     `;
