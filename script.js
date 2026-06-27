@@ -33,12 +33,22 @@ document.addEventListener('DOMContentLoaded', () => {
 
                         // Setup helper to close the intro screen
                         const closeIntro = () => {
+                            document.removeEventListener('keydown', handleEscKey);
                             preloader.style.opacity = '0';
                             preloader.style.visibility = 'hidden';
                             setTimeout(() => {
                                 preloader.style.display = 'none';
                             }, 500);
                         };
+
+                        const handleEscKey = (e) => {
+                            if (e.key === 'Escape') {
+                                clearTimeout(autoCloseTimeout);
+                                closeIntro();
+                            }
+                        };
+
+                        document.addEventListener('keydown', handleEscKey);
 
                         // Auto close after 3.5 seconds
                         const autoCloseTimeout = setTimeout(closeIntro, 3500);
