@@ -48,6 +48,9 @@
                 </div>
                 <ul class="admin-menu">
                     <li class="admin-menu-item">
+                        <a href="#" id="sidebarPasswordChangeBtn" style="color: #cbd5e1;"><i class="fa-solid fa-key"></i> Şifre Değiştir</a>
+                    </li>
+                    <li class="admin-menu-item">
                         <a href="#" id="logoutBtn" style="color: #f87171;"><i class="fa-solid fa-arrow-right-from-bracket"></i> Çıkış Yap</a>
                     </li>
                 </ul>
@@ -199,6 +202,10 @@
                                 <input type="text" id="annTitle" class="form-control" placeholder="Duyurunun ana başlığı" required>
                             </div>
                             <div class="form-group">
+                                <label for="annImage">Görsel / Resim URL (İsteğe Bağlı)</label>
+                                <input type="text" id="annImage" class="form-control" placeholder="Örn: ../cover-kamp-istisare-toplantisi.webp veya boş bırakın">
+                            </div>
+                            <div class="form-group">
                                 <label for="annContent">Duyuru Metni / İçerik</label>
                                 <textarea id="annContent" class="form-control" rows="6" placeholder="Üyelere iletilecek mesaj detayları..." style="resize: none;" required></textarea>
                             </div>
@@ -206,6 +213,28 @@
                                 <i class="fa-solid fa-paper-plane"></i> Duyuruyu Yayınla
                             </button>
                         </form>
+                    </div>
+
+                    <div class="admin-card" style="margin-top: 32px;">
+                        <h3><i class="fa-solid fa-list" style="color: var(--primary);"></i> Yayınlanmış Duyurular</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Daha önce yayınlanmış olan duyuruları aşağıdan görüntüleyebilir veya silebilirsiniz.
+                        </p>
+                        <div class="table-responsive">
+                             <table class="admin-table">
+                                 <thead>
+                                     <tr>
+                                         <th>Duyuru Başlığı</th>
+                                         <th>Tarih</th>
+                                         <th>Görsel</th>
+                                         <th>İşlemler</th>
+                                     </tr>
+                                 </thead>
+                                 <tbody id="announcementsTableBody">
+                                     <!-- Dynamic -->
+                                 </tbody>
+                             </table>
+                        </div>
                     </div>
                 </div>
 

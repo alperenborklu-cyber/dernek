@@ -105,6 +105,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         <span>${ann.date}</span>
                     </div>
                     <div class="announcement-title">${ann.title}</div>
+                    ${ann.image ? `<img src="${ann.image}" alt="${ann.title}" class="announcement-image" style="width: 100%; max-height: 250px; object-fit: cover; border-radius: 12px; margin-top: 8px; margin-bottom: 12px;">` : ''}
                     <div class="announcement-content">${ann.content}</div>
                     
                     <!-- Duyuru Yorum Kutusu -->

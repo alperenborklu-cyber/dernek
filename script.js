@@ -585,6 +585,72 @@ document.addEventListener('DOMContentLoaded', () => {
         newsDetailContent.appendChild(commentsWrapper);
     }
 
+    // Dinamik Haber & Duyuru Entegrasyonu (Public sayfalar için)
+    const newsGrid = document.querySelector('.news-grid');
+    if (newsGrid) {
+        const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+        // Duyuruları en yeni üstte olacak şekilde ekleyelim
+        announcements.forEach(ann => {
+            let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
+            if (imagePath.startsWith('../')) {
+                imagePath = imagePath.substring(3);
+            }
+            const card = document.createElement('article');
+            card.className = 'news-card dynamic-news-card';
+            card.innerHTML = `
+                <div class="news-img">
+                    <img src="${imagePath}" alt="${ann.title}">
+                    <span class="news-date">${ann.date}</span>
+                </div>
+                <div class="news-content">
+                    <span class="news-category">Duyuru</span>
+                    <h3>${ann.title}</h3>
+                    <p>${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
+                    <a href="member/dashboard.html" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            `;
+            newsGrid.insertBefore(card, newsGrid.firstChild);
+        });
+    }
+
+    const sliderTrack = document.querySelector('.news-slider-track');
+    const dotsContainer = document.querySelector('.slider-dots');
+    if (sliderTrack) {
+        const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+        // Kaydırıcıya (Slider) duyuruları en yeni ilk slayt olacak şekilde ekleyelim
+        announcements.forEach(ann => {
+            let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
+            if (imagePath.startsWith('../')) {
+                imagePath = imagePath.substring(3);
+            }
+            const slide = document.createElement('div');
+            slide.className = 'news-slide';
+            slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url('${imagePath}')`;
+            slide.innerHTML = `
+                <div class="news-slide-content">
+                    <span class="news-slide-category">Duyuru</span>
+                    <span class="news-slide-date">${ann.date}</span>
+                    <h3 class="news-slide-title">${ann.title}</h3>
+                    <p class="news-slide-desc">${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
+                    <a href="member/dashboard.html" class="btn btn-primary">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            `;
+            sliderTrack.insertBefore(slide, sliderTrack.firstChild);
+        });
+
+        // Yeni slaytlara göre gösterge noktalarını (dots) yeniden oluşturalım
+        if (dotsContainer) {
+            const totalSlides = sliderTrack.querySelectorAll('.news-slide').length;
+            dotsContainer.innerHTML = '';
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('span');
+                dot.className = i === 0 ? 'dot active' : 'dot';
+                dot.setAttribute('data-index', i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+    }
+
     // News Slider Logic
     const track = document.querySelector('.news-slider-track');
     const prevBtn = document.querySelector('.news-slider-container .prev-btn');

@@ -191,6 +191,7 @@ document.addEventListener("DOMContentLoaded", () => {
         announcementForm.addEventListener("submit", (e) => {
             e.preventDefault();
             const title = document.getElementById("annTitle").value.trim();
+            const image = document.getElementById("annImage").value.trim();
             const content = document.getElementById("annContent").value.trim();
             const alertBox = document.getElementById("annSuccessAlert");
 
@@ -201,6 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 id: "ann-" + Date.now(),
                 title: title,
                 content: content,
+                image: image || "",
                 date: new Date().toISOString().split('T')[0]
             };
 
@@ -218,12 +220,50 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Duyuruları Listeleme ve Silme (Yönetim Paneli İçin)
+    const renderAnnouncementsList = () => {
+        const tableBody = document.getElementById("announcementsTableBody");
+        if (!tableBody) return;
+
+        const announcements = JSON.parse(localStorage.getItem("announcements") || "[]");
+
+        if (announcements.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="4" style="text-align: center; color: var(--text-muted);">Yayınlanmış duyuru bulunmamaktadır.</td></tr>`;
+            return;
+        }
+
+        tableBody.innerHTML = announcements.map(ann => `
+            <tr>
+                <td><strong>${ann.title}</strong></td>
+                <td>${ann.date}</td>
+                <td>${ann.image ? `<img src="${ann.image}" style="height: 40px; max-width: 80px; object-fit: cover; border-radius: 4px;" alt="Görsel">` : '<span style="color: var(--text-muted); font-size: 0.85rem;">Görsel Yok</span>'}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm btn-delete-announcement" data-id="${ann.id}"><i class="fa-solid fa-trash"></i> Sil</button>
+                </td>
+            </tr>
+        `).join('');
+
+        // Duyuru Silme Olayı
+        document.querySelectorAll(".btn-delete-announcement").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.getAttribute("data-id");
+                if (confirm("Bu duyuruyu silmek istediğinizden emin misiniz?")) {
+                    const allAnnouncements = JSON.parse(localStorage.getItem("announcements") || "[]");
+                    const updatedAnnouncements = allAnnouncements.filter(ann => ann.id !== id);
+                    localStorage.setItem("announcements", JSON.stringify(updatedAnnouncements));
+                    renderAll();
+                }
+            });
+        });
+    };
+
     // Ortak Yenileme Fonksiyonu
     const renderAll = () => {
         updateStats();
         renderApplications();
         renderComments();
         renderSuggestions();
+        renderAnnouncementsList();
     };
 
     renderAll();
@@ -259,6 +299,18 @@ document.addEventListener("DOMContentLoaded", () => {
             e.preventDefault();
             localStorage.removeItem("dernek_session");
             window.location.href = "../index.html";
+        });
+    }
+
+    // Sidebar Şifre Değiştir Butonu Olayı
+    const sidebarPasswordChangeBtn = document.getElementById("sidebarPasswordChangeBtn");
+    if (sidebarPasswordChangeBtn) {
+        sidebarPasswordChangeBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const settingsTabBtn = document.querySelector('.tab-btn[data-tab="settings"]');
+            if (settingsTabBtn) {
+                settingsTabBtn.click();
+            }
         });
     }
 
