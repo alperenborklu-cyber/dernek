@@ -3924,7 +3924,7 @@ body.dark-mode .pdf-meta {
     top: 50%;
     width: max-content;
     will-change: transform;
-    animation: ticker-slide 30s linear infinite;
+    animation: ticker-slide 65s linear infinite;
     gap: 50px;
     padding-left: 100%; /* Starts scrolling exactly from the right edge */
 }
