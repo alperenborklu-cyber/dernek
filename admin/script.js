@@ -407,6 +407,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderSuggestions();
         renderAnnouncementsList();
         renderSliderItems();
+        renderInstagramItems();
     };
 
     // === SLIDER YÖNETİMİ BAŞLANGIÇ ===
@@ -557,6 +558,157 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
     // === SLIDER YÖNETİMİ BİTİŞ ===
+
+    // === INSTAGRAM YÖNETİMİ BAŞLANGIÇ ===
+    const renderInstagramItems = () => {
+        const tableBody = document.getElementById("instagramTableBody");
+        if (!tableBody) return;
+
+        const posts = JSON.parse(localStorage.getItem("instagram_posts") || "[]");
+
+        if (posts.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Eklenmiş Instagram paylaşımı bulunmamaktadır.</td></tr>`;
+            return;
+        }
+
+        tableBody.innerHTML = posts.map(post => `
+            <tr>
+                <td><img src="${post.image.startsWith('data:') ? post.image : (post.image.startsWith('../') ? post.image : '../' + post.image)}" style="height: 70px; width: 44px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);" alt="Instagram"></td>
+                <td><strong>${post.title}</strong></td>
+                <td><span class="badge badge-approved" style="background-color: rgba(225, 48, 108, 0.1); color: #e1306c;">${post.username || '@koprusu.gonul'}</span></td>
+                <td><a href="${post.link}" target="_blank" style="font-size: 0.8rem; word-break: break-all; color: var(--primary); text-decoration: underline;">Linke Git</a></td>
+                <td>
+                    <button class="btn btn-warning btn-sm btn-edit-insta" data-id="${post.id}" style="background-color: #f59e0b; color: white;"><i class="fa-solid fa-edit"></i> Düzenle</button>
+                    <button class="btn btn-danger btn-sm btn-delete-insta" data-id="${post.id}" style="background-color: #ef4444; color: white;"><i class="fa-solid fa-trash"></i> Sil</button>
+                </td>
+            </tr>
+        `).join('');
+
+        // Instagram Silme Olayı
+        document.querySelectorAll(".btn-delete-insta").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.getAttribute("data-id");
+                if (confirm("Bu Instagram paylaşımını silmek istediğinizden emin misiniz?")) {
+                    const allPosts = JSON.parse(localStorage.getItem("instagram_posts") || "[]");
+                    const updatedPosts = allPosts.filter(p => p.id !== id);
+                    localStorage.setItem("instagram_posts", JSON.stringify(updatedPosts));
+                    if (document.getElementById("editInstagramId").value === id) {
+                        resetInstagramForm();
+                    }
+                    renderAll();
+                }
+            });
+        });
+
+        // Instagram Düzenleme Olayı
+        document.querySelectorAll(".btn-edit-insta").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.getAttribute("data-id");
+                const allPosts = JSON.parse(localStorage.getItem("instagram_posts") || "[]");
+                const post = allPosts.find(p => p.id === id);
+
+                if (post) {
+                    document.getElementById("instaTitle").value = post.title;
+                    document.getElementById("instaLink").value = post.link;
+                    document.getElementById("instaUsername").value = post.username || "@koprusu.gonul";
+                    document.getElementById("instaImage").value = post.image;
+                    document.getElementById("editInstagramId").value = post.id;
+
+                    const previewContainer = document.getElementById("instaImagePreviewContainer");
+                    const previewImg = document.getElementById("instaImagePreview");
+                    if (post.image) {
+                        previewImg.src = post.image.startsWith('data:') ? post.image : (post.image.startsWith('../') ? post.image : '../' + post.image);
+                        previewContainer.style.display = "block";
+                    } else {
+                        previewContainer.style.display = "none";
+                    }
+
+                    document.getElementById("submitInstaBtn").innerHTML = '<i class="fa-solid fa-save"></i> Değişiklikleri Kaydet';
+                    document.getElementById("cancelEditInstaBtn").style.display = "inline-flex";
+
+                    document.getElementById("addInstagramForm").scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    };
+
+    const addInstagramForm = document.getElementById("addInstagramForm");
+    const cancelEditInstaBtn = document.getElementById("cancelEditInstaBtn");
+
+    if (addInstagramForm) {
+        addInstagramForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const title = document.getElementById("instaTitle").value.trim();
+            const link = document.getElementById("instaLink").value.trim();
+            const username = document.getElementById("instaUsername").value.trim();
+            const image = document.getElementById("instaImage").value.trim();
+            const editId = document.getElementById("editInstagramId").value;
+            const successAlert = document.getElementById("instagramSuccessAlert");
+
+            if (!title || !link || !image) return;
+
+            const posts = JSON.parse(localStorage.getItem("instagram_posts") || "[]");
+
+            if (editId) {
+                const idx = posts.findIndex(p => p.id === editId);
+                if (idx !== -1) {
+                    posts[idx].title = title;
+                    posts[idx].link = link;
+                    posts[idx].username = username;
+                    posts[idx].image = image;
+                    localStorage.setItem("instagram_posts", JSON.stringify(posts));
+                    resetInstagramForm();
+                }
+            } else {
+                if (posts.length >= 10) {
+                    alert("En fazla 10 adet Instagram paylaşımı ekleyebilirsiniz. Lütfen yenisini eklemek için eskilerden birini siliniz.");
+                    return;
+                }
+                const newPost = {
+                    id: "insta-" + Date.now(),
+                    title: title,
+                    link: link,
+                    username: username,
+                    image: image
+                };
+                posts.unshift(newPost);
+                localStorage.setItem("instagram_posts", JSON.stringify(posts));
+                addInstagramForm.reset();
+                resetInstagramForm();
+            }
+
+            if (successAlert) {
+                successAlert.style.display = "block";
+                setTimeout(() => {
+                    successAlert.style.display = "none";
+                }, 3000);
+            }
+
+            renderAll();
+        });
+    }
+
+    const resetInstagramForm = () => {
+        if (addInstagramForm) {
+            addInstagramForm.reset();
+            document.getElementById("instaUsername").value = "@koprusu.gonul";
+        }
+        document.getElementById("editInstagramId").value = "";
+        document.getElementById("submitInstaBtn").innerHTML = '<i class="fa-solid fa-plus"></i> Paylaşım Ekle';
+        if (cancelEditInstaBtn) cancelEditInstaBtn.style.display = "none";
+        
+        const previewContainer = document.getElementById("instaImagePreviewContainer");
+        if (previewContainer) previewContainer.style.display = "none";
+        const previewImg = document.getElementById("instaImagePreview");
+        if (previewImg) previewImg.src = "";
+    };
+
+    if (cancelEditInstaBtn) {
+        cancelEditInstaBtn.addEventListener("click", () => {
+            resetInstagramForm();
+        });
+    }
+    // === INSTAGRAM YÖNETİMİ BİTİŞ ===
 
     renderAll();
 
@@ -812,6 +964,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleFileSelect("annImage3File", "annImage3", "annImage3PreviewContainer", "annImage3Preview");
     handleFileSelect("projImageFile", "projImage", "projImagePreviewContainer", "projImagePreview");
     handleFileSelect("sliderImageFile", "sliderImage", "sliderImagePreviewContainer", "sliderImagePreview");
+    handleFileSelect("instaImageFile", "instaImage", "instaImagePreviewContainer", "instaImagePreview");
 
     // Silme Butonları Olayı
     const registerRemoveImageHandler = (removeBtnId, textInputId, previewContainerId, previewImgId, fileInputId) => {
@@ -837,6 +990,7 @@ document.addEventListener("DOMContentLoaded", () => {
     registerRemoveImageHandler("removeAnnImage3Btn", "annImage3", "annImage3PreviewContainer", "annImage3Preview", "annImage3File");
     registerRemoveImageHandler("removeProjImageBtn", "projImage", "projImagePreviewContainer", "projImagePreview", "projImageFile");
     registerRemoveImageHandler("removeSliderImageBtn", "sliderImage", "sliderImagePreviewContainer", "sliderImagePreview", "sliderImageFile");
+    registerRemoveImageHandler("removeInstaImageBtn", "instaImage", "instaImagePreviewContainer", "instaImagePreview", "instaImageFile");
 
     // Sidebar toggle for mobile view
     const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");

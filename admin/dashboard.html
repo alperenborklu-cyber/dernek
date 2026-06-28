@@ -138,6 +138,9 @@
                     <button class="tab-btn" data-tab="slider">
                         <i class="fa-solid fa-sliders"></i> Slider Yönetimi
                     </button>
+                    <button class="tab-btn" data-tab="instagram">
+                        <i class="fa-brands fa-instagram"></i> Instagram Paylaşımları
+                    </button>
                     <button class="tab-btn" data-tab="settings">
                         <i class="fa-solid fa-key"></i> Şifre Değiştir
                     </button>
@@ -535,6 +538,81 @@
                                     </tr>
                                 </thead>
                                 <tbody id="sliderTableBody">
+                                    <!-- Dynamic -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Instagram Posts Management -->
+                <div class="tab-content" id="instagramTab">
+                    <div class="admin-card" style="max-width: 800px;">
+                        <h3><i class="fa-brands fa-instagram" style="color: #e1306c;"></i> Öne Çıkan Instagram Paylaşımı Tanımla</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Buradan ekleyeceğiniz Instagram / sosyal medya paylaşımları, ana sayfadaki "Öne Çıkan Instagram Paylaşımlarımız" alanında yan yana kaydırılabilir (scrollable) olarak listelenecektir. En fazla 10 adet eklenebilir.
+                        </p>
+                        
+                        <div class="alert-success" id="instagramSuccessAlert" style="display: none; padding: 12px; background-color: #d1fae5; color: #065f46; border-radius: 8px; margin-bottom: 20px;">
+                            <i class="fa-solid fa-circle-check"></i> Instagram paylaşımı başarıyla kaydedildi!
+                        </div>
+
+                        <form id="addInstagramForm" class="admin-form">
+                            <input type="hidden" id="editInstagramId" value="">
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="instaTitle" style="display: block; margin-bottom: 8px; font-weight: 500;">Paylaşım Başlığı</label>
+                                <input type="text" id="instaTitle" class="form-control" placeholder="Örn: Genel Başkanımızla Röportaj Videosu" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="instaLink" style="display: block; margin-bottom: 8px; font-weight: 500;">Instagram Paylaşım Linki (Reel / Post URL)</label>
+                                <input type="url" id="instaLink" class="form-control" placeholder="Örn: https://www.instagram.com/reels/DaF2NcZqZkv/" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="instaUsername" style="display: block; margin-bottom: 8px; font-weight: 500;">Kullanıcı Adı</label>
+                                <input type="text" id="instaUsername" class="form-control" value="@koprusu.gonul" placeholder="Örn: @koprusu.gonul" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="instaImage" style="display: block; margin-bottom: 8px; font-weight: 500;">Kapak Görseli</label>
+                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                                    <input type="text" id="instaImage" class="form-control" placeholder="Görsel yolu (örn: cover-kamp-tanitim-videosu.webp) veya boş bırakın" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                                    <label class="btn btn-secondary" style="margin: 0; padding: 10px 16px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; border-radius: 6px;">
+                                        <i class="fa-solid fa-folder-open"></i> Göz At...
+                                        <input type="file" id="instaImageFile" accept="image/*" style="display: none;">
+                                    </label>
+                                </div>
+                                <div id="instaImagePreviewContainer" style="display: none; margin-top: 8px; position: relative; width: 100px; height: 160px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
+                                    <img id="instaImagePreview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <button type="button" id="removeInstaImageBtn" style="position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;"><i class="fa-solid fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <button type="submit" class="btn btn-primary" id="submitInstaBtn" style="padding: 12px 24px; background-color: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                                    <i class="fa-solid fa-plus"></i> Paylaşım Ekle
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="cancelEditInstaBtn" style="display: none; padding: 12px 24px; font-weight: 600; border-radius: 6px; border: none; cursor: pointer;">
+                                    <i class="fa-solid fa-times"></i> İptal Et
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="admin-card" style="margin-top: 32px;">
+                        <h3><i class="fa-solid fa-list" style="color: var(--primary);"></i> Kayıtlı Instagram Paylaşımları</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Eklenmiş olan Instagram paylaşımlarını aşağıdan görüntüleyebilir, düzenleyebilir veya silebilirsiniz (en fazla 10 adet).
+                        </p>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Görsel (9:16)</th>
+                                        <th>Başlık</th>
+                                        <th>Kullanıcı</th>
+                                        <th>Link</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="instagramTableBody">
                                     <!-- Dynamic -->
                                 </tbody>
                             </table>

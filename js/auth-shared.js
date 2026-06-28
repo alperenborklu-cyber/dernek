@@ -210,21 +210,50 @@ const DEFAULT_SLIDES = [
     }
 ];
 
+const DEFAULT_INSTAGRAM_POSTS = [
+    {
+        id: "insta-1",
+        title: "Genel Başkanımızla Röportaj Videosu",
+        link: "https://www.instagram.com/reels/DaF2NcZqZkv/",
+        image: "cover-kamp-tanitim-videosu.webp",
+        username: "@koprusu.gonul"
+    },
+    {
+        id: "insta-2",
+        title: "Değerli Üyelerimize Teşekkür Belgeleri",
+        link: "https://www.instagram.com/koprusu.gonul/",
+        image: "cover-kamp-tesekkur-belgesi.webp",
+        username: "@koprusu.gonul"
+    },
+    {
+        id: "insta-3",
+        title: "Genişletilmiş İl Başkanları Toplantısı",
+        link: "https://www.instagram.com/koprusu.gonul/",
+        image: "cover-il-baskanlari-toplantisi.webp",
+        username: "@koprusu.gonul"
+    }
+];
+
 // LocalStorage başlatma fonksiyonu
 function initializeDatabase() {
-    if (!localStorage.getItem("dernek_initialized") || !localStorage.getItem("dernek_initialized_v3")) {
+    if (!localStorage.getItem("dernek_initialized") || !localStorage.getItem("dernek_initialized_v3") || !localStorage.getItem("dernek_initialized_v4")) {
         localStorage.setItem("members", JSON.stringify(DEFAULT_MEMBERS));
         localStorage.setItem("announcements", JSON.stringify(DEFAULT_ANNOUNCEMENTS));
         localStorage.setItem("comments", JSON.stringify(DEFAULT_COMMENTS));
         localStorage.setItem("suggestions", JSON.stringify(DEFAULT_SUGGESTIONS));
         localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
+        localStorage.setItem("instagram_posts", JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
         localStorage.setItem("admin_password", "admin123");
         localStorage.setItem("dernek_initialized", "true");
         localStorage.setItem("dernek_initialized_v3", "true");
+        localStorage.setItem("dernek_initialized_v4", "true");
         console.log("Dernek LocalStorage Veritabanı Güncellendi ve Başlatıldı.");
     }
     if (!localStorage.getItem("slider_items")) {
         localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
+    }
+    if (!localStorage.getItem("instagram_posts")) {
+        localStorage.setItem("instagram_posts", JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
     }
     if (!localStorage.getItem("admin_password")) {
         localStorage.setItem("admin_password", "admin123");
