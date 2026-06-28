@@ -649,26 +649,29 @@ document.addEventListener('DOMContentLoaded', () => {
     const sliderTrack = document.querySelector('.news-slider-track');
     const dotsContainer = document.querySelector('.slider-dots');
     if (sliderTrack) {
-        const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
-        // Kaydırıcıya (Slider) duyuruları en yeni ilk slayt olacak şekilde ekleyelim
-        announcements.slice().reverse().forEach(ann => {
-            let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
+        const slides = JSON.parse(localStorage.getItem('slider_items') || '[]');
+        // Kaydırıcıya (Slider) slaytları ekleyelim
+        slides.forEach(slideItem => {
+            let imagePath = slideItem.image || 'cover-kamp-istisare-toplantisi.webp';
             if (imagePath.startsWith('../')) {
                 imagePath = imagePath.substring(3);
             }
             const slide = document.createElement('div');
             slide.className = 'news-slide';
             slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url('${imagePath}')`;
+            
+            const targetLink = slideItem.link || '#';
+            
             slide.innerHTML = `
                 <div class="news-slide-content">
-                    <span class="news-slide-category">${ann.category || 'Kurumsal'}</span>
-                    <span class="news-slide-date">${ann.date}</span>
-                    <h3 class="news-slide-title">${ann.title}</h3>
-                    <p class="news-slide-desc">${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
-                    <a href="haber-detay.html?id=${ann.id}" class="btn btn-primary">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                    <span class="news-slide-category">${slideItem.category || 'Duyuru'}</span>
+                    <span class="news-slide-date">${slideItem.date || ''}</span>
+                    <h3 class="news-slide-title">${slideItem.title}</h3>
+                    <p class="news-slide-desc">${slideItem.content.substring(0, 150)}${slideItem.content.length > 150 ? '...' : ''}</p>
+                    <a href="${targetLink}" class="btn btn-primary">Detaylı Bilgi <i class="fa-solid fa-arrow-right"></i></a>
                 </div>
             `;
-            sliderTrack.insertBefore(slide, sliderTrack.firstChild);
+            sliderTrack.appendChild(slide);
         });
 
         // Yeni slaytlara göre gösterge noktalarını (dots) yeniden oluşturalım

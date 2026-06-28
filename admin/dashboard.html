@@ -127,6 +127,9 @@
                     <button class="tab-btn" data-tab="projects">
                         <i class="fa-solid fa-briefcase"></i> Proje Ekle
                     </button>
+                    <button class="tab-btn" data-tab="slider">
+                        <i class="fa-solid fa-sliders"></i> Slider Yönetimi
+                    </button>
                     <button class="tab-btn" data-tab="settings">
                         <i class="fa-solid fa-key"></i> Şifre Değiştir
                     </button>
@@ -449,6 +452,85 @@
                                 <i class="fa-solid fa-plus"></i> Projeyi Ekle
                             </button>
                         </form>
+                    </div>
+                </div>
+
+                <!-- Tab: Slider Management -->
+                <div class="tab-content" id="sliderTab">
+                    <div class="admin-card" style="max-width: 800px;">
+                        <h3><i class="fa-solid fa-sliders" style="color: var(--primary);"></i> Slider Görseli / Slayt Tanımla</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Buradan ekleyeceğiniz slaytlar, ana sayfadaki büyük banner slider alanında anında ve dinamik olarak listelenecektir.
+                        </p>
+                        
+                        <div class="alert-success" id="sliderSuccessAlert" style="display: none; padding: 12px; background-color: #d1fae5; color: #065f46; border-radius: 8px; margin-bottom: 20px;">
+                            <i class="fa-solid fa-circle-check"></i> Slayt başarıyla kaydedildi!
+                        </div>
+
+                        <form id="addSliderForm" class="admin-form">
+                            <input type="hidden" id="editSliderId" value="">
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="sliderTitle" style="display: block; margin-bottom: 8px; font-weight: 500;">Slayt Başlığı</label>
+                                <input type="text" id="sliderTitle" class="form-control" placeholder="Örn: Engelsiz Yarınları Birlikte İnşa Edelim!" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="sliderCategory" style="display: block; margin-bottom: 8px; font-weight: 500;">Kategori / Etiket</label>
+                                <input type="text" id="sliderCategory" class="form-control" placeholder="Örn: Kurumsal, Duyuru, Sosyal" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="sliderLink" style="display: block; margin-bottom: 8px; font-weight: 500;">Hedef URL / Yönlendirme Linki (İsteğe Bağlı)</label>
+                                <input type="text" id="sliderLink" class="form-control" placeholder="Örn: haber-detay.html?id=ann-123 veya # veya boş bırakın" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);">
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="sliderImage" style="display: block; margin-bottom: 8px; font-weight: 500;">Slayt Arka Plan Görseli</label>
+                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
+                                    <input type="text" id="sliderImage" class="form-control" placeholder="Görsel yolu veya boş bırakın" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                                    <label class="btn btn-secondary" style="margin: 0; padding: 10px 16px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; border-radius: 6px;">
+                                        <i class="fa-solid fa-folder-open"></i> Göz At...
+                                        <input type="file" id="sliderImageFile" accept="image/*" style="display: none;">
+                                    </label>
+                                </div>
+                                <div id="sliderImagePreviewContainer" style="display: none; margin-top: 8px; position: relative; width: 160px; height: 90px; border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
+                                    <img id="sliderImagePreview" src="" style="width: 100%; height: 100%; object-fit: cover;">
+                                    <button type="button" id="removeSliderImageBtn" style="position: absolute; top: 4px; right: 4px; width: 20px; height: 20px; border-radius: 50%; background-color: rgba(239, 68, 68, 0.9); color: white; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.75rem;"><i class="fa-solid fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-bottom: 16px;">
+                                <label for="sliderDesc" style="display: block; margin-bottom: 8px; font-weight: 500;">Açıklama / Alt Başlık Metni</label>
+                                <textarea id="sliderDesc" class="form-control" rows="4" placeholder="Slaytta görünecek kısa açıklama metni..." style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color); resize: none;" required></textarea>
+                            </div>
+                            <div style="display: flex; gap: 12px; align-items: center;">
+                                <button type="submit" class="btn btn-primary" id="submitSliderBtn" style="padding: 12px 24px; background-color: var(--primary); color: white; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                                    <i class="fa-solid fa-plus"></i> Slaytı Ekle
+                                </button>
+                                <button type="button" class="btn btn-secondary" id="cancelEditSliderBtn" style="display: none; padding: 12px 24px; font-weight: 600; border-radius: 6px; border: none; cursor: pointer;">
+                                    <i class="fa-solid fa-times"></i> İptal Et
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="admin-card" style="margin-top: 32px;">
+                        <h3><i class="fa-solid fa-list" style="color: var(--primary);"></i> Yayındaki Slider Slaytları</h3>
+                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
+                            Daha önce eklenmiş olan slider slaytlarını aşağıdan görüntüleyebilir, düzenleyebilir veya silebilirsiniz.
+                        </p>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Görsel</th>
+                                        <th>Başlık</th>
+                                        <th>Kategori</th>
+                                        <th>Yönlendirme Linki</th>
+                                        <th>İşlemler</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="sliderTableBody">
+                                    <!-- Dynamic -->
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
                 </div>
 

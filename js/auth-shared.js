@@ -180,6 +180,36 @@ const DEFAULT_SUGGESTIONS = [
     }
 ];
 
+const DEFAULT_SLIDES = [
+    {
+        id: "slide-1",
+        title: "Eti Maden İşletmeleri Genel Müdür Yardımcısı Sayın Hüseyin Uyan'a Ziyaret",
+        category: "Kurumsal",
+        content: "Dernek heyetimiz, Eti Maden İşletmeleri Genel Müdür Yardımcısı Sayın Hüseyin UYAN'ı makamında ziyaret ederek çalışmalar ve geleceğe yönelik projeler hakkında görüş alışverişinde bulundu.",
+        image: "cover-eti-maden.webp",
+        date: "2026-06-20",
+        link: "haber-eti-maden-ziyaret.html"
+    },
+    {
+        id: "slide-2",
+        title: "Ankara Sivil Topluma Rehberlik Çalıştayı'na Katılım",
+        category: "Kurumsal",
+        content: "T.C. İçişleri Bakanlığı Sivil Toplumla İlişkiler Genel Müdürlüğü tarafından düzenlenen çalıştaya derneğimizi temsilen Genel Başkanımız ve Genel Başkan Yardımcımız katılım sağlamıştır.",
+        image: "cover-sivil-toplum-calistayi.webp",
+        date: "2026-06-19",
+        link: "haber-sivil-toplum-calistayi.html"
+    },
+    {
+        id: "slide-3",
+        title: "Değerli Üyelerimize Teşekkür Belgeleri Takdim Edildi",
+        category: "Eğitim",
+        content: "EÜAŞ Mersin Taşucu Denizkent Eğitim Tesislerinde gerçekleştirilen Eğitim ve Değerlendirme Kampı son gününde katılımcılarımıza teşekkür belgeleri takdim edildi.",
+        image: "cover-kamp-tesekkur-belgesi.webp",
+        date: "2026-06-17",
+        link: "haber-kamp-tesekkur-belgesi.html"
+    }
+];
+
 // LocalStorage başlatma fonksiyonu
 function initializeDatabase() {
     if (!localStorage.getItem("dernek_initialized") || !localStorage.getItem("dernek_initialized_v3")) {
@@ -187,10 +217,14 @@ function initializeDatabase() {
         localStorage.setItem("announcements", JSON.stringify(DEFAULT_ANNOUNCEMENTS));
         localStorage.setItem("comments", JSON.stringify(DEFAULT_COMMENTS));
         localStorage.setItem("suggestions", JSON.stringify(DEFAULT_SUGGESTIONS));
+        localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
         localStorage.setItem("admin_password", "admin123");
         localStorage.setItem("dernek_initialized", "true");
         localStorage.setItem("dernek_initialized_v3", "true");
         console.log("Dernek LocalStorage Veritabanı Güncellendi ve Başlatıldı.");
+    }
+    if (!localStorage.getItem("slider_items")) {
+        localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
     }
     if (!localStorage.getItem("admin_password")) {
         localStorage.setItem("admin_password", "admin123");

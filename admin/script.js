@@ -406,7 +406,157 @@ document.addEventListener("DOMContentLoaded", () => {
         renderComments();
         renderSuggestions();
         renderAnnouncementsList();
+        renderSliderItems();
     };
+
+    // === SLIDER YÖNETİMİ BAŞLANGIÇ ===
+    const renderSliderItems = () => {
+        const tableBody = document.getElementById("sliderTableBody");
+        if (!tableBody) return;
+
+        const slides = JSON.parse(localStorage.getItem("slider_items") || "[]");
+
+        if (slides.length === 0) {
+            tableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Eklenmiş slider slaytı bulunmamaktadır.</td></tr>`;
+            return;
+        }
+
+        tableBody.innerHTML = slides.map(slide => `
+            <tr>
+                <td><img src="${slide.image.startsWith('data:') ? slide.image : (slide.image.startsWith('../') ? slide.image : '../' + slide.image)}" style="height: 50px; width: 88px; object-fit: cover; border-radius: 4px; border: 1px solid var(--border-color);" alt="Slide"></td>
+                <td><strong>${slide.title}</strong><br><small style="color: var(--text-muted);">${slide.content.substring(0, 80)}...</small></td>
+                <td><span class="badge badge-approved" style="background-color: rgba(0, 92, 230, 0.1); color: var(--primary);">${slide.category}</span></td>
+                <td><code style="font-size: 0.8rem; background: var(--bg-color); padding: 2px 6px; border-radius: 4px;">${slide.link || 'Yönlendirme Yok'}</code></td>
+                <td>
+                    <button class="btn btn-warning btn-sm btn-edit-slider" data-id="${slide.id}" style="background-color: #f59e0b; color: white;"><i class="fa-solid fa-edit"></i> Düzenle</button>
+                    <button class="btn btn-danger btn-sm btn-delete-slider" data-id="${slide.id}"><i class="fa-solid fa-trash"></i> Sil</button>
+                </td>
+            </tr>
+        `).join('');
+
+        // Slider Silme Olayı
+        document.querySelectorAll(".btn-delete-slider").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.getAttribute("data-id");
+                if (confirm("Bu slaytı silmek istediğinizden emin misiniz?")) {
+                    const allSlides = JSON.parse(localStorage.getItem("slider_items") || "[]");
+                    const updatedSlides = allSlides.filter(s => s.id !== id);
+                    localStorage.setItem("slider_items", JSON.stringify(updatedSlides));
+                    if (document.getElementById("editSliderId").value === id) {
+                        resetSliderForm();
+                    }
+                    renderAll();
+                }
+            });
+        });
+
+        // Slider Düzenleme Olayı
+        document.querySelectorAll(".btn-edit-slider").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.getAttribute("data-id");
+                const allSlides = JSON.parse(localStorage.getItem("slider_items") || "[]");
+                const slide = allSlides.find(s => s.id === id);
+
+                if (slide) {
+                    document.getElementById("sliderTitle").value = slide.title;
+                    document.getElementById("sliderCategory").value = slide.category;
+                    document.getElementById("sliderLink").value = slide.link || "";
+                    document.getElementById("sliderImage").value = slide.image;
+                    document.getElementById("sliderDesc").value = slide.content;
+                    document.getElementById("editSliderId").value = slide.id;
+
+                    const previewContainer = document.getElementById("sliderImagePreviewContainer");
+                    const previewImg = document.getElementById("sliderImagePreview");
+                    if (slide.image) {
+                        previewImg.src = slide.image.startsWith('data:') ? slide.image : (slide.image.startsWith('../') ? slide.image : '../' + slide.image);
+                        previewContainer.style.display = "block";
+                    } else {
+                        previewContainer.style.display = "none";
+                    }
+
+                    document.getElementById("submitSliderBtn").innerHTML = '<i class="fa-solid fa-save"></i> Değişiklikleri Kaydet';
+                    document.getElementById("cancelEditSliderBtn").style.display = "inline-flex";
+
+                    document.getElementById("addSliderForm").scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    };
+
+    const addSliderForm = document.getElementById("addSliderForm");
+    const cancelEditSliderBtn = document.getElementById("cancelEditSliderBtn");
+
+    if (addSliderForm) {
+        addSliderForm.addEventListener("submit", (e) => {
+            e.preventDefault();
+            const title = document.getElementById("sliderTitle").value.trim();
+            const category = document.getElementById("sliderCategory").value.trim();
+            const link = document.getElementById("sliderLink").value.trim();
+            const image = document.getElementById("sliderImage").value.trim();
+            const content = document.getElementById("sliderDesc").value.trim();
+            const editId = document.getElementById("editSliderId").value;
+            const successAlert = document.getElementById("sliderSuccessAlert");
+
+            if (!title || !content || !image) return;
+
+            const slides = JSON.parse(localStorage.getItem("slider_items") || "[]");
+
+            if (editId) {
+                const idx = slides.findIndex(s => s.id === editId);
+                if (idx !== -1) {
+                    slides[idx].title = title;
+                    slides[idx].category = category;
+                    slides[idx].link = link;
+                    slides[idx].image = image;
+                    slides[idx].content = content;
+                    localStorage.setItem("slider_items", JSON.stringify(slides));
+                    resetSliderForm();
+                }
+            } else {
+                const newSlide = {
+                    id: "slide-" + Date.now(),
+                    title: title,
+                    category: category,
+                    link: link,
+                    image: image,
+                    content: content,
+                    date: new Date().toISOString().split('T')[0]
+                };
+                slides.unshift(newSlide);
+                localStorage.setItem("slider_items", JSON.stringify(slides));
+                addSliderForm.reset();
+                resetSliderForm();
+            }
+
+            if (successAlert) {
+                successAlert.style.display = "block";
+                setTimeout(() => {
+                    successAlert.style.display = "none";
+                }, 3000);
+            }
+
+            renderAll();
+        });
+    }
+
+    const resetSliderForm = () => {
+        if (addSliderForm) addSliderForm.reset();
+        document.getElementById("editSliderId").value = "";
+        document.getElementById("submitSliderBtn").innerHTML = '<i class="fa-solid fa-plus"></i> Slaytı Ekle';
+        if (cancelEditSliderBtn) cancelEditSliderBtn.style.display = "none";
+        
+        const previewContainer = document.getElementById("sliderImagePreviewContainer");
+        if (previewContainer) previewContainer.style.display = "none";
+        const previewImg = document.getElementById("sliderImagePreview");
+        if (previewImg) previewImg.src = "";
+    };
+
+    if (cancelEditSliderBtn) {
+        cancelEditSliderBtn.addEventListener("click", () => {
+            resetSliderForm();
+        });
+    }
+    // === SLIDER YÖNETİMİ BİTİŞ ===
 
     renderAll();
 
@@ -611,15 +761,21 @@ document.addEventListener("DOMContentLoaded", () => {
                         cropperImage.src = rawImgUrl;
                         cropperModal.style.display = "flex";
 
-                        // En boy oranını 1.5 varsayılanına eşitle
-                        if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "1.5";
+                        // Slider için 16:9, diğerleri için 1.5 en boy oranı
+                        let defaultRatio = 1.5;
+                        if (fileInputId === "sliderImageFile") {
+                            defaultRatio = 1.7777777777777777; // 16:9
+                            if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "1.7777777777777777";
+                        } else {
+                            if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "1.5";
+                        }
 
                         // Varsa önceki cropper'ı temizle
                         if (activeCropper) activeCropper.destroy();
 
                         // Cropper.js başlat
                         activeCropper = new Cropper(cropperImage, {
-                            aspectRatio: 1.5,
+                            aspectRatio: defaultRatio,
                             viewMode: 1,
                             background: false,
                             autoCropArea: 1,
@@ -655,6 +811,7 @@ document.addEventListener("DOMContentLoaded", () => {
     handleFileSelect("annImage2File", "annImage2", "annImage2PreviewContainer", "annImage2Preview");
     handleFileSelect("annImage3File", "annImage3", "annImage3PreviewContainer", "annImage3Preview");
     handleFileSelect("projImageFile", "projImage", "projImagePreviewContainer", "projImagePreview");
+    handleFileSelect("sliderImageFile", "sliderImage", "sliderImagePreviewContainer", "sliderImagePreview");
 
     // Silme Butonları Olayı
     const registerRemoveImageHandler = (removeBtnId, textInputId, previewContainerId, previewImgId, fileInputId) => {
@@ -679,4 +836,5 @@ document.addEventListener("DOMContentLoaded", () => {
     registerRemoveImageHandler("removeAnnImage2Btn", "annImage2", "annImage2PreviewContainer", "annImage2Preview", "annImage2File");
     registerRemoveImageHandler("removeAnnImage3Btn", "annImage3", "annImage3PreviewContainer", "annImage3Preview", "annImage3File");
     registerRemoveImageHandler("removeProjImageBtn", "projImage", "projImagePreviewContainer", "projImagePreview", "projImageFile");
+    registerRemoveImageHandler("removeSliderImageBtn", "sliderImage", "sliderImagePreviewContainer", "sliderImagePreview", "sliderImageFile");
 });
