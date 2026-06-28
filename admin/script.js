@@ -106,6 +106,47 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    // 5.5. Onaylanmış Üyeleri Listeleme
+    const renderMembers = () => {
+        const membersTableBody = document.getElementById("membersTableBody");
+        if (!membersTableBody) return;
+
+        const members = JSON.parse(localStorage.getItem("members") || "[]");
+        const approvedMembers = members.filter(m => m.status === "approved");
+
+        if (approvedMembers.length === 0) {
+            membersTableBody.innerHTML = `<tr><td colspan="7" style="text-align: center; color: var(--text-muted);">Kayıtlı aktif üye bulunmamaktadır.</td></tr>`;
+            return;
+        }
+
+        membersTableBody.innerHTML = approvedMembers.map(m => `
+            <tr>
+                <td><code style="background-color: var(--bg-color); padding: 2px 6px; border-radius: 4px; font-size: 0.82rem;">${m.memberNo || 'Atanmadı'}</code></td>
+                <td><strong>${m.fullName}</strong></td>
+                <td>${m.tcNo}</td>
+                <td>${m.email}</td>
+                <td>${m.phone}</td>
+                <td>${m.city || '-'}</td>
+                <td>
+                    <button class="btn btn-danger btn-sm btn-delete-member" data-email="${m.email}"><i class="fa-solid fa-user-minus"></i> Üyeliği Sil</button>
+                </td>
+            </tr>
+        `).join('');
+
+        // Üye Silme Olayı
+        document.querySelectorAll(".btn-delete-member").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const email = btn.getAttribute("data-email");
+                if (confirm("Bu üyeyi ve üyeliğini silmek istediğinizden emin misiniz?")) {
+                    const allMembers = JSON.parse(localStorage.getItem("members") || "[]");
+                    const updatedMembers = allMembers.filter(m => m.email !== email);
+                    localStorage.setItem("members", JSON.stringify(updatedMembers));
+                    renderAll();
+                }
+            });
+        });
+    };
+
     // 6. Bekleyen Yorumları Listeleme
     const renderComments = () => {
         const commentTableBody = document.getElementById("commentsTableBody");
@@ -403,6 +444,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const renderAll = () => {
         updateStats();
         renderApplications();
+        renderMembers();
         renderComments();
         renderSuggestions();
         renderAnnouncementsList();
