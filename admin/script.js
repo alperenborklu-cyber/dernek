@@ -837,4 +837,29 @@ document.addEventListener("DOMContentLoaded", () => {
     registerRemoveImageHandler("removeAnnImage3Btn", "annImage3", "annImage3PreviewContainer", "annImage3Preview", "annImage3File");
     registerRemoveImageHandler("removeProjImageBtn", "projImage", "projImagePreviewContainer", "projImagePreview", "projImageFile");
     registerRemoveImageHandler("removeSliderImageBtn", "sliderImage", "sliderImagePreviewContainer", "sliderImagePreview", "sliderImageFile");
+
+    // Sidebar toggle for mobile view
+    const sidebarToggleBtn = document.getElementById("sidebarToggleBtn");
+    const sidebar = document.querySelector(".admin-sidebar");
+    const sidebarOverlay = document.getElementById("sidebarOverlay");
+
+    if (sidebarToggleBtn && sidebar && sidebarOverlay) {
+        const toggleSidebar = () => {
+            const isActive = sidebar.classList.toggle("active");
+            sidebarOverlay.style.display = isActive ? "block" : "none";
+        };
+
+        sidebarToggleBtn.addEventListener("click", toggleSidebar);
+        sidebarOverlay.addEventListener("click", toggleSidebar);
+
+        // Sidebar link clicks should close sidebar on mobile
+        document.querySelectorAll(".admin-menu-item a").forEach(link => {
+            link.addEventListener("click", () => {
+                if (window.innerWidth <= 992) {
+                    sidebar.classList.remove("active");
+                    sidebarOverlay.style.display = "none";
+                }
+            });
+        });
+    }
 });

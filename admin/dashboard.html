@@ -59,12 +59,20 @@
                 </ul>
             </div>
         </aside>
+        
+        <!-- Sidebar Overlay for Mobile -->
+        <div id="sidebarOverlay" style="display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 9998; backdrop-filter: blur(2px);"></div>
 
         <!-- Main Content -->
         <main class="admin-main">
             <!-- Header -->
             <header class="admin-header">
-                <h1>Sistem Yönetim Paneli</h1>
+                <div style="display: flex; align-items: center; gap: 12px;">
+                    <button class="theme-toggle-btn" id="sidebarToggleBtn" title="Menüyü Aç/Kapat" style="display: none; align-items: center; justify-content: center; width: 42px; height: 42px;">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    <h1>Sistem Yönetim Paneli</h1>
+                </div>
                 <div class="header-right">
                     <button class="theme-toggle-btn" id="themeTogglePortal" title="Gece Modu">
                         <i class="fa-solid fa-moon"></i>

@@ -429,3 +429,76 @@ body {
     margin-bottom: 20px;
     display: none;
 }
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .admin-sidebar {
+        position: fixed;
+        left: -280px;
+        top: 0;
+        bottom: 0;
+        z-index: 9999;
+        box-shadow: 10px 0 30px rgba(0,0,0,0.25);
+    }
+    
+    .admin-sidebar.active {
+        left: 0;
+    }
+    
+    #sidebarToggleBtn {
+        display: inline-flex !important;
+    }
+    
+    .admin-header {
+        padding: 16px 20px;
+    }
+    
+    .admin-content {
+        padding: 20px;
+    }
+    
+    .tabs-navigation {
+        overflow-x: auto;
+        white-space: nowrap;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+    }
+    
+    .tab-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+        display: inline-block;
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+    }
+    
+    .admin-card {
+        padding: 20px;
+    }
+    
+    .admin-table th, .admin-table td {
+        padding: 12px;
+        font-size: 0.85rem;
+    }
+    
+    .table-responsive {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+}
+
+@media (max-width: 480px) {
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .admin-header h1 {
+        font-size: 1.2rem;
+    }
+}
