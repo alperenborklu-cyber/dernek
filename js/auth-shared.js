@@ -236,7 +236,7 @@ const DEFAULT_INSTAGRAM_POSTS = [
 
 // LocalStorage başlatma fonksiyonu
 function initializeDatabase() {
-    if (!localStorage.getItem("dernek_initialized") || !localStorage.getItem("dernek_initialized_v3") || !localStorage.getItem("dernek_initialized_v4")) {
+    if (!localStorage.getItem("dernek_initialized") || !localStorage.getItem("dernek_initialized_v3") || !localStorage.getItem("dernek_initialized_v4") || !localStorage.getItem("dernek_initialized_v5")) {
         localStorage.setItem("members", JSON.stringify(DEFAULT_MEMBERS));
         localStorage.setItem("announcements", JSON.stringify(DEFAULT_ANNOUNCEMENTS));
         localStorage.setItem("comments", JSON.stringify(DEFAULT_COMMENTS));
@@ -247,6 +247,7 @@ function initializeDatabase() {
         localStorage.setItem("dernek_initialized", "true");
         localStorage.setItem("dernek_initialized_v3", "true");
         localStorage.setItem("dernek_initialized_v4", "true");
+        localStorage.setItem("dernek_initialized_v5", "true");
         console.log("Dernek LocalStorage Veritabanı Güncellendi ve Başlatıldı.");
     }
     if (!localStorage.getItem("slider_items")) {
