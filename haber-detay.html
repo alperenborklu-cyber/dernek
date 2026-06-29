@@ -297,6 +297,11 @@
                 </div>
                 ${mainImgBottom}
             `;
+
+            // Initialize comments system for this specific dynamic news ID
+            if (typeof window.initCommentsSystem === 'function') {
+                window.initCommentsSystem(id);
+            }
         });
     </script>
 </body>

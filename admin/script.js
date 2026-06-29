@@ -754,6 +754,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     renderAll();
 
+    // Tablar arası otomatik veri senkronizasyonu (Gelen kutusu, yorum onayları vb. için)
+    window.addEventListener("storage", (e) => {
+        if (e.key === "suggestions" || e.key === "comments" || e.key === "members" || e.key === "announcements") {
+            renderAll();
+        }
+    });
+
     // 9. Gece/Gündüz Modu Senkronu
     const themeBtn = document.getElementById("themeTogglePortal");
     if (themeBtn) {

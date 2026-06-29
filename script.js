@@ -470,20 +470,22 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // 11. Dynamic News Page Comment System
-    const newsDetailContent = document.querySelector('.news-detail-content');
-    if (newsDetailContent) {
-        // Identify the page ID (filename without ext)
-        const pathParts = window.location.pathname.split('/');
-        const pageId = pathParts[pathParts.length - 1].replace('.html', '') || 'general-news';
+    window.initCommentsSystem = (pageId) => {
+        const newsDetailContent = document.querySelector('.news-detail-content');
+        if (!newsDetailContent) return;
 
-        // Render Comments Widget Wrapper
+        // Clean up any existing comments wrapper to prevent duplication
+        const existingWrapper = newsDetailContent.querySelector('.comments-widget-container');
+        if (existingWrapper) {
+            existingWrapper.remove();
+        }
+
         const commentsWrapper = document.createElement('div');
         commentsWrapper.className = 'comments-widget-container';
         commentsWrapper.style.marginTop = '48px';
         commentsWrapper.style.paddingTop = '32px';
         commentsWrapper.style.borderTop = '1px solid var(--border-color)';
 
-        // Render functions
         const renderComments = () => {
             const comments = JSON.parse(localStorage.getItem('comments') || '[]');
             const pageComments = comments.filter(c => c.targetId === pageId && c.status === 'approved');
@@ -583,7 +585,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
         renderComments();
         newsDetailContent.appendChild(commentsWrapper);
+    };
+
+    // Auto-run for static news detail pages
+    const initialNewsDetailContent = document.querySelector('.news-detail-content');
+    if (initialNewsDetailContent) {
+        const pathParts = window.location.pathname.split('/');
+        const filename = pathParts[pathParts.length - 1];
+        if (filename !== 'haber-detay.html' && filename !== 'haber-detay') {
+            const pageId = filename.replace('.html', '') || 'general-news';
+            window.initCommentsSystem(pageId);
+        }
     }
+
 
     // Dinamik Haber & Duyuru Entegrasyonu (Public sayfalar için)
     const newsGrid = document.querySelector('.news-grid');
