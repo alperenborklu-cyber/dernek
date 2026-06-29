@@ -863,6 +863,34 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     
     initLightbox();
+
+    // 14. İletişim Sayfası Mesaj Gönderim Kaydı (Gelen Kutusu/Suggestions Entegrasyonu)
+    const contactForm = document.getElementById('contactForm');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const subject = document.getElementById('subject').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            if (!name || !email || !subject || !message) return;
+
+            const suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
+            suggestions.push({
+                id: 'sug-' + Date.now(),
+                authorName: name,
+                authorEmail: email,
+                subject: '[İletişim Sayfası] ' + subject,
+                message: message,
+                date: new Date().toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
+            });
+
+            localStorage.setItem('suggestions', JSON.stringify(suggestions));
+            contactForm.reset();
+            alert('Mesajınız yönetim kuruluna iletilmiştir. Geri bildiriminiz için teşekkür ederiz!');
+        });
+    }
 });
 
 

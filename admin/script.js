@@ -160,18 +160,39 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-        commentTableBody.innerHTML = pendingComments.map(c => `
-            <tr>
-                <td><strong>${c.authorName}</strong><br><small style="color: var(--text-muted);">${c.authorEmail}</small></td>
-                <td><code style="background-color: var(--bg-color); padding: 2px 6px; border-radius: 4px; font-size: 0.8rem;">${c.targetId}</code></td>
-                <td>"${c.content}"</td>
-                <td>${c.date}</td>
-                <td>
-                    <button class="btn btn-success btn-sm btn-approve-comment" data-id="${c.id}"><i class="fa-solid fa-check"></i> Onayla</button>
-                    <button class="btn btn-danger btn-sm btn-delete-comment" data-id="${c.id}"><i class="fa-solid fa-trash"></i> Sil</button>
-                </td>
-            </tr>
-        `).join('');
+        const announcements = JSON.parse(localStorage.getItem("announcements") || "[]");
+
+        commentTableBody.innerHTML = pendingComments.map(c => {
+            const targetAnn = announcements.find(a => a.id === c.targetId);
+            let targetTitle = "";
+            let targetUrl = "";
+
+            if (targetAnn) {
+                targetTitle = targetAnn.title;
+                targetUrl = `../haber-detay.html?id=${c.targetId}`;
+            } else {
+                targetTitle = c.targetId
+                    .replace('blog-', 'Blog: ')
+                    .replace('haber-', 'Haber: ')
+                    .replace('proje-', 'Proje: ')
+                    .replace(/-/g, ' ');
+                targetTitle = targetTitle.split(' ').map(w => w.charAt(0).toUpperCase() + w.slice(1)).join(' ');
+                targetUrl = `../${c.targetId}.html`;
+            }
+
+            return `
+                <tr>
+                    <td><strong>${c.authorName}</strong><br><small style="color: var(--text-muted);">${c.authorEmail}</small></td>
+                    <td><a href="${targetUrl}" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: underline;">${targetTitle}</a></td>
+                    <td>"${c.content}"</td>
+                    <td>${c.date}</td>
+                    <td>
+                        <button class="btn btn-success btn-sm btn-approve-comment" data-id="${c.id}"><i class="fa-solid fa-check"></i> Onayla</button>
+                        <button class="btn btn-danger btn-sm btn-delete-comment" data-id="${c.id}"><i class="fa-solid fa-trash"></i> Sil</button>
+                    </td>
+                </tr>
+            `;
+        }).join('');
 
         // Yorum Onay / Sil Olayları
         document.querySelectorAll(".btn-approve-comment").forEach(btn => {
