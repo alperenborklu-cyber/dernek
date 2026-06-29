@@ -955,11 +955,14 @@ document.addEventListener("DOMContentLoaded", () => {
                         cropperImage.src = rawImgUrl;
                         cropperModal.style.display = "flex";
 
-                        // Slider için 16:9, diğerleri için 1.5 en boy oranı
+                        // Slider için 16:9, Instagram için 9:16, diğerleri için 1.5 en boy oranı
                         let defaultRatio = 1.5;
                         if (fileInputId === "sliderImageFile") {
                             defaultRatio = 1.7777777777777777; // 16:9
                             if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "1.7777777777777777";
+                        } else if (fileInputId === "instaImageFile") {
+                            defaultRatio = 0.5625; // 9:16 (Dikey Video)
+                            if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "0.5625";
                         } else {
                             if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "1.5";
                         }

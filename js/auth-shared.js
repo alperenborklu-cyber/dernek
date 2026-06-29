@@ -19,7 +19,7 @@ const DEFAULT_MEMBERS = [
         phone: "5551234567",
         education: "Lisans",
         city: "Ankara",
-        address: "TCDD 2. Bölge Behiçbey Tesisleri Datem Binaları A Blok Anadolu Blv. Behiçbey - Yenimahalle / ANKARA",
+        address: "İstasyon Mah. Tüzün Cad. Dış Kapı No: 33 Akaraatlı Apt. İç Kapı No: - Etimesgut / ANKARA / TÜRKİYE",
         memberNo: "UD-2026-0001",
         duesDebt: 120, // TL
         status: "approved"

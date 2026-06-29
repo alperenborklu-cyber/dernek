@@ -128,7 +128,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div class="top-bar-left">
                     <span><i class="fa-solid fa-phone"></i> 0 312 311 13 05</span>
                     <span><i class="fa-solid fa-envelope"></i> info@dernek.org.tr</span>
-                    <span><i class="fa-solid fa-location-dot"></i> Behiçbey / Ankara</span>
+                    <span><i class="fa-solid fa-location-dot"></i> Etimesgut / Ankara</span>
                 </div>
                 <div class="top-bar-right">
                     <div class="accessibility-options">
@@ -389,12 +389,12 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 9. Append Dernek Kütük No to Footer
+    // 9. Append Dernek Sicili to Footer
     const footerBottomP = document.querySelector('.footer-bottom p');
     if (footerBottomP) {
         // Prevent duplicate append just in case
-        if (!footerBottomP.textContent.includes('06.157.157')) {
-            footerBottomP.innerHTML += ' <span style="opacity: 0.8; margin-left: 8px;">| Dernek Kütük No: 06.157.157</span>';
+        if (!footerBottomP.textContent.includes('06-157-157')) {
+            footerBottomP.innerHTML += ' <span style="opacity: 0.8; margin-left: 8px;">| Dernek Sicili: 06-157-157</span>';
         }
     }
 
