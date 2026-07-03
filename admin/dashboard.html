@@ -83,6 +83,17 @@
             <!-- Content Area -->
             <div class="admin-content">
                 
+                <!-- Sunucu Durumu Göstergesi -->
+                <div id="serverStatusBanner" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-radius: 10px; margin-bottom: 24px; font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-main);">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i id="serverStatusIcon" class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.1rem; color: var(--primary);"></i>
+                        <span id="serverStatusText">Yerel sunucu bağlantısı kontrol ediliyor...</span>
+                    </div>
+                    <button type="button" id="forceSyncBtn" class="btn btn-primary btn-sm" style="display: none; font-size: 0.8rem; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; align-items: center; gap: 6px; font-weight: 600;">
+                        <i class="fa-solid fa-cloud-arrow-up"></i> Değişiklikleri Dosyalara Kaydet (Canlı Yayına Hazırla)
+                    </button>
+                </div>
+                
                 <!-- Stats Grid -->
                 <div class="stats-grid">
                     <div class="stat-card stat-primary" style="cursor: pointer;" onclick="const btn = document.querySelector('.tab-btn[data-tab=\'applications\']'); if (btn) btn.click();">

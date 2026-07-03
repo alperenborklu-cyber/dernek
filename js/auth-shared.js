@@ -1,6 +1,11 @@
 // auth-shared.js - Ortak Kimlik Doğrulama ve LocalStorage Veri Katmanı
 
+// Sürüm ve varsayılan şifre bilgileri
+const DB_VERSION = "1";
+const DEFAULT_ADMIN_PASSWORD = "admin123";
+
 // Başlangıç verilerini tanımlayalım
+const DEFAULT_PROJECTS = [];
 const DEFAULT_MEMBERS = [
     {
         email: "uye@dernek.org.tr",
@@ -236,19 +241,29 @@ const DEFAULT_INSTAGRAM_POSTS = [
 
 // LocalStorage başlatma fonksiyonu
 function initializeDatabase() {
-    if (!localStorage.getItem("dernek_initialized") || !localStorage.getItem("dernek_initialized_v3") || !localStorage.getItem("dernek_initialized_v4") || !localStorage.getItem("dernek_initialized_v5")) {
+    const currentVersion = localStorage.getItem("dernek_db_version");
+    
+    if (!localStorage.getItem("dernek_initialized") || 
+        !localStorage.getItem("dernek_initialized_v3") || 
+        !localStorage.getItem("dernek_initialized_v4") || 
+        !localStorage.getItem("dernek_initialized_v5") ||
+        currentVersion !== DB_VERSION) {
+        
         localStorage.setItem("members", JSON.stringify(DEFAULT_MEMBERS));
         localStorage.setItem("announcements", JSON.stringify(DEFAULT_ANNOUNCEMENTS));
         localStorage.setItem("comments", JSON.stringify(DEFAULT_COMMENTS));
         localStorage.setItem("suggestions", JSON.stringify(DEFAULT_SUGGESTIONS));
         localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
         localStorage.setItem("instagram_posts", JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
-        localStorage.setItem("admin_password", "admin123");
+        localStorage.setItem("projects", JSON.stringify(DEFAULT_PROJECTS));
+        localStorage.setItem("admin_password", DEFAULT_ADMIN_PASSWORD);
+        
         localStorage.setItem("dernek_initialized", "true");
         localStorage.setItem("dernek_initialized_v3", "true");
         localStorage.setItem("dernek_initialized_v4", "true");
         localStorage.setItem("dernek_initialized_v5", "true");
-        console.log("Dernek LocalStorage Veritabanı Güncellendi ve Başlatıldı.");
+        localStorage.setItem("dernek_db_version", DB_VERSION);
+        console.log("Dernek LocalStorage Veritabanı Yeni Sürümle Güncellendi: " + DB_VERSION);
     }
     if (!localStorage.getItem("slider_items")) {
         localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
@@ -256,8 +271,11 @@ function initializeDatabase() {
     if (!localStorage.getItem("instagram_posts")) {
         localStorage.setItem("instagram_posts", JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
     }
+    if (!localStorage.getItem("projects")) {
+        localStorage.setItem("projects", JSON.stringify(DEFAULT_PROJECTS));
+    }
     if (!localStorage.getItem("admin_password")) {
-        localStorage.setItem("admin_password", "admin123");
+        localStorage.setItem("admin_password", DEFAULT_ADMIN_PASSWORD);
     }
 }
 
@@ -272,7 +290,7 @@ function login(email, password) {
     initializeDatabase();
     
     // Admin kontrolü
-    const storedAdminPassword = localStorage.getItem("admin_password") || "admin123";
+    const storedAdminPassword = localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD;
     if (email === "admin@dernek.org.tr" && password === storedAdminPassword) {
         const adminSession = { email: "admin@dernek.org.tr", role: "admin", fullName: "Sistem Yöneticisi" };
         localStorage.setItem("dernek_session", JSON.stringify(adminSession));

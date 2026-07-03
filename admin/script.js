@@ -471,6 +471,11 @@ document.addEventListener("DOMContentLoaded", () => {
         renderAnnouncementsList();
         renderSliderItems();
         renderInstagramItems();
+        
+        // Sunucuya sessizce kaydet
+        if (typeof syncWithLocalServer === 'function') {
+            syncWithLocalServer(true);
+        }
     };
 
     // === SLIDER YÖNETİMİ BAŞLANGIÇ ===
@@ -862,6 +867,11 @@ document.addEventListener("DOMContentLoaded", () => {
             projects.push(newProj);
             localStorage.setItem("projects", JSON.stringify(projects));
 
+            // Sunucuya sessizce kaydet
+            if (typeof syncWithLocalServer === 'function') {
+                syncWithLocalServer(true);
+            }
+
             // Form Sıfırla
             addProjectForm.reset();
             const projPreviewContainer = document.getElementById("projImagePreviewContainer");
@@ -922,6 +932,11 @@ document.addEventListener("DOMContentLoaded", () => {
             
             localStorage.setItem("admin_password", newPassword);
             changePasswordForm.reset();
+            
+            // Sunucuya sessizce kaydet
+            if (typeof syncWithLocalServer === 'function') {
+                syncWithLocalServer(true);
+            }
             
             if (successAlert) {
                 successAlert.style.display = "block";
@@ -1089,4 +1104,140 @@ document.addEventListener("DOMContentLoaded", () => {
             });
         });
     }
+
+    // === YEREL SUNUCU SENKRONİZASYON SİSTEMİ ===
+    let isServerConnected = false;
+    const serverUrl = window.location.origin; // e.g. http://localhost:3000
+
+    const checkServerConnection = async () => {
+        const banner = document.getElementById("serverStatusBanner");
+        const icon = document.getElementById("serverStatusIcon");
+        const text = document.getElementById("serverStatusText");
+        const syncBtn = document.getElementById("forceSyncBtn");
+
+        if (!banner || !icon || !text) return;
+
+        try {
+            // Sunucunun aktif olup olmadığını kontrol edelim (AbortController ile timeout ekliyoruz)
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 1500);
+            
+            const response = await fetch(`${serverUrl}/api/save`, {
+                method: 'OPTIONS',
+                signal: controller.signal
+            });
+            
+            clearTimeout(timeoutId);
+
+            if (!response.ok) {
+                throw new Error("HTTP error " + response.status);
+            }
+
+            isServerConnected = true;
+            
+            banner.style.backgroundColor = "rgba(16, 185, 129, 0.08)";
+            banner.style.borderColor = "rgba(16, 185, 129, 0.25)";
+            banner.style.color = "#065f46";
+            
+            icon.className = "fa-solid fa-circle-check";
+            icon.style.color = "#10b981";
+            icon.classList.remove("fa-spin", "fa-circle-notch");
+            
+            text.innerHTML = `<strong>Yerel Sunucu Aktif</strong> - Yapılan tüm değişiklikler projedeki dosyalara (<code>js/auth-shared.js</code>) kaydedilecektir.`;
+            
+            if (syncBtn) {
+                syncBtn.style.display = "inline-flex";
+            }
+        } catch (err) {
+            isServerConnected = false;
+            
+            banner.style.backgroundColor = "rgba(239, 68, 68, 0.08)";
+            banner.style.borderColor = "rgba(239, 68, 68, 0.25)";
+            banner.style.color = "#991b1b";
+            
+            icon.className = "fa-solid fa-triangle-exclamation";
+            icon.style.color = "#ef4444";
+            icon.classList.remove("fa-spin", "fa-circle-notch");
+            
+            text.innerHTML = `<strong>Sunucu Pasif (Sadece Tarayıcı Modu)</strong> - Değişiklikleri dosyalara kaydetmek için terminalde <code>node server.js</code> çalıştırın.`;
+            
+            if (syncBtn) {
+                syncBtn.style.display = "none";
+            }
+        }
+    };
+
+    const syncWithLocalServer = async (quiet = false) => {
+        if (!isServerConnected) return;
+
+        const dataToSave = {
+            members: JSON.parse(localStorage.getItem("members") || "[]"),
+            announcements: JSON.parse(localStorage.getItem("announcements") || "[]"),
+            comments: JSON.parse(localStorage.getItem("comments") || "[]"),
+            suggestions: JSON.parse(localStorage.getItem("suggestions") || "[]"),
+            slider_items: JSON.parse(localStorage.getItem("slider_items") || "[]"),
+            instagram_posts: JSON.parse(localStorage.getItem("instagram_posts") || "[]"),
+            projects: JSON.parse(localStorage.getItem("projects") || "[]"),
+            admin_password: localStorage.getItem("admin_password") || "admin123"
+        };
+
+        try {
+            const response = await fetch(`${serverUrl}/api/save`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToSave)
+            });
+
+            const result = await response.json();
+            
+            if (result.success) {
+                console.log(`[Senkronizasyon] Veriler başarıyla kaydedildi. DB_VERSION: ${result.version}`);
+                
+                const statusSpan = document.getElementById("serverStatusText");
+                if (statusSpan) {
+                    const timeStr = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    if (result.gitPush) {
+                        statusSpan.innerHTML = `<strong>Yerel Sunucu Aktif</strong> - Değişiklikler dosyalara kaydedildi ve <strong>GitHub'a gönderildi (canlıya alındı)</strong> (${timeStr}).`;
+                    } else if (result.gitPush === false) {
+                        statusSpan.innerHTML = `<strong>Yerel Sunucu Aktif</strong> - Dosyalar güncellendi ancak <strong>Git push başarısız:</strong> <span style="font-size:0.82rem; color:#b91c1c;">${result.gitError}</span> (${timeStr}).`;
+                    } else {
+                        statusSpan.innerHTML = `<strong>Yerel Sunucu Aktif</strong> - Yapılan değişiklikler projedeki dosyalara kaydedildi (${timeStr}).`;
+                    }
+                }
+
+                if (!quiet) {
+                    if (result.gitPush) {
+                        alert("Tüm değişiklikler başarıyla yerel dosyalara kaydedildi ve otomatik olarak GitHub'a (canlıya) gönderildi!");
+                    } else if (result.gitPush === false) {
+                        alert("Değişiklikler yerel dosyalara kaydedildi ancak GitHub'a otomatik gönderilemedi. Hata: " + result.gitError);
+                    } else {
+                        alert("Tüm değişiklikler yerel dosyalara başarıyla kaydedildi!");
+                    }
+                }
+            } else {
+                console.error('[Senkronizasyon] Hata:', result.error);
+                if (!quiet) {
+                    alert("Dosya kaydetme hatası: " + result.error);
+                }
+            }
+        } catch (err) {
+            console.error('[Senkronizasyon] Sunucuya bağlanılamadı:', err);
+            if (!quiet) {
+                alert("Yerel sunucuya bağlanırken hata oluştu. Lütfen sunucunun çalıştığından emin olun.");
+            }
+        }
+    };
+
+    // Force Sync butonu
+    const forceSyncBtn = document.getElementById("forceSyncBtn");
+    if (forceSyncBtn) {
+        forceSyncBtn.addEventListener("click", () => {
+            syncWithLocalServer(false);
+        });
+    }
+
+    // Bağlantı kontrolünü tetikle
+    checkServerConnection();
 });
