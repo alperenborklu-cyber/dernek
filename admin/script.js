@@ -1105,9 +1105,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // === YEREL SUNUCU SENKRONİZASYON SİSTEMİ ===
+    // === SUNUCU SENKRONİZASYON SİSTEMİ ===
     let isServerConnected = false;
-    const serverUrl = window.location.origin; // e.g. http://localhost:3000
 
     const checkServerConnection = async () => {
         const banner = document.getElementById("serverStatusBanner");
@@ -1118,12 +1117,11 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!banner || !icon || !text) return;
 
         try {
-            // Sunucunun aktif olup olmadığını kontrol edelim (AbortController ile timeout ekliyoruz)
             const controller = new AbortController();
             const timeoutId = setTimeout(() => controller.abort(), 1500);
             
-            const response = await fetch(`${serverUrl}/api/save`, {
-                method: 'OPTIONS',
+            const response = await fetch(`../api.php?action=get_data`, {
+                method: 'GET',
                 signal: controller.signal
             });
             
@@ -1143,7 +1141,7 @@ document.addEventListener("DOMContentLoaded", () => {
             icon.style.color = "#10b981";
             icon.classList.remove("fa-spin", "fa-circle-notch");
             
-            text.innerHTML = `<strong>Yerel Sunucu Aktif</strong> - Yapılan tüm değişiklikler projedeki dosyalara (<code>js/auth-shared.js</code>) kaydedilecektir.`;
+            text.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan tüm değişiklikler sunucudaki ortak veritabanına kaydedilecektir.`;
             
             if (syncBtn) {
                 syncBtn.style.display = "inline-flex";
@@ -1159,7 +1157,7 @@ document.addEventListener("DOMContentLoaded", () => {
             icon.style.color = "#ef4444";
             icon.classList.remove("fa-spin", "fa-circle-notch");
             
-            text.innerHTML = `<strong>Sunucu Pasif (Sadece Tarayıcı Modu)</strong> - Değişiklikleri dosyalara kaydetmek için terminalde <code>node server.js</code> çalıştırın.`;
+            text.innerHTML = `<strong>Sunucu Pasif (Sadece Tarayıcı Modu)</strong> - Sunucu bağlantısı kurulamadı. Değişiklikler sadece bu tarayıcıda kalacaktır.`;
             
             if (syncBtn) {
                 syncBtn.style.display = "none";
@@ -1182,7 +1180,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         try {
-            const response = await fetch(`${serverUrl}/api/save`, {
+            const response = await fetch(`../api.php?action=save_admin`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -1193,39 +1191,27 @@ document.addEventListener("DOMContentLoaded", () => {
             const result = await response.json();
             
             if (result.success) {
-                console.log(`[Senkronizasyon] Veriler başarıyla kaydedildi. DB_VERSION: ${result.version}`);
+                console.log(`[Senkronizasyon] Veriler başarıyla kaydedildi.`);
                 
                 const statusSpan = document.getElementById("serverStatusText");
                 if (statusSpan) {
                     const timeStr = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                    if (result.gitPush) {
-                        statusSpan.innerHTML = `<strong>Yerel Sunucu Aktif</strong> - Değişiklikler dosyalara kaydedildi ve <strong>GitHub'a gönderildi (canlıya alındı)</strong> (${timeStr}).`;
-                    } else if (result.gitPush === false) {
-                        statusSpan.innerHTML = `<strong>Yerel Sunucu Aktif</strong> - Dosyalar güncellendi ancak <strong>Git push başarısız:</strong> <span style="font-size:0.82rem; color:#b91c1c;">${result.gitError}</span> (${timeStr}).`;
-                    } else {
-                        statusSpan.innerHTML = `<strong>Yerel Sunucu Aktif</strong> - Yapılan değişiklikler projedeki dosyalara kaydedildi (${timeStr}).`;
-                    }
+                    statusSpan.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan değişiklikler sunucu veritabanına kaydedildi (${timeStr}).`;
                 }
 
                 if (!quiet) {
-                    if (result.gitPush) {
-                        alert("Tüm değişiklikler başarıyla yerel dosyalara kaydedildi ve otomatik olarak GitHub'a (canlıya) gönderildi!");
-                    } else if (result.gitPush === false) {
-                        alert("Değişiklikler yerel dosyalara kaydedildi ancak GitHub'a otomatik gönderilemedi. Hata: " + result.gitError);
-                    } else {
-                        alert("Tüm değişiklikler yerel dosyalara başarıyla kaydedildi!");
-                    }
+                    alert("Tüm değişiklikler sunucu veritabanına başarıyla kaydedildi!");
                 }
             } else {
-                console.error('[Senkronizasyon] Hata:', result.error);
+                console.error('[Senkronizasyon] Hata:', result.message);
                 if (!quiet) {
-                    alert("Dosya kaydetme hatası: " + result.error);
+                    alert("Sunucu kaydetme hatası: " + result.message);
                 }
             }
         } catch (err) {
             console.error('[Senkronizasyon] Sunucuya bağlanılamadı:', err);
             if (!quiet) {
-                alert("Yerel sunucuya bağlanırken hata oluştu. Lütfen sunucunun çalıştığından emin olun.");
+                alert("Sunucuya bağlanırken hata oluştu. Sunucu bağlantısını kontrol edin.");
             }
         }
     };

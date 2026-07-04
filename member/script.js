@@ -76,6 +76,13 @@ document.addEventListener("DOMContentLoaded", () => {
                     localStorage.setItem("members", JSON.stringify(members));
                 }
 
+                // Send to server
+                fetch("../api.php?action=update_profile", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: currentUser.email, duesDebt: 0 })
+                }).catch(err => console.error(err));
+
                 alert("Ödeme işleminiz başarıyla simüle edilmiştir. Teşekkür ederiz!");
                 updateDuesUI();
             }
@@ -138,7 +145,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (!text) return;
                 
                 const comments = JSON.parse(localStorage.getItem("comments") || "[]");
-                comments.push({
+                const newComment = {
                     id: "comm-" + Date.now(),
                     targetId: annId,
                     authorName: currentUser.fullName,
@@ -146,9 +153,18 @@ document.addEventListener("DOMContentLoaded", () => {
                     content: text,
                     date: new Date().toLocaleString("tr-TR", { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' }),
                     status: "pending"
-                });
+                };
+                comments.push(newComment);
                 
                 localStorage.setItem("comments", JSON.stringify(comments));
+                
+                // Send to server
+                fetch("../api.php?action=add_comment", {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(newComment)
+                }).catch(err => console.error(err));
+
                 commentInput.value = "";
                 
                 const alertDiv = document.getElementById(`alert-ann-comment-${annId}`);
@@ -174,16 +190,25 @@ document.addEventListener("DOMContentLoaded", () => {
             if (!subject || !message) return;
 
             const suggestions = JSON.parse(localStorage.getItem("suggestions") || "[]");
-            suggestions.push({
+            const newSuggestion = {
                 id: "sug-" + Date.now(),
                 authorName: currentUser.fullName,
                 authorEmail: currentUser.email,
                 subject: subject,
                 message: message,
                 date: new Date().toLocaleString("tr-TR", { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
-            });
+            };
+            suggestions.push(newSuggestion);
 
             localStorage.setItem("suggestions", JSON.stringify(suggestions));
+
+            // Send to server
+            fetch("../api.php?action=add_suggestion", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newSuggestion)
+            }).catch(err => console.error(err));
+
             suggestionForm.reset();
 
             alertBox.style.display = "block";
@@ -226,6 +251,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 sessionCopy.fullName = currentUser.fullName;
                 localStorage.setItem("dernek_session", JSON.stringify(sessionCopy));
             }
+
+            // Send to server
+            fetch("../api.php?action=update_profile", {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: currentUser.email,
+                    fullName: currentUser.fullName,
+                    phone: currentUser.phone,
+                    education: currentUser.education,
+                    address: currentUser.address
+                })
+            }).catch(err => console.error(err));
 
             const alertBox = document.getElementById("profileAlert");
             alertBox.style.display = "block";

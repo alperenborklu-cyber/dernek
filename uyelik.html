@@ -928,6 +928,22 @@
                     members.push(newApplicant);
                     localStorage.setItem("members", JSON.stringify(members));
 
+                    // Send to server
+                    const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
+                    const API_URL = isSubdir ? "../api.php" : "api.php";
+                    fetch(`${API_URL}?action=signup`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newApplicant)
+                    })
+                    .then(res => res.json())
+                    .then(result => {
+                        console.log("Signup server response:", result);
+                    })
+                    .catch(err => {
+                        console.error("Signup server error:", err);
+                    });
+
                     document.getElementById('sumName').textContent = fullNameVal;
                     document.getElementById('sumType').textContent = "Asil Üye Başvurusu (Onay Bekliyor)";
                     

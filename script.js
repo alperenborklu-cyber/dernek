@@ -571,6 +571,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     allComments.push(newComment);
                     localStorage.setItem('comments', JSON.stringify(allComments));
 
+                    // Send to server
+                    const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+                    const API_URL = isSubDir ? '../api.php' : 'api.php';
+                    fetch(`${API_URL}?action=add_comment`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(newComment)
+                    }).catch(err => console.error("Error saving comment on server:", err));
+
                     commentsWrapper.querySelector('#commentText').value = '';
                     const alertBox = commentsWrapper.querySelector('#commentAlert');
                     alertBox.textContent = 'Yorumunuz başarıyla gönderildi! Yönetici onayından sonra yayınlanacaktır.';
@@ -877,16 +886,27 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!name || !email || !subject || !message) return;
 
             const suggestions = JSON.parse(localStorage.getItem('suggestions') || '[]');
-            suggestions.push({
+            const newSuggestion = {
                 id: 'sug-' + Date.now(),
                 authorName: name,
                 authorEmail: email,
                 subject: '[İletişim Sayfası] ' + subject,
                 message: message,
                 date: new Date().toLocaleString('tr-TR', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit' })
-            });
+            };
+
+            suggestions.push(newSuggestion);
 
             localStorage.setItem('suggestions', JSON.stringify(suggestions));
+
+            // Send to server
+            const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+            const API_URL = isSubDir ? '../api.php' : 'api.php';
+            fetch(`${API_URL}?action=add_suggestion`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newSuggestion)
+            }).catch(err => console.error("Error saving suggestion on server:", err));
             contactForm.reset();
             alert('Mesajınız yönetim kuruluna iletilmiştir. Geri bildiriminiz için teşekkür ederiz!');
         });

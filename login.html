@@ -283,7 +283,7 @@
     <script src="script.js"></script>
     
     <script>
-        document.getElementById('loginForm').addEventListener('submit', function(e) {
+        document.getElementById('loginForm').addEventListener('submit', async function(e) {
             e.preventDefault();
             const email = document.getElementById('email').value.trim();
             const password = document.getElementById('password').value;
@@ -291,7 +291,7 @@
             
             alertBox.style.display = 'none';
             
-            const result = login(email, password);
+            const result = await login(email, password);
             if (result.success) {
                 if (result.role === 'admin') {
                     window.location.href = 'admin/dashboard.html';

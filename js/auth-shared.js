@@ -33,6 +33,14 @@ const DEFAULT_MEMBERS = [
 
 const DEFAULT_ANNOUNCEMENTS = [
     {
+        id: "ann-sivas-tasra-toplantisi",
+        title: "Gönül Köprüsü Taşra Teşkilat Toplantılarına Sivas'ta Start Verildi",
+        category: "Kurumsal",
+        content: "Gönül Köprüsü Derneği olarak, yereldeki teşkilatlanma çalışmalarımıza ve engelli hakları mücadelemize ivme kazandırmak amacıyla başlattığımız Taşra Teşkilat Toplantılarına Sivas'ta start verdik. Tüm Engelliler Derneği, Umut Veren Eller ve Sivas İyilik Derneği ile verimli istişareler gerçekleştirdik.",
+        image: "cover-sivas-tasra-toplantisi.webp",
+        date: "2026-07-04"
+    },
+    {
         id: "ann-eti-maden",
         title: "Eti Maden İşletmeleri Genel Müdür Yardımcısı Sayın Hüseyin Uyan'a Ziyaret",
         category: "Kurumsal",
@@ -187,6 +195,15 @@ const DEFAULT_SUGGESTIONS = [
 
 const DEFAULT_SLIDES = [
     {
+        id: "slide-sivas-tasra-toplantisi",
+        title: "Gönül Köprüsü Taşra Teşkilat Toplantılarına Sivas'ta Start Verildi",
+        category: "Kurumsal",
+        content: "Gönül Köprüsü Derneği olarak, yereldeki teşkilatlanma çalışmalarımıza ve engelli hakları mücadelemize ivme kazandırmak amacıyla başlattığımız Taşra Teşkilat Toplantılarına Sivas'ta start verdik.",
+        image: "cover-sivas-tasra-toplantisi.webp",
+        date: "2026-07-04",
+        link: "haber-sivas-tasra-toplantisi.html"
+    },
+    {
         id: "slide-1",
         title: "Eti Maden İşletmeleri Genel Müdür Yardımcısı Sayın Hüseyin Uyan'a Ziyaret",
         category: "Kurumsal",
@@ -279,6 +296,29 @@ function initializeDatabase() {
     }
 }
 
+// Sunucudan veri senkronizasyonu
+async function syncDataFromServer() {
+    const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
+    const API_URL = isSubdir ? "../api.php" : "api.php";
+    try {
+        const res = await fetch(`${API_URL}?action=get_data`);
+        if (res.ok) {
+            const data = await res.json();
+            if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
+            if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
+            if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
+            if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
+            if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
+            if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
+            if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
+            if (data.admin_password) localStorage.setItem("admin_password", data.admin_password);
+            console.log("Sunucu veritabanı başarıyla yerel tarayıcı ile senkronize edildi.");
+        }
+    } catch (e) {
+        console.error("Sunucu senkronizasyon hatası:", e);
+    }
+}
+
 // Oturum Yönetimi
 function getCurrentUser() {
     const session = localStorage.getItem("dernek_session");
@@ -286,31 +326,25 @@ function getCurrentUser() {
     return JSON.parse(session);
 }
 
-function login(email, password) {
-    initializeDatabase();
-    
-    // Admin kontrolü
-    const storedAdminPassword = localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD;
-    if (email === "admin@dernek.org.tr" && password === storedAdminPassword) {
-        const adminSession = { email: "admin@dernek.org.tr", role: "admin", fullName: "Sistem Yöneticisi" };
-        localStorage.setItem("dernek_session", JSON.stringify(adminSession));
-        return { success: true, role: "admin", user: adminSession };
-    }
-    
-    // Üye kontrolü
-    const members = JSON.parse(localStorage.getItem("members") || "[]");
-    const user = members.find(m => m.email === email && m.password === password);
-    
-    if (user) {
-        if (user.status !== "approved") {
-            return { success: false, message: "Üyelik başvurunuz henüz onaylanmamıştır veya reddedilmiştir." };
+async function login(email, password) {
+    const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
+    const API_URL = isSubdir ? "../api.php" : "api.php";
+    try {
+        const response = await fetch(`${API_URL}?action=login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const result = await response.json();
+        if (result.success) {
+            localStorage.setItem("dernek_session", JSON.stringify(result.user));
+            return result;
         }
-        const userSession = { email: user.email, role: "member", fullName: user.fullName, memberNo: user.memberNo };
-        localStorage.setItem("dernek_session", JSON.stringify(userSession));
-        return { success: true, role: "member", user: userSession };
+        return { success: false, message: result.message || "E-posta adresi veya şifre hatalı." };
+    } catch (e) {
+        console.error(e);
+        return { success: false, message: "Sunucu bağlantı hatası." };
     }
-    
-    return { success: false, message: "E-posta adresi veya şifre hatalı." };
 }
 
 function logout() {
@@ -337,5 +371,6 @@ function checkAccess(requiredRole) {
     return true;
 }
 
-// Sayfa yüklendiğinde otomatik veri tabanını kur
+// Sayfa yüklendiğinde otomatik veri tabanını kur ve sunucudan veriyi çek
 initializeDatabase();
+syncDataFromServer();
