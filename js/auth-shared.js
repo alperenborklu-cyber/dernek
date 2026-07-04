@@ -1,7 +1,7 @@
 // auth-shared.js - Ortak Kimlik Doğrulama ve LocalStorage Veri Katmanı
 
 // Sürüm ve varsayılan şifre bilgileri
-const DB_VERSION = "1";
+const DB_VERSION = "2";
 const DEFAULT_ADMIN_PASSWORD = "admin123";
 
 // Başlangıç verilerini tanımlayalım
