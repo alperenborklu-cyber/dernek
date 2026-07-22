@@ -462,7 +462,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     // Ortak Yenileme Fonksiyonu
-    const renderAll = () => {
+    const renderAll = async () => {
         updateStats();
         renderApplications();
         renderMembers();
@@ -474,7 +474,7 @@ document.addEventListener("DOMContentLoaded", () => {
         
         // Sunucuya sessizce kaydet
         if (typeof syncWithLocalServer === 'function') {
-            syncWithLocalServer(true);
+            await syncWithLocalServer(true);
         }
     };
 
@@ -1029,8 +1029,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         newSaveBtn.addEventListener("click", () => {
                             if (activeCropper) {
-                                // Seçilen alanı kesip Base64 veri yolunu al (Boyutu optimize etmek için 0.85 kalite)
-                                const croppedDataUrl = activeCropper.getCroppedCanvas().toDataURL('image/jpeg', 0.85);
+                                // Seçilen alanı kesip Base64 veri yolunu al (Boyutu optimize etmek için 600px maks genişlik ve 0.65 kalite)
+                                const croppedDataUrl = activeCropper.getCroppedCanvas({
+                                    maxWidth: 600,
+                                    maxHeight: 600,
+                                    imageSmoothingEnabled: true,
+                                    imageSmoothingQuality: 'medium'
+                                }).toDataURL('image/jpeg', 0.65);
                                 
                                 if (textInput) textInput.value = croppedDataUrl;
                                 if (previewImg) previewImg.src = croppedDataUrl;
