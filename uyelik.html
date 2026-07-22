@@ -213,24 +213,24 @@
                         <div class="form-success-panel" id="formSuccessPanel">
                             <div class="success-icon-wrapper">
                                 <div class="success-circle">
-                                    <i class="fa-solid fa-check"></i>
+                                    <i class="fa-solid fa-clock" style="color: #eab308;"></i>
                                 </div>
                             </div>
-                            <h3>Üyeliğiniz Başarıyla Oluşturuldu!</h3>
-                            <p class="success-p">Engelli Memur & İşçi Derneği ailemize hoş geldiniz. Üyeliğiniz anında aktif edilmiştir. Artık web sitemizdeki haber ve blog yazılarına yorum yazabilir, üye portalından dernek faaliyetlerini takip edebilirsiniz.</p>
+                            <h3>Başvurunuz Başarıyla Alındı!</h3>
+                            <p class="success-p">Engelli Memur & İşçi Derneği üyelik başvurunuz sisteme kaydedilmiştir. Başvurunuz dernek yönetimi tarafından incelenip onaylandıktan sonra belirlediğiniz şifre ile giriş yapabilir, haber ve blog yazılarına yorum yazabilir ve üye portalını kullanabilirsiniz.</p>
                             
                             <div class="application-summary">
-                                <h4>Üyelik Bilgileriniz</h4>
+                                <h4>Başvuru Bilgileriniz</h4>
                                 <div class="summary-grid">
                                     <div class="summary-item"><strong>Ad Soyad:</strong> <span id="sumName">-</span></div>
                                     <div class="summary-item"><strong>E-posta:</strong> <span id="sumEmail">-</span></div>
                                     <div class="summary-item"><strong>Üye No:</strong> <span id="sumMemberNo">-</span></div>
-                                    <div class="summary-item"><strong>Durum:</strong> <span style="color: #10b981; font-weight: 600;">Aktif Üye</span></div>
+                                    <div class="summary-item"><strong>Durum:</strong> <span style="color: #eab308; font-weight: 600;">Onay Bekliyor</span></div>
                                 </div>
                             </div>
 
                             <div class="success-actions" style="display: flex; gap: 12px; justify-content: center; margin-top: 24px;">
-                                <a href="member/dashboard.html" class="btn btn-primary"><i class="fa-solid fa-gauge"></i> Üye Portalı'na Git</a>
+                                <a href="login.html" class="btn btn-primary"><i class="fa-solid fa-right-to-bracket"></i> Giriş Yap sayfasına Git</a>
                                 <a href="index.html" class="btn btn-outline"><i class="fa-solid fa-house"></i> Ana Sayfaya Dön</a>
                             </div>
                         </div>
@@ -513,7 +513,7 @@
                     city: cityVal,
                     memberNo: memberNo,
                     duesDebt: 0,
-                    status: "approved" // Immediate approval so user can login & comment right away!
+                    status: "pending" // Admin must approve the registration first
                 };
 
                 members.push(newMember);
@@ -528,14 +528,8 @@
                     }
                 }
 
-                // Auto-login session for user
-                const session = {
-                    email: emailVal,
-                    role: "member",
-                    fullName: fullNameVal,
-                    memberNo: memberNo
-                };
-                localStorage.setItem("dernek_session", JSON.stringify(session));
+                // Auto-login disabled because admin approval is required.
+                // localStorage.setItem("dernek_session", ...);
 
                 // Update summary UI
                 document.getElementById('sumName').textContent = fullNameVal;

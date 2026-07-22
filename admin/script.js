@@ -88,7 +88,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     allMembers[memberIdx].status = "approved";
                     localStorage.setItem("members", JSON.stringify(allMembers));
                     if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
-                    alert("Üye başarıyla onaylandı. Artık geçici şifresi (123456) ile portala giriş yapabilir.");
+                    alert("Üye başvurusu başarıyla onaylandı. Üye kendi belirlediği şifre ile sisteme giriş yapabilir.");
                     renderAll();
                 }
             });

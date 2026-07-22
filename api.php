@@ -109,7 +109,8 @@ switch ($action) {
             }
         }
         
-        // Yeni üyeyi ekle
+        // Yeni üyeyi ekle (Durum her zaman onay bekliyor olarak başlar)
+        $input['status'] = 'pending';
         $db['members'][] = $input;
         
         if (save_db($db)) {
