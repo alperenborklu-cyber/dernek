@@ -310,4 +310,60 @@ document.addEventListener("DOMContentLoaded", () => {
             window.location.href = "../index.html";
         });
     }
+
+    // Sunucudan güncel verileri çekip arayüzü tazeleyen fonksiyon
+    const syncMemberData = async () => {
+        try {
+            const response = await fetch("../api.php?action=get_data");
+            if (response.ok) {
+                const data = await response.json();
+                if (data) {
+                    if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
+                    if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
+                    if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
+                    if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
+                    if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
+                    if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
+                    if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
+                    
+                    const updatedMembers = JSON.parse(localStorage.getItem("members") || "[]");
+                    const updatedCurrentUser = updatedMembers.find(m => m.email === session.email);
+                    if (updatedCurrentUser) {
+                        currentUser = updatedCurrentUser;
+                        
+                        // Sidebar ve kart verilerini güncelle
+                        if (sidebarName) sidebarName.textContent = currentUser.fullName;
+                        if (sidebarNo) sidebarNo.textContent = currentUser.memberNo || 'Atanmadı';
+                        if (cardName) cardName.textContent = currentUser.fullName;
+                        if (cardNo) cardNo.textContent = currentUser.memberNo || 'Atanmadı';
+                        if (cardTc) cardTc.textContent = currentUser.tcNo.replace(/(\d{3})\d{5}(\d{3})/, "$1*****$2");
+                        if (cardBlood) cardBlood.textContent = currentUser.bloodGroup + " Rh";
+                        if (cardDisability) cardDisability.textContent = `%${currentUser.disabilityRatio} (${currentUser.disabilityType})`;
+                        
+                        // Profil formu alanlarını güncelle
+                        if (profileForm) {
+                            document.getElementById("pName").value = currentUser.fullName;
+                            document.getElementById("pPhone").value = currentUser.phone || "";
+                            document.getElementById("pEmail").value = currentUser.email;
+                            document.getElementById("pEducation").value = currentUser.education || "";
+                            document.getElementById("pAddress").value = currentUser.address || "";
+                            if (currentUser.disabilityType) {
+                                document.getElementById("pDisabilityType").value = currentUser.disabilityType;
+                                document.getElementById("pDisabilityRatio").value = currentUser.disabilityRatio;
+                            }
+                        }
+                        
+                        // Aidat ve duyuruları yeniden çiz
+                        updateDuesUI();
+                        renderAnnouncements();
+                    }
+                }
+            }
+        } catch (e) {
+            console.error("Member data sync failed:", e);
+        }
+    };
+
+    // Arka planda sunucu verilerini çek ve portalı güncelle
+    syncMemberData();
 });

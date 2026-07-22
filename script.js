@@ -608,223 +608,233 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // Dinamik Haber & Duyuru Entegrasyonu (Public sayfalar için)
-    const newsGrid = document.querySelector('.news-grid');
-    if (newsGrid) {
-        const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
-        // Duyuruları en yeni üstte olacak şekilde ekleyelim
-        announcements.slice().reverse().forEach(ann => {
-            let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
-            if (imagePath.startsWith('../')) {
-                imagePath = imagePath.substring(3);
-            }
-            const card = document.createElement('article');
-            card.className = 'news-card dynamic-news-card';
-            card.innerHTML = `
-                <div class="news-img">
-                    <img src="${imagePath}" alt="${ann.title}">
-                    <span class="news-date">${ann.date}</span>
-                </div>
-                <div class="news-content">
-                    <span class="news-category">${ann.category || 'Kurumsal'}</span>
-                    <h3>${ann.title}</h3>
-                    <p>${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
-                    <a href="haber-detay.html?id=${ann.id}" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            `;
-            newsGrid.insertBefore(card, newsGrid.firstChild);
-        });
-
-        // Haber Listesi Filtreleme Mantığı (Public haberler.html için)
-        const filterButtons = document.querySelectorAll('.filter-container .filter-btn');
-        if (filterButtons.length > 0) {
-            filterButtons.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    filterButtons.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-
-                    const filterText = btn.textContent.trim().toLowerCase();
-                    const cards = newsGrid.querySelectorAll('.news-card');
-
-                    cards.forEach(card => {
-                        const categoryEl = card.querySelector('.news-category');
-                        if (!categoryEl) return;
-                        
-                        const categoryText = categoryEl.textContent.trim().toLowerCase();
-                        
-                        if (filterText === 'hepsi') {
-                            card.style.display = 'block';
-                        } else if (filterText === 'eğitim & i̇stihdam' && (categoryText.includes('eğitim') || categoryText.includes('istihdam'))) {
-                            card.style.display = 'block';
-                        } else if (filterText === 'spor & sosyal' && (categoryText.includes('spor') || categoryText.includes('sosyal'))) {
-                            card.style.display = 'block';
-                        } else if (categoryText.includes(filterText) || filterText.includes(categoryText)) {
-                            card.style.display = 'block';
-                        } else {
-                            card.style.display = 'none';
-                        }
-                    });
-                });
-            });
+    // Dinamik İçerik Yükleme Fonksiyonu (Hem yerel önbellek hem de sunucu verisi için)
+    window.initDynamicContent = () => {
+        // 8. Stats Counter Animation güncellemesi
+        const stats = document.querySelectorAll('.stat-number');
+        const memberStat = Array.from(stats).find(el => el.nextElementSibling && el.nextElementSibling.textContent.includes('Kayıtlı Üye'));
+        if (memberStat) {
+            const members = JSON.parse(localStorage.getItem('members') || '[]');
+            memberStat.setAttribute('data-target', 1000 + members.length);
         }
-    }
 
-    const sliderTrack = document.querySelector('.news-slider-track');
-    const dotsContainer = document.querySelector('.slider-dots');
-    if (sliderTrack) {
-        const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
-        // En güncel 10 haberi slayt olarak gösterelim
-        const slides = announcements.slice(0, 10);
-        
-        slides.forEach(slideItem => {
-            let imagePath = slideItem.image || 'cover-kamp-istisare-toplantisi.webp';
-            if (imagePath.startsWith('../')) {
-                imagePath = imagePath.substring(3);
+        // 11. Dinamik Haber Detay Yorum Sistemi
+        const initialNewsDetailContent = document.querySelector('.news-detail-content');
+        if (initialNewsDetailContent) {
+            const pathParts = window.location.pathname.split('/');
+            const filename = pathParts[pathParts.length - 1];
+            if (filename !== 'haber-detay.html' && filename !== 'haber-detay') {
+                const pageId = filename.replace('.html', '') || 'general-news';
+                window.initCommentsSystem(pageId);
             }
-            const slide = document.createElement('div');
-            slide.className = 'news-slide';
-            slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url('${imagePath}')`;
+        }
+
+        // Dinamik Haber & Duyuru Entegrasyonu (Public sayfalar için)
+        const newsGrid = document.querySelector('.news-grid');
+        if (newsGrid) {
+            // Çift eklemeyi önlemek için önceden eklenen dinamik kartları temizle
+            newsGrid.querySelectorAll('.dynamic-news-card').forEach(el => el.remove());
             
-            const targetLink = slideItem.link || `haber-detay.html?id=${slideItem.id}`;
-            
-            slide.innerHTML = `
-                <div class="news-slide-content">
-                    <span class="news-slide-category">${slideItem.category || 'Duyuru'}</span>
-                    <span class="news-slide-date">${slideItem.date || ''}</span>
-                    <h3 class="news-slide-title">${slideItem.title}</h3>
-                    <p class="news-slide-desc">${slideItem.content.substring(0, 150)}${slideItem.content.length > 150 ? '...' : ''}</p>
-                    <a href="${targetLink}" class="btn btn-primary">Detaylı Bilgi <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            `;
-            sliderTrack.appendChild(slide);
-        });
-
-        // Yeni slaytlara göre gösterge noktalarını (dots) yeniden oluşturalım
-        if (dotsContainer) {
-            const totalSlides = sliderTrack.querySelectorAll('.news-slide').length;
-            dotsContainer.innerHTML = '';
-            for (let i = 0; i < totalSlides; i++) {
-                const dot = document.createElement('span');
-                dot.className = i === 0 ? 'dot active' : 'dot';
-                dot.setAttribute('data-index', i);
-                dotsContainer.appendChild(dot);
-            }
-        }
-    }
-
-    // News Slider Logic
-    const track = document.querySelector('.news-slider-track');
-    const prevBtn = document.querySelector('.news-slider-container .prev-btn');
-    const nextBtn = document.querySelector('.news-slider-container .next-btn');
-    const dots = document.querySelectorAll('.slider-dots .dot');
-
-    if (track && dots.length > 0) {
-        let currentSlide = 0;
-
-        const updateSlider = (index) => {
-            const offset = index * 100;
-            track.style.transform = `translateX(-${offset}%)`;
-
-            dots.forEach(d => d.classList.remove('active'));
-            if (dots[index]) dots[index].classList.add('active');
-            currentSlide = index;
-        };
-
-        if (nextBtn) {
-            nextBtn.addEventListener('click', () => {
-                let nextIdx = (currentSlide + 1) % dots.length;
-                updateSlider(nextIdx);
-            });
-        }
-
-        if (prevBtn) {
-            prevBtn.addEventListener('click', () => {
-                let prevIdx = (currentSlide - 1 + dots.length) % dots.length;
-                updateSlider(prevIdx);
-            });
-        }
-
-        dots.forEach((dot, idx) => {
-            dot.addEventListener('click', () => {
-                updateSlider(idx);
-            });
-        });
-
-        // Resize support
-        window.addEventListener('resize', () => {
-            updateSlider(currentSlide);
-        });
-
-        // Optional: Auto slide every 5 seconds
-        setInterval(() => {
-                    let nextIdx = (currentSlide + 1) % dots.length;
-            updateSlider(nextIdx);
-        }, 5000);
-    }
-
-    // 11.5. Dinamik Instagram Paylaşımları Yükleyici
-    const instagramScrollContainer = document.getElementById('instagramScrollContainer');
-    if (instagramScrollContainer) {
-        const posts = JSON.parse(localStorage.getItem('instagram_posts') || '[]');
-        if (posts.length > 0) {
-            instagramScrollContainer.innerHTML = '';
-            posts.forEach(post => {
-                let imagePath = post.image || 'cover-kamp-tanitim-videosu.webp';
+            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            // Duyuruları en yeni üstte olacak şekilde ekleyelim
+            announcements.slice().reverse().forEach(ann => {
+                let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
                 if (imagePath.startsWith('../')) {
                     imagePath = imagePath.substring(3);
                 }
-                const card = document.createElement('a');
-                card.href = post.link;
-                card.target = '_blank';
-                card.rel = 'noopener';
-                card.className = 'instagram-reel-card';
+                const card = document.createElement('article');
+                card.className = 'news-card dynamic-news-card';
                 card.innerHTML = `
-                    <div style="width: 100%; height: 100%; background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.7)), url('${imagePath}'); background-size: cover; background-position: center;"></div>
-                    <div class="reel-overlay" style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 24px; color: white; text-align: left; background: rgba(0, 0, 0, 0.25); transition: background 0.3s ease;">
-                        <div style="display: flex; align-items: center; gap: 8px;">
-                            <i class="fa-brands fa-instagram" style="font-size: 1.5rem; color: #ffffff;"></i>
-                            <span style="font-weight: 600; font-size: 0.9rem; color: #ffffff;">${post.username || '@koprusu.gonul'}</span>
-                        </div>
-                        <div style="text-align: center; margin-bottom: auto; margin-top: auto;">
-                            <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(255,255,255,0.9); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); color: #e1306c; font-size: 1.5rem; transition: transform 0.3s ease;" class="play-btn">
-                                <i class="fa-solid fa-play" style="margin-left: 4px; color: #e1306c;"></i>
-                            </div>
-                        </div>
-                        <div>
-                            <h4 style="margin: 0 0 8px 0; font-size: 1.15rem; font-family: 'Outfit', sans-serif; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.6); color: #ffffff;">${post.title}</h4>
-                            <span style="font-size: 0.8rem; opacity: 0.9; color: #cbd5e1;"><i class="fa-solid fa-square-arrow-up-right"></i> Instagram'da İzlemek İçin Tıklayın</span>
-                        </div>
+                    <div class="news-img">
+                        <img src="${imagePath}" alt="${ann.title}">
+                        <span class="news-date">${ann.date}</span>
+                    </div>
+                    <div class="news-content">
+                        <span class="news-category">${ann.category || 'Kurumsal'}</span>
+                        <h3>${ann.title}</h3>
+                        <p>${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
+                        <a href="haber-detay.html?id=${ann.id}" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 `;
-                instagramScrollContainer.appendChild(card);
+                newsGrid.insertBefore(card, newsGrid.firstChild);
             });
-        } else {
-            instagramScrollContainer.innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Henüz öne çıkarılan Instagram paylaşımı eklenmemiş.</p>';
-        }
-    }
 
-    // 12. Dinamik Haber Ticker (Akan Yazı)
-    const tickerContent = document.querySelector('.ticker-content');
-    if (tickerContent) {
-        const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
-        if (announcements.length > 0) {
-            const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
-            const prefix = isSubDir ? '../' : '';
-            
-            tickerContent.innerHTML = '';
-            // En yeni eklenen haberler en başta görünecek şekilde sıralayalım (reverse)
-            announcements.slice().reverse().forEach(ann => {
-                const link = ann.link || `${prefix}haber-detay.html?id=${ann.id}`;
-                const dateParts = ann.date ? ann.date.split('-') : [];
-                const formattedDate = dateParts.length === 3 ? `[${dateParts[2]}.${dateParts[1]}.${dateParts[0]}]` : `[${ann.date || ''}]`;
-                
-                const a = document.createElement('a');
-                a.href = link;
-                a.innerHTML = `<span class="ticker-date">${formattedDate}</span> ${ann.title}`;
-                tickerContent.appendChild(a);
-            });
+            // Haber Listesi Filtreleme Mantığı (Public haberler.html için)
+            const filterButtons = document.querySelectorAll('.filter-container .filter-btn');
+            if (filterButtons.length > 0) {
+                filterButtons.forEach(btn => {
+                    // Temiz bir şekilde event dinleyicisini ekle (öncekileri kaldırarak ya da doğrudan)
+                    btn.onclick = () => {
+                        filterButtons.forEach(b => b.classList.remove('active'));
+                        btn.classList.add('active');
+
+                        const filterText = btn.textContent.trim().toLowerCase();
+                        const cards = newsGrid.querySelectorAll('.news-card');
+
+                        cards.forEach(card => {
+                            const categoryEl = card.querySelector('.news-category');
+                            if (!categoryEl) return;
+                            
+                            const categoryText = categoryEl.textContent.trim().toLowerCase();
+                            
+                            if (filterText === 'hepsi') {
+                                card.style.display = 'block';
+                            } else if (filterText === 'eğitim & i̇stihdam' && (categoryText.includes('eğitim') || categoryText.includes('istihdam'))) {
+                                card.style.display = 'block';
+                            } else if (filterText === 'spor & sosyal' && (categoryText.includes('spor') || categoryText.includes('sosyal'))) {
+                                card.style.display = 'block';
+                            } else if (categoryText.includes(filterText) || filterText.includes(categoryText)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        });
+                    };
+                });
+            }
         }
-    }
+
+        // Slayt Haberleri
+        const sliderTrack = document.querySelector('.news-slider-track');
+        const dotsContainer = document.querySelector('.slider-dots');
+        if (sliderTrack) {
+            sliderTrack.innerHTML = '';
+            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            // En güncel 10 haberi slayt olarak gösterelim
+            const slides = announcements.slice(0, 10);
+            
+            slides.forEach(slideItem => {
+                let imagePath = slideItem.image || 'cover-kamp-istisare-toplantisi.webp';
+                if (imagePath.startsWith('../')) {
+                    imagePath = imagePath.substring(3);
+                }
+                const slide = document.createElement('div');
+                slide.className = 'news-slide';
+                slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url('${imagePath}')`;
+                
+                const targetLink = slideItem.link || `haber-detay.html?id=${slideItem.id}`;
+                
+                slide.innerHTML = `
+                    <div class="news-slide-content">
+                        <span class="news-slide-category">${slideItem.category || 'Duyuru'}</span>
+                        <span class="news-slide-date">${slideItem.date || ''}</span>
+                        <h3 class="news-slide-title">${slideItem.title}</h3>
+                        <p class="news-slide-desc">${slideItem.content.substring(0, 150)}${slideItem.content.length > 150 ? '...' : ''}</p>
+                        <a href="${targetLink}" class="btn btn-primary">Detaylı Bilgi <i class="fa-solid fa-arrow-right"></i></a>
+                    </div>
+                `;
+                sliderTrack.appendChild(slide);
+            });
+
+            // Yeni slaytlara göre gösterge noktalarını (dots) yeniden oluşturalım
+            if (dotsContainer) {
+                const totalSlides = sliderTrack.querySelectorAll('.news-slide').length;
+                dotsContainer.innerHTML = '';
+                for (let i = 0; i < totalSlides; i++) {
+                    const dot = document.createElement('span');
+                    dot.className = i === 0 ? 'dot active' : 'dot';
+                    dot.setAttribute('data-index', i);
+                    dotsContainer.appendChild(dot);
+                }
+            }
+        }
+
+        // Dinamik Instagram Paylaşımları Yükleyici
+        const instagramScrollContainer = document.getElementById('instagramScrollContainer');
+        if (instagramScrollContainer) {
+            const posts = JSON.parse(localStorage.getItem('instagram_posts') || '[]');
+            if (posts.length > 0) {
+                instagramScrollContainer.innerHTML = '';
+                posts.forEach(post => {
+                    let imagePath = post.image || 'cover-kamp-tanitim-videosu.webp';
+                    if (imagePath.startsWith('../')) {
+                        imagePath = imagePath.substring(3);
+                    }
+                    const card = document.createElement('a');
+                    card.href = post.link;
+                    card.target = '_blank';
+                    card.rel = 'noopener';
+                    card.className = 'instagram-reel-card';
+                    card.innerHTML = `
+                        <div style="width: 100%; height: 100%; background-image: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.7)), url('${imagePath}'); background-size: cover; background-position: center;"></div>
+                        <div class="reel-overlay" style="position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 24px; color: white; text-align: left; background: rgba(0, 0, 0, 0.25); transition: background 0.3s ease;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <i class="fa-brands fa-instagram" style="font-size: 1.5rem; color: #ffffff;"></i>
+                                <span style="font-weight: 600; font-size: 0.9rem; color: #ffffff;">${post.username || '@koprusu.gonul'}</span>
+                            </div>
+                            <div style="text-align: center; margin-bottom: auto; margin-top: auto;">
+                                <div style="width: 64px; height: 64px; border-radius: 50%; background-color: rgba(255,255,255,0.9); display: inline-flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3); color: #e1306c; font-size: 1.5rem; transition: transform 0.3s ease;" class="play-btn">
+                                    <i class="fa-solid fa-play" style="margin-left: 4px; color: #e1306c;"></i>
+                                </div>
+                            </div>
+                            <div>
+                                <h4 style="margin: 0 0 8px 0; font-size: 1.15rem; font-family: 'Outfit', sans-serif; font-weight: 600; text-shadow: 0 2px 4px rgba(0,0,0,0.6); color: #ffffff;">${post.title}</h4>
+                                <span style="font-size: 0.8rem; opacity: 0.9; color: #cbd5e1;"><i class="fa-solid fa-square-arrow-up-right"></i> Instagram'da İzlemek İçin Tıklayın</span>
+                            </div>
+                        </div>
+                    `;
+                    instagramScrollContainer.appendChild(card);
+                });
+            } else {
+                instagramScrollContainer.innerHTML = '<p style="color: var(--text-muted); font-style: italic;">Henüz öne çıkarılan Instagram paylaşımı eklenmemiş.</p>';
+            }
+        }
+
+        // Dinamik Haber Ticker (Akan Yazı)
+        const tickerContent = document.querySelector('.ticker-content');
+        if (tickerContent) {
+            const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
+            if (announcements.length > 0) {
+                const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+                const prefix = isSubDir ? '../' : '';
+                
+                tickerContent.innerHTML = '';
+                // En yeni eklenen haberler en başta görünecek şekilde sıralayalım (reverse)
+                announcements.slice().reverse().forEach(ann => {
+                    const link = ann.link || `${prefix}haber-detay.html?id=${ann.id}`;
+                    const dateParts = ann.date ? ann.date.split('-') : [];
+                    const formattedDate = dateParts.length === 3 ? `[${dateParts[2]}.${dateParts[1]}.${dateParts[0]}]` : `[${ann.date || ''}]`;
+                    
+                    const a = document.createElement('a');
+                    a.href = link;
+                    a.innerHTML = `<span class="ticker-date">${formattedDate}</span> ${ann.title}`;
+                    tickerContent.appendChild(a);
+                });
+            }
+        }
+    };
+
+    // İlk yüklemede yerel önbellek verileriyle göster
+    window.initDynamicContent();
+
+    // Sunucu Veritabanı ile Senkronizasyon Fonksiyonu
+    const syncFromServer = async () => {
+        try {
+            const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+            const API_URL = isSubDir ? '../api.php' : 'api.php';
+            const response = await fetch(`${API_URL}?action=get_data`);
+            if (response.ok) {
+                const data = await response.json();
+                if (data) {
+                    if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
+                    if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
+                    if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
+                    if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
+                    if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
+                    if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
+                    if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
+                    
+                    // Sunucudan gelen güncel verilerle arayüzü yenile
+                    window.initDynamicContent();
+                }
+            }
+        } catch (e) {
+            console.error("Sunucudan veri senkronizasyonu başarısız:", e);
+        }
+    };
+
+    // Sayfa yüklenince arka planda sessizce sunucu verilerini çek ve güncelle
+    syncFromServer();
 
     // 13. Haber Resimleri Lightbox (Tıklayınca Büyütme)
     const initLightbox = () => {

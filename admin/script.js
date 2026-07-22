@@ -1131,6 +1131,27 @@ document.addEventListener("DOMContentLoaded", () => {
                 throw new Error("HTTP error " + response.status);
             }
 
+            const data = await response.json();
+            if (data) {
+                if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
+                if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
+                if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
+                if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
+                if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
+                if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
+                if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
+                
+                // Render with new server data (do not run sync inside this initial render to avoid loop)
+                updateStats();
+                renderApplications();
+                renderMembers();
+                renderComments();
+                renderSuggestions();
+                renderAnnouncementsList();
+                renderSliderItems();
+                renderInstagramItems();
+            }
+
             isServerConnected = true;
             
             banner.style.backgroundColor = "rgba(16, 185, 129, 0.08)";
