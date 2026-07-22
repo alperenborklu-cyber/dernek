@@ -1117,16 +1117,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!banner || !icon || !text) return;
 
         try {
-            const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 5000);
-            
-            const response = await fetch(`../api.php?action=get_data`, {
-                method: 'GET',
-                signal: controller.signal
-            });
-            
-            clearTimeout(timeoutId);
-
+            const response = await fetch("https://kvdb.io/dernek_db_alperen_7f8a9b/data");
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
             }
@@ -1140,8 +1131,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
                 if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
                 if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
+                if (data.admin_password) localStorage.setItem("admin_password", data.admin_password);
                 
-                // Render with new server data (do not run sync inside this initial render to avoid loop)
                 updateStats();
                 renderApplications();
                 renderMembers();
@@ -1162,7 +1153,7 @@ document.addEventListener("DOMContentLoaded", () => {
             icon.style.color = "#10b981";
             icon.classList.remove("fa-spin", "fa-circle-notch");
             
-            text.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan tüm değişiklikler sunucudaki ortak veritabanına kaydedilecektir.`;
+            text.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan tüm değişiklikler ortak bulut veritabanına kaydedilecektir.`;
             
             if (syncBtn) {
                 syncBtn.style.display = "inline-flex";
@@ -1178,7 +1169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             icon.style.color = "#ef4444";
             icon.classList.remove("fa-spin", "fa-circle-notch");
             
-            text.innerHTML = `<strong>Sunucu Pasif (Sadece Tarayıcı Modu)</strong> - Sunucu bağlantısı kurulamadı. Değişiklikler sadece bu tarayıcıda kalacaktır.`;
+            text.innerHTML = `<strong>Sunucu Pasif (Sadece Tarayıcı Modu)</strong> - İnternet veya bulut veritabanı bağlantısı kurulamadı. Değişiklikler yerel kalacaktır.`;
             
             if (syncBtn) {
                 syncBtn.style.display = "none";
@@ -1187,52 +1178,27 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     const syncWithLocalServer = async (quiet = false) => {
-        if (!isServerConnected) return;
-
-        const dataToSave = {
-            members: JSON.parse(localStorage.getItem("members") || "[]"),
-            announcements: JSON.parse(localStorage.getItem("announcements") || "[]"),
-            comments: JSON.parse(localStorage.getItem("comments") || "[]"),
-            suggestions: JSON.parse(localStorage.getItem("suggestions") || "[]"),
-            slider_items: JSON.parse(localStorage.getItem("slider_items") || "[]"),
-            instagram_posts: JSON.parse(localStorage.getItem("instagram_posts") || "[]"),
-            projects: JSON.parse(localStorage.getItem("projects") || "[]"),
-            admin_password: localStorage.getItem("admin_password") || "admin123"
-        };
-
         try {
-            const response = await fetch(`../api.php?action=save_admin`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dataToSave)
-            });
-
-            const result = await response.json();
-            
-            if (result.success) {
-                console.log(`[Senkronizasyon] Veriler başarıyla kaydedildi.`);
+            const success = await uploadDataToCloud();
+            if (success) {
+                console.log(`[Senkronizasyon] Veriler başarıyla buluta kaydedildi.`);
                 
                 const statusSpan = document.getElementById("serverStatusText");
                 if (statusSpan) {
                     const timeStr = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                    statusSpan.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan değişiklikler sunucu veritabanına kaydedildi (${timeStr}).`;
+                    statusSpan.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan değişiklikler ortak bulut veritabanına kaydedildi (${timeStr}).`;
                 }
 
                 if (!quiet) {
-                    alert("Tüm değişiklikler sunucu veritabanına başarıyla kaydedildi!");
+                    alert("Tüm değişiklikler ortak bulut veritabanına başarıyla kaydedildi!");
                 }
             } else {
-                console.error('[Senkronizasyon] Hata:', result.message);
-                if (!quiet) {
-                    alert("Sunucu kaydetme hatası: " + result.message);
-                }
+                throw new Error("Buluta kaydetme başarısız oldu.");
             }
         } catch (err) {
-            console.error('[Senkronizasyon] Sunucuya bağlanılamadı:', err);
+            console.error('[Senkronizasyon] Bulut veritabanı hatası:', err);
             if (!quiet) {
-                alert("Sunucuya bağlanırken hata oluştu. Sunucu bağlantısını kontrol edin.");
+                alert("Bulut veritabanına bağlanırken hata oluştu. İnternet bağlantınızı kontrol edin.");
             }
         }
     };

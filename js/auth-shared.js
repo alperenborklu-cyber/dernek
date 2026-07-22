@@ -296,26 +296,58 @@ function initializeDatabase() {
     }
 }
 
-// Sunucudan veri senkronizasyonu
+// Global Bulut Depolama Veritabanı Adresi (kvdb.io - PHP/Veritabanı sunucusu gerektirmez, tüm dünyada ortaktır)
+const CLOUD_DB_URL = "https://kvdb.io/dernek_db_alperen_7f8a9b/data";
+
+// Sunucudan (Bulut Veritabanından) veri senkronizasyonu
 async function syncDataFromServer() {
-    const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
-    const API_URL = isSubdir ? "../api.php" : "api.php";
     try {
-        const res = await fetch(`${API_URL}?action=get_data`);
+        const res = await fetch(CLOUD_DB_URL);
         if (res.ok) {
             const data = await res.json();
-            if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
-            if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
-            if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
-            if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
-            if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
-            if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
-            if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
-            if (data.admin_password) localStorage.setItem("admin_password", data.admin_password);
-            console.log("Sunucu veritabanı başarıyla yerel tarayıcı ile senkronize edildi.");
+            if (data) {
+                if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
+                if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
+                if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
+                if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
+                if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
+                if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
+                if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
+                if (data.admin_password) localStorage.setItem("admin_password", data.admin_password);
+                console.log("Bulut veritabanı başarıyla yerel tarayıcı ile senkronize edildi.");
+            }
+        } else if (res.status === 404) {
+            // Bulut veritabanı henüz oluşturulmadıysa yereldeki başlangıç verilerini yükle
+            console.log("Bulut veritabanı boş, başlangıç verileri yükleniyor...");
+            await uploadDataToCloud();
         }
     } catch (e) {
-        console.error("Sunucu senkronizasyon hatası:", e);
+        console.error("Bulut veritabanı senkronizasyon hatası:", e);
+    }
+}
+
+// Yerel hafızadaki güncel verileri Bulut Veritabanına yükleme fonksiyonu
+async function uploadDataToCloud() {
+    const dataToSave = {
+        members: JSON.parse(localStorage.getItem("members") || JSON.stringify(DEFAULT_MEMBERS)),
+        announcements: JSON.parse(localStorage.getItem("announcements") || JSON.stringify(DEFAULT_ANNOUNCEMENTS)),
+        comments: JSON.parse(localStorage.getItem("comments") || JSON.stringify(DEFAULT_COMMENTS)),
+        suggestions: JSON.parse(localStorage.getItem("suggestions") || JSON.stringify(DEFAULT_SUGGESTIONS)),
+        slider_items: JSON.parse(localStorage.getItem("slider_items") || JSON.stringify(DEFAULT_SLIDES)),
+        instagram_posts: JSON.parse(localStorage.getItem("instagram_posts") || JSON.stringify(DEFAULT_INSTAGRAM_POSTS)),
+        projects: JSON.parse(localStorage.getItem("projects") || JSON.stringify(DEFAULT_PROJECTS)),
+        admin_password: localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD
+    };
+    try {
+        await fetch(CLOUD_DB_URL, {
+            method: 'POST',
+            body: JSON.stringify(dataToSave)
+        });
+        console.log("Tüm değişiklikler ortak bulut veritabanına kaydedildi.");
+        return true;
+    } catch (e) {
+        console.error("Bulut veritabanına kaydetme hatası:", e);
+        return false;
     }
 }
 
@@ -326,30 +358,35 @@ function getCurrentUser() {
     return JSON.parse(session);
 }
 
+// Tamamen Sunucusuz (Client-side) Giriş Sistemi (Buluttan çekilen verilere göre doğrular)
 async function login(email, password) {
-    const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
-    const API_URL = isSubdir ? "../api.php" : "api.php";
-    try {
-        const response = await fetch(`${API_URL}?action=login`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email, password })
-        });
-        const result = await response.json();
-        if (result.success) {
-            localStorage.setItem("dernek_session", JSON.stringify(result.user));
-            return result;
-        }
-        return { success: false, message: result.message || "E-posta adresi veya şifre hatalı." };
-    } catch (e) {
-        console.error(e);
-        return { success: false, message: "Sunucu bağlantı hatası." };
+    const adminPass = localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD;
+    if (email === "admin@dernek.org.tr" && password === adminPass) {
+        const session = { email: "admin@dernek.org.tr", role: "admin", fullName: "Sistem Yöneticisi" };
+        localStorage.setItem("dernek_session", JSON.stringify(session));
+        return { success: true, role: "admin", user: session };
     }
+    
+    const members = JSON.parse(localStorage.getItem("members") || "[]");
+    const m = members.find(m => m.email === email && m.password === password);
+    if (m) {
+        if (m.status !== 'approved') {
+            return { success: false, message: "Üyelik başvurunuz henüz onaylanmamıştır veya reddedilmiştir." };
+        }
+        const session = {
+            email: m.email,
+            role: "member",
+            fullName: m.fullName,
+            memberNo: m.memberNo || ''
+        };
+        localStorage.setItem("dernek_session", JSON.stringify(session));
+        return { success: true, role: "member", user: session };
+    }
+    return { success: false, message: "E-posta adresi veya şifre hatalı." };
 }
 
 function logout() {
     localStorage.removeItem("dernek_session");
-    // Sayfayı yenile veya anasayfaya yönlendir
     const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
     window.location.href = isSubdir ? "../index.html" : "index.html";
 }
@@ -357,13 +394,11 @@ function logout() {
 function checkAccess(requiredRole) {
     const user = getCurrentUser();
     if (!user) {
-        // Oturum yoksa
         const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
         window.location.href = isSubdir ? "../login.html" : "login.html";
         return false;
     }
     if (requiredRole && user.role !== requiredRole) {
-        // Rol uyuşmuyorsa yetkisiz giriş engellenir
         const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
         window.location.href = isSubdir ? "../index.html" : "index.html";
         return false;
@@ -371,6 +406,6 @@ function checkAccess(requiredRole) {
     return true;
 }
 
-// Sayfa yüklendiğinde otomatik veri tabanını kur ve sunucudan veriyi çek
+// Sayfa yüklendiğinde veritabanını kur ve buluttan en güncel halini çek
 initializeDatabase();
 syncDataFromServer();

@@ -572,13 +572,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     localStorage.setItem('comments', JSON.stringify(allComments));
 
                     // Send to server
-                    const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
-                    const API_URL = isSubDir ? '../api.php' : 'api.php';
-                    fetch(`${API_URL}?action=add_comment`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(newComment)
-                    }).catch(err => console.error("Error saving comment on server:", err));
+                    uploadDataToCloud().catch(err => console.error("Error saving comment on server:", err));
 
                     commentsWrapper.querySelector('#commentText').value = '';
                     const alertBox = commentsWrapper.querySelector('#commentAlert');
@@ -810,24 +804,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sunucu Veritabanı ile Senkronizasyon Fonksiyonu
     const syncFromServer = async () => {
         try {
-            const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
-            const API_URL = isSubDir ? '../api.php' : 'api.php';
-            const response = await fetch(`${API_URL}?action=get_data`);
-            if (response.ok) {
-                const data = await response.json();
-                if (data) {
-                    if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
-                    if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
-                    if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
-                    if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
-                    if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
-                    if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
-                    if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
-                    
-                    // Sunucudan gelen güncel verilerle arayüzü yenile
-                    window.initDynamicContent();
-                }
-            }
+            await syncDataFromServer();
+            // Sunucudan gelen güncel verilerle arayüzü yenile
+            window.initDynamicContent();
         } catch (e) {
             console.error("Sunucudan veri senkronizasyonu başarısız:", e);
         }
@@ -910,13 +889,7 @@ document.addEventListener('DOMContentLoaded', () => {
             localStorage.setItem('suggestions', JSON.stringify(suggestions));
 
             // Send to server
-            const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
-            const API_URL = isSubDir ? '../api.php' : 'api.php';
-            fetch(`${API_URL}?action=add_suggestion`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(newSuggestion)
-            }).catch(err => console.error("Error saving suggestion on server:", err));
+            uploadDataToCloud().catch(err => console.error("Error saving suggestion on server:", err));
             contactForm.reset();
             alert('Mesajınız yönetim kuruluna iletilmiştir. Geri bildiriminiz için teşekkür ederiz!');
         });
