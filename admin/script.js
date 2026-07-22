@@ -8,6 +8,31 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
+    // === DEBOUNCED BULUT KAYIT (429 rate-limit önlemi) ===
+    let _saveTimer = null;
+    const saveToCloud = (quiet = true) => {
+        clearTimeout(_saveTimer);
+        _saveTimer = setTimeout(async () => {
+            try {
+                const success = await uploadDataToCloud();
+                if (success) {
+                    const statusSpan = document.getElementById("serverStatusText");
+                    if (statusSpan) {
+                        const timeStr = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                        statusSpan.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan değişiklikler ortak bulut veritabanına kaydedildi (${timeStr}).`;
+                    }
+                    if (!quiet) alert("Tüm değişiklikler ortak bulut veritabanına başarıyla kaydedildi!");
+                } else {
+                    if (!quiet) alert("Bulut veritabanına bağlanırken hata oluştu. Lütfen tekrar deneyin.");
+                }
+            } catch (err) {
+                console.error('[saveToCloud] hata:', err);
+            }
+        }, 1500);
+    };
+    // Geriye dönük uyumluluk: eski syncWithLocalServer çağrıları saveToCloud'a yönlenir
+    window.syncWithLocalServer = saveToCloud;
+
     // 2. Admin Adını Sidebar'a Yaz
     const sidebarName = document.querySelector(".sidebar-user .user-name");
     if (sidebarName) sidebarName.textContent = session.fullName;
@@ -87,7 +112,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (memberIdx !== -1) {
                     allMembers[memberIdx].status = "approved";
                     localStorage.setItem("members", JSON.stringify(allMembers));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     alert("Üye başarıyla onaylandı. Artık geçici şifresi (123456) ile portala giriş yapabilir.");
                     renderAll();
                 }
@@ -101,7 +126,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allMembers = JSON.parse(localStorage.getItem("members") || "[]");
                     const updatedMembers = allMembers.filter(m => m.email !== email);
                     localStorage.setItem("members", JSON.stringify(updatedMembers));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     renderAll();
                 }
             });
@@ -143,7 +168,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allMembers = JSON.parse(localStorage.getItem("members") || "[]");
                     const updatedMembers = allMembers.filter(m => m.email !== email);
                     localStorage.setItem("members", JSON.stringify(updatedMembers));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     renderAll();
                 }
             });
@@ -242,7 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (commentIdx !== -1) {
                     allComments[commentIdx].status = "approved";
                     localStorage.setItem("comments", JSON.stringify(allComments));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     renderAll();
                 }
             });
@@ -257,7 +282,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (commentIdx !== -1) {
                     allComments[commentIdx].status = "pending";
                     localStorage.setItem("comments", JSON.stringify(allComments));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     renderAll();
                 }
             });
@@ -270,7 +295,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allComments = JSON.parse(localStorage.getItem("comments") || "[]");
                     const updatedComments = allComments.filter(c => c.id !== id);
                     localStorage.setItem("comments", JSON.stringify(updatedComments));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     renderAll();
                 }
             });
@@ -346,7 +371,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     announcements[idx].image3Position = image3Position || "gallery";
                     announcements[idx].content = content;
                     localStorage.setItem("announcements", JSON.stringify(announcements));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     
                     alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla güncellendi!';
                     resetAnnForm();
@@ -370,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 announcements.unshift(newAnn); // En üste ekle
                 localStorage.setItem("announcements", JSON.stringify(announcements));
-                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                saveToCloud();
                 
                 alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla yayınlandı!';
                 announcementForm.reset();
@@ -439,7 +464,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td><strong>${ann.title}</strong></td>
                 <td><span class="badge badge-approved" style="background-color: rgba(0, 92, 230, 0.1); color: var(--primary);">${ann.category || 'Kurumsal'}</span></td>
                 <td>${ann.date}</td>
-                <td>${ann.image ? `<img src="${ann.image}" style="height: 40px; max-width: 80px; object-fit: cover; border-radius: 4px;" alt="Görsel">` : '<span style="color: var(--text-muted); font-size: 0.85rem;">Görsel Yok</span>'}</td>
+                <td>${ann.image ? `<img src="${fixAdminImgPath(ann.image)}" style="height: 40px; max-width: 80px; object-fit: cover; border-radius: 4px;" alt="Görsel">` : '<span style="color: var(--text-muted); font-size: 0.85rem;">Görsel Yok</span>'}</td>
                 <td>
                     <button class="btn btn-warning btn-sm btn-edit-announcement" data-id="${ann.id}" style="background-color: #f59e0b; color: white;"><i class="fa-solid fa-edit"></i> Düzenle</button>
                     <button class="btn btn-danger btn-sm btn-delete-announcement" data-id="${ann.id}"><i class="fa-solid fa-trash"></i> Sil</button>
@@ -455,7 +480,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allAnnouncements = JSON.parse(localStorage.getItem("announcements") || "[]");
                     const updatedAnnouncements = allAnnouncements.filter(ann => ann.id !== id);
                     localStorage.setItem("announcements", JSON.stringify(updatedAnnouncements));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     // Düzenlenen duyuru silinirse formu sıfırla
                     if (editAnnIdInput && editAnnIdInput.value === id) {
                         resetAnnForm();
@@ -519,8 +544,17 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    // Helper to fix image paths for admin subpage
+    const fixAdminImgPath = (url) => {
+        if (!url) return '';
+        if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('../')) {
+            return url;
+        }
+        return '../' + url;
+    };
+
     // Ortak Yenileme Fonksiyonu
-    const renderAll = async () => {
+    const renderAll = () => {
         updateStats();
         renderApplications();
         renderMembers();
@@ -529,11 +563,6 @@ document.addEventListener("DOMContentLoaded", () => {
         renderAnnouncementsList();
         renderSliderItems();
         renderInstagramItems();
-        
-        // Sunucuya sessizce kaydet
-        if (typeof syncWithLocalServer === 'function') {
-            await syncWithLocalServer(true);
-        }
     };
 
     // === SLIDER YÖNETİMİ BAŞLANGIÇ ===
@@ -569,7 +598,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allSlides = JSON.parse(localStorage.getItem("slider_items") || "[]");
                     const updatedSlides = allSlides.filter(s => s.id !== id);
                     localStorage.setItem("slider_items", JSON.stringify(updatedSlides));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     if (document.getElementById("editSliderId").value === id) {
                         resetSliderForm();
                     }
@@ -638,7 +667,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     slides[idx].image = image;
                     slides[idx].content = content;
                     localStorage.setItem("slider_items", JSON.stringify(slides));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     resetSliderForm();
                 }
             } else {
@@ -653,7 +682,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 slides.unshift(newSlide);
                 localStorage.setItem("slider_items", JSON.stringify(slides));
-                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                saveToCloud();
                 addSliderForm.reset();
                 resetSliderForm();
             }
@@ -721,7 +750,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allPosts = JSON.parse(localStorage.getItem("instagram_posts") || "[]");
                     const updatedPosts = allPosts.filter(p => p.id !== id);
                     localStorage.setItem("instagram_posts", JSON.stringify(updatedPosts));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     if (document.getElementById("editInstagramId").value === id) {
                         resetInstagramForm();
                     }
@@ -787,7 +816,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     posts[idx].username = username;
                     posts[idx].image = image;
                     localStorage.setItem("instagram_posts", JSON.stringify(posts));
-                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    saveToCloud();
                     resetInstagramForm();
                 }
             } else {
@@ -804,7 +833,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 posts.unshift(newPost);
                 localStorage.setItem("instagram_posts", JSON.stringify(posts));
-                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                saveToCloud();
                 addInstagramForm.reset();
                 resetInstagramForm();
             }
@@ -932,9 +961,7 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("projects", JSON.stringify(projects));
 
             // Sunucuya sessizce kaydet
-            if (typeof syncWithLocalServer === 'function') {
-                syncWithLocalServer(true);
-            }
+            saveToCloud();
 
             // Form Sıfırla
             addProjectForm.reset();
@@ -998,9 +1025,7 @@ document.addEventListener("DOMContentLoaded", () => {
             changePasswordForm.reset();
             
             // Sunucuya sessizce kaydet
-            if (typeof syncWithLocalServer === 'function') {
-                syncWithLocalServer(true);
-            }
+            saveToCloud();
             
             if (successAlert) {
                 successAlert.style.display = "block";
@@ -1297,37 +1322,11 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
-    const syncWithLocalServer = async (quiet = false) => {
-        try {
-            const success = await uploadDataToCloud();
-            if (success) {
-                console.log(`[Senkronizasyon] Veriler başarıyla buluta kaydedildi.`);
-                
-                const statusSpan = document.getElementById("serverStatusText");
-                if (statusSpan) {
-                    const timeStr = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                    statusSpan.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan değişiklikler ortak bulut veritabanına kaydedildi (${timeStr}).`;
-                }
-
-                if (!quiet) {
-                    alert("Tüm değişiklikler ortak bulut veritabanına başarıyla kaydedildi!");
-                }
-            } else {
-                throw new Error("Buluta kaydetme başarısız oldu.");
-            }
-        } catch (err) {
-            console.error('[Senkronizasyon] Bulut veritabanı hatası:', err);
-            if (!quiet) {
-                alert("Bulut veritabanına bağlanırken hata oluştu. İnternet bağlantınızı kontrol edin.");
-            }
-        }
-    };
-
     // Force Sync butonu
     const forceSyncBtn = document.getElementById("forceSyncBtn");
     if (forceSyncBtn) {
         forceSyncBtn.addEventListener("click", () => {
-            syncWithLocalServer(false);
+            saveToCloud(false); // false = alert kullanıcıya göster
         });
     }
 
