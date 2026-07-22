@@ -214,10 +214,19 @@
                 <!-- Tab: Comments -->
                 <div class="tab-content" id="commentsTab">
                     <div class="admin-card">
-                        <h3><i class="fa-solid fa-comments-dollar" style="color: #ef4444;"></i> Onay Bekleyen Yorumlar</h3>
-                        <p style="font-size: 0.9rem; color: var(--text-muted); margin-bottom: 24px;">
-                            Üyelerin haberler veya duyurular altında yayınlamak istedikleri yorumların onayı bu sekmeden gerçekleştirilmektedir.
-                        </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;">
+                            <div>
+                                <h3 style="margin-bottom: 4px;"><i class="fa-solid fa-comments" style="color: var(--primary);"></i> Yorum Yönetimi</h3>
+                                <p style="font-size: 0.9rem; color: var(--text-muted); margin: 0;">
+                                    Üyelerin haber, blog veya duyurulara yaptığı yorumları inceleyebilir, onaylayabilir veya silebilirsiniz.
+                                </p>
+                            </div>
+                            <div class="comment-filter-btns" style="display: flex; gap: 8px;">
+                                <button class="btn btn-sm btn-outline active" data-comment-filter="all" style="border-radius: 20px;">Tüm Yorumlar</button>
+                                <button class="btn btn-sm btn-outline" data-comment-filter="pending" style="border-radius: 20px;">Onay Bekleyenler</button>
+                                <button class="btn btn-sm btn-outline" data-comment-filter="approved" style="border-radius: 20px;">Yayınlananlar</button>
+                            </div>
+                        </div>
                         
                         <div class="table-responsive">
                             <table class="admin-table">
@@ -227,6 +236,7 @@
                                         <th>Hedef Sayfa/Duyuru</th>
                                         <th>Yorum İçeriği</th>
                                         <th>Tarih</th>
+                                        <th>Durum</th>
                                         <th>İşlemler</th>
                                     </tr>
                                 </thead>

@@ -147,22 +147,48 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // 6. Bekleyen Yorumları Listeleme
+    // 6. Yorumları Listeleme ve Yönetme
+    let currentCommentFilter = 'all';
+
     const renderComments = () => {
         const commentTableBody = document.getElementById("commentsTableBody");
         if (!commentTableBody) return;
 
         const comments = JSON.parse(localStorage.getItem("comments") || "[]");
-        const pendingComments = comments.filter(c => c.status === "pending");
+        let filteredComments = comments;
+        if (currentCommentFilter === "pending") {
+            filteredComments = comments.filter(c => c.status === "pending");
+        } else if (currentCommentFilter === "approved") {
+            filteredComments = comments.filter(c => c.status === "approved");
+        }
 
-        if (pendingComments.length === 0) {
-            commentTableBody.innerHTML = `<tr><td colspan="5" style="text-align: center; color: var(--text-muted);">Onay bekleyen yorum bulunmamaktadır.</td></tr>`;
+        // Filter button active state listener
+        document.querySelectorAll("[data-comment-filter]").forEach(btn => {
+            const filter = btn.getAttribute("data-comment-filter");
+            if (filter === currentCommentFilter) {
+                btn.classList.add("active");
+                btn.style.backgroundColor = "var(--primary)";
+                btn.style.color = "#ffffff";
+            } else {
+                btn.classList.remove("active");
+                btn.style.backgroundColor = "transparent";
+                btn.style.color = "var(--text-main)";
+            }
+
+            btn.onclick = () => {
+                currentCommentFilter = filter;
+                renderComments();
+            };
+        });
+
+        if (filteredComments.length === 0) {
+            commentTableBody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: var(--text-muted); padding: 24px;">Yorum bulunmamaktadır.</td></tr>`;
             return;
         }
 
         const announcements = JSON.parse(localStorage.getItem("announcements") || "[]");
 
-        commentTableBody.innerHTML = pendingComments.map(c => {
+        commentTableBody.innerHTML = filteredComments.map(c => {
             const targetAnn = announcements.find(a => a.id === c.targetId);
             let targetTitle = "";
             let targetUrl = "";
@@ -180,21 +206,30 @@ document.addEventListener("DOMContentLoaded", () => {
                 targetUrl = `../${c.targetId}.html`;
             }
 
+            const statusBadge = c.status === "approved"
+                ? `<span style="background: #d1e7dd; color: #0f5132; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 600;"><i class="fa-solid fa-circle-check"></i> Yayınlandı</span>`
+                : `<span style="background: #fef3c7; color: #d97706; padding: 4px 8px; border-radius: 6px; font-size: 0.8rem; font-weight: 600;"><i class="fa-solid fa-clock"></i> Onay Bekliyor</span>`;
+
+            const actionBtns = c.status === "approved"
+                ? `<button class="btn btn-warning btn-sm btn-unapprove-comment" data-id="${c.id}" style="background: #f59e0b; color: white; border: none; padding: 5px 10px; font-size: 0.8rem; border-radius: 6px; margin-right: 4px;"><i class="fa-solid fa-eye-slash"></i> Gizle</button>`
+                : `<button class="btn btn-success btn-sm btn-approve-comment" data-id="${c.id}" style="padding: 5px 10px; font-size: 0.8rem; border-radius: 6px; margin-right: 4px;"><i class="fa-solid fa-check"></i> Onayla</button>`;
+
             return `
                 <tr>
                     <td><strong>${c.authorName}</strong><br><small style="color: var(--text-muted);">${c.authorEmail}</small></td>
                     <td><a href="${targetUrl}" target="_blank" style="color: var(--primary); font-weight: 600; text-decoration: underline;">${targetTitle}</a></td>
-                    <td>"${c.content}"</td>
+                    <td style="max-width: 250px; word-wrap: break-word;">"${c.content}"</td>
                     <td>${c.date}</td>
+                    <td>${statusBadge}</td>
                     <td>
-                        <button class="btn btn-success btn-sm btn-approve-comment" data-id="${c.id}"><i class="fa-solid fa-check"></i> Onayla</button>
-                        <button class="btn btn-danger btn-sm btn-delete-comment" data-id="${c.id}"><i class="fa-solid fa-trash"></i> Sil</button>
+                        ${actionBtns}
+                        <button class="btn btn-danger btn-sm btn-delete-comment" data-id="${c.id}" style="padding: 5px 10px; font-size: 0.8rem; border-radius: 6px;"><i class="fa-solid fa-trash"></i> Sil</button>
                     </td>
                 </tr>
             `;
         }).join('');
 
-        // Yorum Onay / Sil Olayları
+        // Yorum Onay / Gizle / Sil Olayları
         document.querySelectorAll(".btn-approve-comment").forEach(btn => {
             btn.addEventListener("click", () => {
                 const id = btn.getAttribute("data-id");
@@ -204,6 +239,22 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (commentIdx !== -1) {
                     allComments[commentIdx].status = "approved";
                     localStorage.setItem("comments", JSON.stringify(allComments));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
+                    renderAll();
+                }
+            });
+        });
+
+        document.querySelectorAll(".btn-unapprove-comment").forEach(btn => {
+            btn.addEventListener("click", () => {
+                const id = btn.getAttribute("data-id");
+                const allComments = JSON.parse(localStorage.getItem("comments") || "[]");
+                const commentIdx = allComments.findIndex(c => c.id === id);
+
+                if (commentIdx !== -1) {
+                    allComments[commentIdx].status = "pending";
+                    localStorage.setItem("comments", JSON.stringify(allComments));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
@@ -216,6 +267,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allComments = JSON.parse(localStorage.getItem("comments") || "[]");
                     const updatedComments = allComments.filter(c => c.id !== id);
                     localStorage.setItem("comments", JSON.stringify(updatedComments));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
