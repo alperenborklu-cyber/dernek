@@ -999,7 +999,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Göz At Dosya Okuyucu Fonksiyonları (FileReader & Base64 & Cropper.js)
+    // Göz At & Görsel Kırpma (Cropper.js) Katmanı
     let activeCropper = null;
     const cropperModal = document.getElementById("cropperModal");
     const cropperImage = document.getElementById("cropperImage");
@@ -1019,16 +1019,60 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("cropperCancelBtn")?.addEventListener("click", closeCropperModal);
 
     // Yakınlaştır / Uzaklaştır / Döndür butonları
-    document.getElementById("cropperZoomInBtn")?.addEventListener("click", () => activeCropper?.zoom(0.1));
-    document.getElementById("cropperZoomOutBtn")?.addEventListener("click", () => activeCropper?.zoom(-0.1));
+    document.getElementById("cropperZoomInBtn")?.addEventListener("click", () => activeCropper?.zoom(0.15));
+    document.getElementById("cropperZoomOutBtn")?.addEventListener("click", () => activeCropper?.zoom(-0.15));
     document.getElementById("cropperRotateBtn")?.addEventListener("click", () => activeCropper?.rotate(45));
 
     // En-Boy oranı değiştirici
     cropperAspectRatioSelect?.addEventListener("change", (e) => {
         if (activeCropper) {
-            activeCropper.setAspectRatio(parseFloat(e.target.value));
+            const val = parseFloat(e.target.value);
+            activeCropper.setAspectRatio(isNaN(val) ? NaN : val);
         }
     });
+
+    // Herhangi bir görseli (Base64 veya URL) Cropper Modalında Açma Fonksiyonu
+    const openCropperWithImage = (imgSrc, defaultRatio, onSaveCallback) => {
+        if (!cropperModal || !cropperImage) return;
+        cropperImage.src = imgSrc;
+        cropperModal.style.display = "flex";
+
+        if (cropperAspectRatioSelect) {
+            cropperAspectRatioSelect.value = String(defaultRatio);
+        }
+
+        if (activeCropper) activeCropper.destroy();
+
+        activeCropper = new Cropper(cropperImage, {
+            aspectRatio: defaultRatio,
+            viewMode: 1,
+            background: false,
+            autoCropArea: 0.95,
+            responsive: true
+        });
+
+        const saveBtn = document.getElementById("cropperSaveBtn");
+        const newSaveBtn = saveBtn.cloneNode(true);
+        saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
+
+        newSaveBtn.addEventListener("click", () => {
+            if (activeCropper) {
+                // Seçilen alanı yüksek kalitede kes ve Base64'e dönüştür
+                const croppedCanvas = activeCropper.getCroppedCanvas({
+                    maxWidth: 1600,
+                    maxHeight: 1200,
+                    imageSmoothingEnabled: true,
+                    imageSmoothingQuality: 'high'
+                });
+
+                if (croppedCanvas) {
+                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.88);
+                    onSaveCallback(croppedDataUrl);
+                }
+                closeCropperModal();
+            }
+        });
+    };
 
     const handleFileSelect = (fileInputId, textInputId, previewContainerId, previewImgId) => {
         const fileInput = document.getElementById(fileInputId);
@@ -1045,62 +1089,46 @@ document.addEventListener("DOMContentLoaded", () => {
                 reader.onload = (event) => {
                     const rawImgUrl = event.target.result;
                     
-                    // Modalı aç ve görseli yükle
-                    if (cropperModal && cropperImage) {
-                        cropperImage.src = rawImgUrl;
-                        cropperModal.style.display = "flex";
-
-                        // Slider için 16:9, Instagram için 9:16, diğerleri için 1.5 en boy oranı
-                        let defaultRatio = 1.5;
-                        if (fileInputId === "sliderImageFile") {
-                            defaultRatio = 1.7777777777777777; // 16:9
-                            if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "1.7777777777777777";
-                        } else if (fileInputId === "instaImageFile") {
-                            defaultRatio = 0.5625; // 9:16 (Dikey Video)
-                            if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "0.5625";
-                        } else {
-                            if (cropperAspectRatioSelect) cropperAspectRatioSelect.value = "1.5";
-                        }
-
-                        // Varsa önceki cropper'ı temizle
-                        if (activeCropper) activeCropper.destroy();
-
-                        // Cropper.js başlat
-                        activeCropper = new Cropper(cropperImage, {
-                            aspectRatio: defaultRatio,
-                            viewMode: 1,
-                            background: false,
-                            autoCropArea: 1,
-                            responsive: true
-                        });
-
-                        // Kaydet butonu dinleyicisini BU input için sıfırlayıp yeniden bağla
-                        const saveBtn = document.getElementById("cropperSaveBtn");
-                        const newSaveBtn = saveBtn.cloneNode(true);
-                        saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
-
-                        newSaveBtn.addEventListener("click", () => {
-                            if (activeCropper) {
-                                // Seçilen alanı kesip Base64 veri yolunu al (Boyutu optimize etmek için 600px maks genişlik ve 0.65 kalite)
-                                const croppedDataUrl = activeCropper.getCroppedCanvas({
-                                    maxWidth: 600,
-                                    maxHeight: 600,
-                                    imageSmoothingEnabled: true,
-                                    imageSmoothingQuality: 'medium'
-                                }).toDataURL('image/jpeg', 0.65);
-                                
-                                if (textInput) textInput.value = croppedDataUrl;
-                                if (previewImg) previewImg.src = croppedDataUrl;
-                                if (previewContainer) previewContainer.style.display = "block";
-                                
-                                closeCropperModal();
-                            }
-                        });
+                    let defaultRatio = 1.7777777777777777; // 16:9 (Slider ve Haberler için ideal)
+                    if (fileInputId === "instaImageFile") {
+                        defaultRatio = 0.5625; // 9:16 (Dikey Video/Post)
+                    } else if (fileInputId === "projImageFile") {
+                        defaultRatio = 1.5;
                     }
+
+                    openCropperWithImage(rawImgUrl, defaultRatio, (croppedDataUrl) => {
+                        if (textInput) textInput.value = croppedDataUrl;
+                        if (previewImg) previewImg.src = croppedDataUrl;
+                        if (previewContainer) previewContainer.style.display = "block";
+                    });
                 };
                 reader.readAsDataURL(file);
             });
         }
+    };
+
+    const registerCropButtonHandler = (cropBtnId, textInputId, fileInputId, previewContainerId, previewImgId, defaultRatio = 1.7777777777777777) => {
+        const cropBtn = document.getElementById(cropBtnId);
+        if (!cropBtn) return;
+
+        cropBtn.addEventListener("click", () => {
+            const textInput = document.getElementById(textInputId);
+            const val = textInput ? textInput.value.trim() : "";
+
+            if (val) {
+                const src = val.startsWith("data:") ? val : (val.startsWith("../") ? val : "../" + val);
+                openCropperWithImage(src, defaultRatio, (croppedDataUrl) => {
+                    if (textInput) textInput.value = croppedDataUrl;
+                    const previewImg = document.getElementById(previewImgId);
+                    const previewContainer = document.getElementById(previewContainerId);
+                    if (previewImg) previewImg.src = croppedDataUrl;
+                    if (previewContainer) previewContainer.style.display = "block";
+                });
+            } else {
+                const fileInput = document.getElementById(fileInputId);
+                if (fileInput) fileInput.click();
+            }
+        });
     };
 
     handleFileSelect("annImageFile", "annImage", "annImagePreviewContainer", "annImagePreview");
@@ -1110,6 +1138,9 @@ document.addEventListener("DOMContentLoaded", () => {
     handleFileSelect("projImageFile", "projImage", "projImagePreviewContainer", "projImagePreview");
     handleFileSelect("sliderImageFile", "sliderImage", "sliderImagePreviewContainer", "sliderImagePreview");
     handleFileSelect("instaImageFile", "instaImage", "instaImagePreviewContainer", "instaImagePreview");
+
+    registerCropButtonHandler("cropSliderImageBtn", "sliderImage", "sliderImageFile", "sliderImagePreviewContainer", "sliderImagePreview", 1.7777777777777777);
+    registerCropButtonHandler("cropAnnImageBtn", "annImage", "annImageFile", "annImagePreviewContainer", "annImagePreview", 1.7777777777777777);
 
     // Silme Butonları Olayı
     const registerRemoveImageHandler = (removeBtnId, textInputId, previewContainerId, previewImgId, fileInputId) => {

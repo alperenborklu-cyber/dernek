@@ -277,8 +277,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="annImage">Görsel / Resim URL (İsteğe Bağlı)</label>
-                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
-                                    <input type="text" id="annImage" class="form-control" placeholder="Örn: ../cover-kamp-istisare-toplantisi.webp veya boş bırakın" style="flex: 1;">
+                                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+                                    <input type="text" id="annImage" class="form-control" placeholder="Örn: ../cover-kamp-istisare-toplantisi.webp veya Base64" style="flex: 1;">
+                                    <button type="button" id="cropAnnImageBtn" class="btn btn-outline" style="padding: 10px 14px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; font-weight: 600;" title="Görseli Kırp">
+                                        <i class="fa-solid fa-crop-simple" style="color: var(--primary);"></i> Görseli Kırp
+                                    </button>
                                     <label class="btn btn-secondary" style="margin: 0; padding: 10px 16px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap;">
                                         <i class="fa-solid fa-folder-open"></i> Göz At...
                                         <input type="file" id="annImageFile" accept="image/*" style="display: none;">
@@ -541,8 +544,11 @@
                             </div>
                             <div class="form-group" style="margin-bottom: 16px;">
                                 <label for="sliderImage" style="display: block; margin-bottom: 8px; font-weight: 500;">Slayt Arka Plan Görseli</label>
-                                <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 8px;">
-                                    <input type="text" id="sliderImage" class="form-control" placeholder="Görsel yolu veya boş bırakın" style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                                <div style="display: flex; gap: 8px; align-items: center; margin-bottom: 8px;">
+                                    <input type="text" id="sliderImage" class="form-control" placeholder="Görsel yolu veya Base64..." style="flex: 1; padding: 10px; border-radius: 6px; border: 1px solid var(--border-color);" required>
+                                    <button type="button" id="cropSliderImageBtn" class="btn btn-outline" style="padding: 10px 14px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; border-radius: 6px; font-weight: 600;" title="Slayt Görselini Kırp">
+                                        <i class="fa-solid fa-crop-simple" style="color: var(--primary);"></i> Görseli Kırp
+                                    </button>
                                     <label class="btn btn-secondary" style="margin: 0; padding: 10px 16px; font-size: 0.85rem; display: inline-flex; align-items: center; gap: 6px; cursor: pointer; white-space: nowrap; border-radius: 6px;">
                                         <i class="fa-solid fa-folder-open"></i> Göz At...
                                         <input type="file" id="sliderImageFile" accept="image/*" style="display: none;">
