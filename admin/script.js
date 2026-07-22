@@ -1095,15 +1095,19 @@ document.addEventListener("DOMContentLoaded", () => {
         newSaveBtn.addEventListener("click", () => {
             if (activeCropper) {
                 const croppedCanvas = activeCropper.getCroppedCanvas({
-                    maxWidth: 450,
-                    maxHeight: 350,
+                    maxWidth: 1200,
+                    maxHeight: 800,
                     imageSmoothingEnabled: true,
-                    imageSmoothingQuality: 'medium'
+                    imageSmoothingQuality: 'high'
                 });
 
                 if (croppedCanvas) {
-                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.5);
-                    onSaveCallback(croppedDataUrl);
+                    // Canvas'ı blob olarak al ve CDN'e yükle
+                    croppedCanvas.toBlob(async (blob) => {
+                        const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
+                        const url = await uploadImageToHost(file);
+                        onSaveCallback(url);
+                    }, 'image/jpeg', 0.85);
                 }
                 closeCropperModal();
             }
@@ -1136,6 +1140,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const uploadImageToHost = async (file) => {
         // Try catbox.moe – no registration, no API key, permanent hosting, CORS allowed
+        // CDN'e yüklendiğinde orijinal kalite korunur, jsonblob'a sadece URL gider
         try {
             const formData = new FormData();
             formData.append('reqtype', 'fileupload');
@@ -1155,9 +1160,9 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (e) {
             console.warn('[catbox.moe] başarısız:', e);
         }
-        // Fallback: agresif base64 sıkıştırma (~8KB) – jsonblob'a sığar
-        console.log('[Görsel] Fallback base64 kullanılıyor (küçük boyut)');
-        return await compressToBase64(file, 280, 200, 0.35);
+        // Fallback: makul kalitede base64 (~25KB) – jsonblob'a sığar
+        console.log('[Görsel] Fallback base64 kullanılıyor');
+        return await compressToBase64(file, 600, 450, 0.65);
     };
 
     const handleFileSelect = (fileInputId, textInputId, previewContainerId, previewImgId) => {
