@@ -273,7 +273,7 @@ function initializeDatabase() {
 }
 
 // Global Bulut Depolama Veritabanı Adresi (jsonblob.com - PHP/Veritabanı sunucusu gerektirmez, tüm dünyada ortaktır)
-const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f89d3-3629-7317-aa18-290aa6c4610c";
+const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f8a67-0dde-798b-896e-0f76c95091b5";
 
 // Sunucudan (Bulut Veritabanından) veri senkronizasyonu
 async function syncDataFromServer() {
@@ -309,16 +309,54 @@ async function syncDataFromServer() {
     }
 }
 
+function sanitizeDataPayload(data) {
+    if (!data) return data;
+    const cleanItem = (item) => {
+        if (!item || typeof item !== 'object') return item;
+        const copy = Array.isArray(item) ? [...item] : { ...item };
+        for (let key in copy) {
+            if (typeof copy[key] === 'string' && copy[key].startsWith('data:image/') && copy[key].length > 100000) {
+                try {
+                    const canvas = document.createElement('canvas');
+                    const img = new Image();
+                    img.src = copy[key];
+                    if (img.width && img.height) {
+                        let w = img.width, h = img.height, max = 450;
+                        if (w > max || h > max) {
+                            if (w > h) { h = Math.round((h * max) / w); w = max; }
+                            else { w = Math.round((w * max) / h); h = max; }
+                        }
+                        canvas.width = w; canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        copy[key] = canvas.toDataURL('image/jpeg', 0.5);
+                    }
+                } catch(e) {}
+            }
+        }
+        return copy;
+    };
+
+    if (Array.isArray(data)) {
+        return data.map(cleanItem);
+    }
+    return data;
+}
+
 // Yerel hafızadaki güncel verileri Bulut Veritabanına yükleme fonksiyonu
 async function uploadDataToCloud() {
+    const rawAnn = JSON.parse(localStorage.getItem("announcements") || JSON.stringify(DEFAULT_ANNOUNCEMENTS));
+    const rawSlides = JSON.parse(localStorage.getItem("slider_items") || JSON.stringify(DEFAULT_SLIDES));
+    const rawInsta = JSON.parse(localStorage.getItem("instagram_posts") || JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
+    const rawProj = JSON.parse(localStorage.getItem("projects") || JSON.stringify(DEFAULT_PROJECTS));
+
     const dataToSave = {
         members: JSON.parse(localStorage.getItem("members") || JSON.stringify(DEFAULT_MEMBERS)),
-        announcements: JSON.parse(localStorage.getItem("announcements") || JSON.stringify(DEFAULT_ANNOUNCEMENTS)),
+        announcements: sanitizeDataPayload(rawAnn),
         comments: JSON.parse(localStorage.getItem("comments") || JSON.stringify(DEFAULT_COMMENTS)),
         suggestions: JSON.parse(localStorage.getItem("suggestions") || JSON.stringify(DEFAULT_SUGGESTIONS)),
-        slider_items: JSON.parse(localStorage.getItem("slider_items") || JSON.stringify(DEFAULT_SLIDES)),
-        instagram_posts: JSON.parse(localStorage.getItem("instagram_posts") || JSON.stringify(DEFAULT_INSTAGRAM_POSTS)),
-        projects: JSON.parse(localStorage.getItem("projects") || JSON.stringify(DEFAULT_PROJECTS)),
+        slider_items: sanitizeDataPayload(rawSlides),
+        instagram_posts: sanitizeDataPayload(rawInsta),
+        projects: sanitizeDataPayload(rawProj),
         admin_password: localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD
     };
     try {
@@ -339,6 +377,11 @@ async function uploadDataToCloud() {
         console.error("Bulut veritabanına kaydetme hatası:", e);
         return false;
     }
+}
+
+// Geriye dönük uyumluluk takma adı (admin panelindeki syncWithLocalServer çağrılarını uploadDataToCloud'a yönlendirir)
+async function syncWithLocalServer(isSilent = false) {
+    return await uploadDataToCloud();
 }
 
 // Oturum Yönetimi
