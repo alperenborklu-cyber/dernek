@@ -1086,6 +1086,38 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
+    const compressImageFile = (file, callback, maxWidth = 500, maxHeight = 400, quality = 0.55) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            const img = new Image();
+            img.onload = () => {
+                let w = img.width;
+                let h = img.height;
+                if (w > maxWidth || h > maxHeight) {
+                    if (w / h > maxWidth / maxHeight) {
+                        h = Math.round((h * maxWidth) / w);
+                        w = maxWidth;
+                    } else {
+                        w = Math.round((w * maxHeight) / h);
+                        h = maxHeight;
+                    }
+                }
+                const canvas = document.createElement('canvas');
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                const compressedUrl = canvas.toDataURL('image/jpeg', quality);
+                callback(compressedUrl);
+            };
+            img.onerror = () => {
+                callback(e.target.result);
+            };
+            img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    };
+
     const handleFileSelect = (fileInputId, textInputId, previewContainerId, previewImgId) => {
         const fileInput = document.getElementById(fileInputId);
         const textInput = document.getElementById(textInputId);
@@ -1097,24 +1129,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 const file = e.target.files[0];
                 if (!file) return;
 
-                const reader = new FileReader();
-                reader.onload = (event) => {
-                    const rawImgUrl = event.target.result;
-                    
-                    let defaultRatio = 1.7777777777777777; // 16:9 (Slider ve Haberler için ideal)
-                    if (fileInputId === "instaImageFile") {
-                        defaultRatio = 0.5625; // 9:16 (Dikey Video/Post)
-                    } else if (fileInputId === "projImageFile") {
-                        defaultRatio = 1.5;
-                    }
-
-                    openCropperWithImage(rawImgUrl, defaultRatio, (croppedDataUrl) => {
-                        if (textInput) textInput.value = croppedDataUrl;
-                        if (previewImg) previewImg.src = croppedDataUrl;
-                        if (previewContainer) previewContainer.style.display = "block";
-                    });
-                };
-                reader.readAsDataURL(file);
+                compressImageFile(file, (compressedDataUrl) => {
+                    if (textInput) textInput.value = compressedDataUrl;
+                    if (previewImg) previewImg.src = compressedDataUrl;
+                    if (previewContainer) previewContainer.style.display = "block";
+                });
             });
         }
     };
