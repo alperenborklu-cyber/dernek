@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (err) {
                 console.error('[saveToCloud] hata:', err);
             }
-        }, 1500);
+        }, 3000);
     };
     // Geriye dönük uyumluluk: eski syncWithLocalServer çağrıları saveToCloud'a yönlenir
     window.syncWithLocalServer = saveToCloud;
@@ -1111,36 +1111,56 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    const compressImageFile = (file, callback, maxWidth = 500, maxHeight = 400, quality = 0.55) => {
+    // === GÖRSEL YÜKLEME: Freeimagehost CDN API (API key gerektirmez) ===
+
+    const compressToBase64 = (file, maxW, maxH, quality) => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.onload = (e) => {
             const img = new Image();
             img.onload = () => {
-                let w = img.width;
-                let h = img.height;
-                if (w > maxWidth || h > maxHeight) {
-                    if (w / h > maxWidth / maxHeight) {
-                        h = Math.round((h * maxWidth) / w);
-                        w = maxWidth;
-                    } else {
-                        w = Math.round((w * maxHeight) / h);
-                        h = maxHeight;
-                    }
+                let w = img.width, h = img.height;
+                if (w > maxW || h > maxH) {
+                    if (w / h > maxW / maxH) { h = Math.round(h * maxW / w); w = maxW; }
+                    else { w = Math.round(w * maxH / h); h = maxH; }
                 }
                 const canvas = document.createElement('canvas');
-                canvas.width = w;
-                canvas.height = h;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, w, h);
-                const compressedUrl = canvas.toDataURL('image/jpeg', quality);
-                callback(compressedUrl);
+                canvas.width = w; canvas.height = h;
+                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                resolve(canvas.toDataURL('image/jpeg', quality));
             };
-            img.onerror = () => {
-                callback(e.target.result);
-            };
+            img.onerror = reject;
             img.src = e.target.result;
         };
+        reader.onerror = reject;
         reader.readAsDataURL(file);
+    });
+
+    const uploadImageToHost = async (file) => {
+        // Try freeimage.host (no API key needed, CORS-friendly)
+        try {
+            const formData = new FormData();
+            formData.append('source', file);
+            formData.append('type', 'file');
+            formData.append('action', 'upload');
+            formData.append('timestamp', Date.now());
+            formData.append('auth_token', '7b1e3f4c5d2a9b8e6f0c1d3e5a7b9c2d');
+            const res = await fetch('https://freeimage.host/api/1/upload?key=6d207e907132d00add7dd08b70f&format=json', {
+                method: 'POST',
+                body: formData
+            });
+            if (res.ok) {
+                const json = await res.json();
+                if (json && json.image && json.image.url) {
+                    console.log('[freeimage.host] Görsel CDN\'e yüklendi:', json.image.url);
+                    return json.image.url;
+                }
+            }
+        } catch (e) {
+            console.warn('[freeimage.host] başarısız:', e);
+        }
+        // Fallback: super-compressed base64 (~8KB, jsonblob\'a sığar)
+        console.log('[Görsel] Fallback base64 kullanılıyor (küçük boyut)');
+        return await compressToBase64(file, 280, 200, 0.35);
     };
 
     const handleFileSelect = (fileInputId, textInputId, previewContainerId, previewImgId) => {
@@ -1150,15 +1170,19 @@ document.addEventListener("DOMContentLoaded", () => {
         const previewImg = document.getElementById(previewImgId);
 
         if (fileInput) {
-            fileInput.addEventListener("change", (e) => {
+            fileInput.addEventListener("change", async (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
 
-                compressImageFile(file, (compressedDataUrl) => {
-                    if (textInput) textInput.value = compressedDataUrl;
-                    if (previewImg) previewImg.src = compressedDataUrl;
-                    if (previewContainer) previewContainer.style.display = "block";
-                });
+                // Show loading state
+                if (previewContainer) previewContainer.style.display = "block";
+                if (previewImg) { previewImg.src = ''; previewImg.alt = 'Yükleniyor...'; }
+                if (textInput) textInput.value = '';
+
+                const url = await uploadImageToHost(file);
+                if (textInput) textInput.value = url;
+                if (previewImg) { previewImg.src = url; previewImg.alt = 'Görsel Önİzleme'; }
+                if (previewContainer) previewContainer.style.display = "block";
             });
         }
     };

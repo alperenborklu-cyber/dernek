@@ -317,28 +317,29 @@ async function sanitizeDataPayload(data) {
         const copy = { ...item };
 
         for (let key in copy) {
-            if (typeof copy[key] === 'string' && copy[key].startsWith('data:image/') && copy[key].length > 80000) {
+            const val = copy[key];
+            // Only process: base64 images larger than 20KB (skip CDN URLs and small images)
+            if (typeof val === 'string' && val.startsWith('data:image/') && val.length > 20000) {
                 copy[key] = await new Promise((resolve) => {
                     const img = new Image();
                     img.onload = () => {
                         try {
                             const canvas = document.createElement('canvas');
-                            let w = img.width, h = img.height, max = 450;
+                            let w = img.width, h = img.height, max = 280;
                             if (w > max || h > max) {
                                 if (w > h) { h = Math.round((h * max) / w); w = max; }
                                 else { w = Math.round((w * max) / h); h = max; }
                             }
                             canvas.width = w;
                             canvas.height = h;
-                            const ctx = canvas.getContext('2d');
-                            ctx.drawImage(img, 0, 0, w, h);
-                            resolve(canvas.toDataURL('image/jpeg', 0.5));
+                            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                            resolve(canvas.toDataURL('image/jpeg', 0.35));
                         } catch (e) {
-                            resolve(copy[key]);
+                            resolve(val);
                         }
                     };
-                    img.onerror = () => resolve(copy[key]);
-                    img.src = copy[key];
+                    img.onerror = () => resolve(val);
+                    img.src = val;
                 });
             }
         }
