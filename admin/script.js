@@ -1069,7 +1069,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         newSaveBtn.addEventListener("click", async () => {
             if (activeCropper) {
-                const hasImgbb = !!localStorage.getItem("imgbb_api_key");
+                const hasImgbb = !!(localStorage.getItem("imgbb_api_key") || "eb4f1f34bbfebb5fef0f4a5d8f85435e");
                 const cropWidth = hasImgbb ? 1920 : 900;
                 const cropHeight = hasImgbb ? 1280 : 600;
 
@@ -1361,7 +1361,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ImgBB Görsel Bulut Yükleme Fonksiyonu
     const uploadImageToImgBB = async (base64Data) => {
-        const apiKey = localStorage.getItem("imgbb_api_key");
+        const apiKey = localStorage.getItem("imgbb_api_key") || "eb4f1f34bbfebb5fef0f4a5d8f85435e";
         if (!apiKey) return null;
 
         let base64Image = base64Data;
@@ -1397,7 +1397,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveImgbbKeyBtn = document.getElementById("saveImgbbKeyBtn");
     
     if (imgbbKeyInput && saveImgbbKeyBtn) {
-        imgbbKeyInput.value = localStorage.getItem("imgbb_api_key") || "";
+        imgbbKeyInput.value = localStorage.getItem("imgbb_api_key") || "eb4f1f34bbfebb5fef0f4a5d8f85435e";
         
         saveImgbbKeyBtn.addEventListener("click", () => {
             const val = imgbbKeyInput.value.trim();
