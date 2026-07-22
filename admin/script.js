@@ -1118,7 +1118,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         try {
             const controller = new AbortController();
-            const timeoutId = setTimeout(() => controller.abort(), 1500);
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
             
             const response = await fetch(`../api.php?action=get_data`, {
                 method: 'GET',
