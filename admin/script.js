@@ -1067,21 +1067,55 @@ document.addEventListener("DOMContentLoaded", () => {
         const newSaveBtn = saveBtn.cloneNode(true);
         saveBtn.parentNode.replaceChild(newSaveBtn, saveBtn);
 
-        newSaveBtn.addEventListener("click", () => {
+        newSaveBtn.addEventListener("click", async () => {
             if (activeCropper) {
-                // Seçilen alanı web ve bulut veritabanı senkronizasyonu için optimal boyutta kes (900px maks genişlik, ~45KB Base64)
+                const hasImgbb = !!localStorage.getItem("imgbb_api_key");
+                const cropWidth = hasImgbb ? 1920 : 900;
+                const cropHeight = hasImgbb ? 1280 : 600;
+
                 const croppedCanvas = activeCropper.getCroppedCanvas({
-                    maxWidth: 900,
-                    maxHeight: 600,
+                    maxWidth: cropWidth,
+                    maxHeight: cropHeight,
                     imageSmoothingEnabled: true,
                     imageSmoothingQuality: 'high'
                 });
 
                 if (croppedCanvas) {
-                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.75);
-                    onSaveCallback(croppedDataUrl);
+                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.85);
+
+                    if (hasImgbb) {
+                        const originalBtnText = newSaveBtn.innerHTML;
+                        newSaveBtn.disabled = true;
+                        newSaveBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin" style="margin-right: 8px;"></i> Buluta Yükleniyor...`;
+
+                        const uploadedUrl = await uploadImageToImgBB(croppedDataUrl);
+                        
+                        newSaveBtn.disabled = false;
+                        newSaveBtn.innerHTML = originalBtnText;
+
+                        if (uploadedUrl) {
+                            onSaveCallback(uploadedUrl);
+                            closeCropperModal();
+                        } else {
+                            if (confirm("Görsel buluta yüklenemedi. Yerel Base64 biçiminde kaydetmek ister misiniz? (Önerilmez, veritabanı boyutu büyür)")) {
+                                const fallbackCanvas = activeCropper.getCroppedCanvas({
+                                    maxWidth: 900,
+                                    maxHeight: 600,
+                                    imageSmoothingEnabled: true,
+                                    imageSmoothingQuality: 'high'
+                                });
+                                const fallbackDataUrl = fallbackCanvas.toDataURL('image/jpeg', 0.7);
+                                onSaveCallback(fallbackDataUrl);
+                                closeCropperModal();
+                            }
+                        }
+                    } else {
+                        onSaveCallback(croppedDataUrl);
+                        closeCropperModal();
+                    }
+                } else {
+                    closeCropperModal();
                 }
-                closeCropperModal();
             }
         });
     };
@@ -1324,6 +1358,53 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         }
     };
+
+    // ImgBB Görsel Bulut Yükleme Fonksiyonu
+    const uploadImageToImgBB = async (base64Data) => {
+        const apiKey = localStorage.getItem("imgbb_api_key");
+        if (!apiKey) return null;
+
+        let base64Image = base64Data;
+        if (base64Data.startsWith("data:")) {
+            base64Image = base64Data.split(",")[1];
+        }
+
+        const formData = new FormData();
+        formData.append("image", base64Image);
+
+        try {
+            const response = await fetch(`https://api.imgbb.com/1/upload?key=${apiKey}`, {
+                method: "POST",
+                body: formData
+            });
+
+            if (response.ok) {
+                const resData = await response.json();
+                if (resData && resData.data && resData.data.url) {
+                    return resData.data.url;
+                }
+            }
+            console.error("ImgBB upload failed:", response.status);
+            return null;
+        } catch (err) {
+            console.error("ImgBB connection error:", err);
+            return null;
+        }
+    };
+
+    // ImgBB API Anahtarı Ayarları
+    const imgbbKeyInput = document.getElementById("imgbbApiKeyInput");
+    const saveImgbbKeyBtn = document.getElementById("saveImgbbKeyBtn");
+    
+    if (imgbbKeyInput && saveImgbbKeyBtn) {
+        imgbbKeyInput.value = localStorage.getItem("imgbb_api_key") || "";
+        
+        saveImgbbKeyBtn.addEventListener("click", () => {
+            const val = imgbbKeyInput.value.trim();
+            localStorage.setItem("imgbb_api_key", val);
+            alert("ImgBB API Anahtarı başarıyla kaydedildi!");
+        });
+    }
 
     // Force Sync butonu
     const forceSyncBtn = document.getElementById("forceSyncBtn");

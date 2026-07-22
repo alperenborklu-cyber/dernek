@@ -84,7 +84,7 @@
             <div class="admin-content">
                 
                 <!-- Sunucu Durumu Göstergesi -->
-                <div id="serverStatusBanner" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-radius: 10px; margin-bottom: 24px; font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-main);">
+                <div id="serverStatusBanner" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-radius: 10px; margin-bottom: 16px; font-size: 0.9rem; font-weight: 500; transition: all 0.3s ease; border: 1px solid var(--border-color); background-color: var(--card-bg); color: var(--text-main);">
                     <div style="display: flex; align-items: center; gap: 10px;">
                         <i id="serverStatusIcon" class="fa-solid fa-circle-notch fa-spin" style="font-size: 1.1rem; color: var(--primary);"></i>
                         <span id="serverStatusText">Yerel sunucu bağlantısı kontrol ediliyor...</span>
@@ -92,6 +92,21 @@
                     <button type="button" id="forceSyncBtn" class="btn btn-primary btn-sm" style="display: none; font-size: 0.8rem; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; align-items: center; gap: 6px; font-weight: 600;">
                         <i class="fa-solid fa-cloud-arrow-up"></i> Değişiklikleri Dosyalara Kaydet (Canlı Yayına Hazırla)
                     </button>
+                </div>
+
+                <!-- ImgBB Bulut Resim Yükleme Ayarı -->
+                <div id="imgbbSetupBanner" style="display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; border-radius: 10px; margin-bottom: 24px; font-size: 0.9rem; font-weight: 500; border: 1px solid rgba(0, 92, 230, 0.2); background-color: var(--card-bg); color: var(--text-main); flex-wrap: wrap; gap: 12px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <i class="fa-solid fa-images" style="font-size: 1.1rem; color: var(--primary);"></i>
+                        <span><strong>ImgBB Bulut Resim Yükleyici:</strong> Yüksek çözünürlüklü görsellerin sisteme yüklenebilmesi için ücretsiz bir API anahtarı tanımlayın.</span>
+                    </div>
+                    <div style="display: flex; align-items: center; gap: 8px; flex-wrap: wrap;">
+                        <input type="password" id="imgbbApiKeyInput" class="form-control" placeholder="ImgBB API Anahtarı" style="padding: 6px 12px; font-size: 0.8rem; width: 220px; border-radius: 6px; border: 1px solid var(--border-color); background: var(--card-bg); color: var(--text-main);">
+                        <button type="button" id="saveImgbbKeyBtn" class="btn btn-primary btn-sm" style="font-size: 0.8rem; padding: 6px 14px; border: none; border-radius: 6px; cursor: pointer; font-weight: 600;">
+                            Kaydet
+                        </button>
+                        <a href="https://api.imgbb.com/" target="_blank" style="font-size: 0.78rem; color: var(--primary); text-decoration: underline; font-weight: 600; margin-left: 4px;">Anahtar Al (Ücretsiz)</a>
+                    </div>
                 </div>
                 
                 <!-- Stats Grid -->
