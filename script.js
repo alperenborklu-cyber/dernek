@@ -815,6 +815,11 @@ document.addEventListener('DOMContentLoaded', () => {
     // Sayfa yüklenince arka planda sessizce sunucu verilerini çek ve güncelle
     syncFromServer();
 
+    // Bulut verisi senkronize olduğunda arayüzü otomatik güncelle
+    window.addEventListener('cloudDataSynced', () => {
+        window.initDynamicContent();
+    });
+
     // 13. Haber Resimleri Lightbox (Tıklayınca Büyütme)
     const initLightbox = () => {
         let lightbox = document.querySelector('.lightbox-overlay');

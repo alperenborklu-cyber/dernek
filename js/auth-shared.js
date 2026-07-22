@@ -257,42 +257,18 @@ const DEFAULT_INSTAGRAM_POSTS = [
 ];
 
 // LocalStorage başlatma fonksiyonu
+// LocalStorage başlangıç değerlerini kurma fonksiyonu (Yalnızca ilk defa girildiyse)
 function initializeDatabase() {
-    const currentVersion = localStorage.getItem("dernek_db_version");
-    
-    if (!localStorage.getItem("dernek_initialized") || 
-        !localStorage.getItem("dernek_initialized_v3") || 
-        !localStorage.getItem("dernek_initialized_v4") || 
-        !localStorage.getItem("dernek_initialized_v5") ||
-        currentVersion !== DB_VERSION) {
-        
-        localStorage.setItem("members", JSON.stringify(DEFAULT_MEMBERS));
-        localStorage.setItem("announcements", JSON.stringify(DEFAULT_ANNOUNCEMENTS));
-        localStorage.setItem("comments", JSON.stringify(DEFAULT_COMMENTS));
-        localStorage.setItem("suggestions", JSON.stringify(DEFAULT_SUGGESTIONS));
-        localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
-        localStorage.setItem("instagram_posts", JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
-        localStorage.setItem("projects", JSON.stringify(DEFAULT_PROJECTS));
-        localStorage.setItem("admin_password", DEFAULT_ADMIN_PASSWORD);
-        
-        localStorage.setItem("dernek_initialized", "true");
-        localStorage.setItem("dernek_initialized_v3", "true");
-        localStorage.setItem("dernek_initialized_v4", "true");
-        localStorage.setItem("dernek_initialized_v5", "true");
-        localStorage.setItem("dernek_db_version", DB_VERSION);
-        console.log("Dernek LocalStorage Veritabanı Yeni Sürümle Güncellendi: " + DB_VERSION);
-    }
-    if (!localStorage.getItem("slider_items")) {
-        localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
-    }
-    if (!localStorage.getItem("instagram_posts")) {
-        localStorage.setItem("instagram_posts", JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
-    }
-    if (!localStorage.getItem("projects")) {
-        localStorage.setItem("projects", JSON.stringify(DEFAULT_PROJECTS));
-    }
-    if (!localStorage.getItem("admin_password")) {
-        localStorage.setItem("admin_password", DEFAULT_ADMIN_PASSWORD);
+    if (!localStorage.getItem("dernek_initialized_cloud")) {
+        if (!localStorage.getItem("members")) localStorage.setItem("members", JSON.stringify(DEFAULT_MEMBERS));
+        if (!localStorage.getItem("announcements")) localStorage.setItem("announcements", JSON.stringify(DEFAULT_ANNOUNCEMENTS));
+        if (!localStorage.getItem("comments")) localStorage.setItem("comments", JSON.stringify(DEFAULT_COMMENTS));
+        if (!localStorage.getItem("suggestions")) localStorage.setItem("suggestions", JSON.stringify(DEFAULT_SUGGESTIONS));
+        if (!localStorage.getItem("slider_items")) localStorage.setItem("slider_items", JSON.stringify(DEFAULT_SLIDES));
+        if (!localStorage.getItem("instagram_posts")) localStorage.setItem("instagram_posts", JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
+        if (!localStorage.getItem("projects")) localStorage.setItem("projects", JSON.stringify(DEFAULT_PROJECTS));
+        if (!localStorage.getItem("admin_password")) localStorage.setItem("admin_password", DEFAULT_ADMIN_PASSWORD);
+        localStorage.setItem("dernek_initialized_cloud", "true");
     }
 }
 
@@ -317,6 +293,12 @@ async function syncDataFromServer() {
                 if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
                 if (data.admin_password) localStorage.setItem("admin_password", data.admin_password);
                 console.log("Bulut veritabanı başarıyla yerel tarayıcı ile senkronize edildi.");
+
+                // Ekrandaki dinamik içerikleri bulut verisiyle derhal güncelle
+                if (typeof window.initDynamicContent === 'function') {
+                    window.initDynamicContent();
+                }
+                window.dispatchEvent(new CustomEvent('cloudDataSynced'));
             }
         } else if (res.status === 404) {
             console.log("Bulut veritabanı bulunamadı, başlangıç verileri yükleniyor...");
