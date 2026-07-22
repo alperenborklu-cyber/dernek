@@ -309,37 +309,43 @@ async function syncDataFromServer() {
     }
 }
 
-function sanitizeDataPayload(data) {
-    if (!data) return data;
-    const cleanItem = (item) => {
+async function sanitizeDataPayload(data) {
+    if (!data || !Array.isArray(data)) return data;
+
+    const sanitizedList = await Promise.all(data.map(async (item) => {
         if (!item || typeof item !== 'object') return item;
-        const copy = Array.isArray(item) ? [...item] : { ...item };
+        const copy = { ...item };
+
         for (let key in copy) {
-            if (typeof copy[key] === 'string' && copy[key].startsWith('data:image/') && copy[key].length > 100000) {
-                try {
-                    const canvas = document.createElement('canvas');
+            if (typeof copy[key] === 'string' && copy[key].startsWith('data:image/') && copy[key].length > 80000) {
+                copy[key] = await new Promise((resolve) => {
                     const img = new Image();
-                    img.src = copy[key];
-                    if (img.width && img.height) {
-                        let w = img.width, h = img.height, max = 450;
-                        if (w > max || h > max) {
-                            if (w > h) { h = Math.round((h * max) / w); w = max; }
-                            else { w = Math.round((w * max) / h); h = max; }
+                    img.onload = () => {
+                        try {
+                            const canvas = document.createElement('canvas');
+                            let w = img.width, h = img.height, max = 450;
+                            if (w > max || h > max) {
+                                if (w > h) { h = Math.round((h * max) / w); w = max; }
+                                else { w = Math.round((w * max) / h); h = max; }
+                            }
+                            canvas.width = w;
+                            canvas.height = h;
+                            const ctx = canvas.getContext('2d');
+                            ctx.drawImage(img, 0, 0, w, h);
+                            resolve(canvas.toDataURL('image/jpeg', 0.5));
+                        } catch (e) {
+                            resolve(copy[key]);
                         }
-                        canvas.width = w; canvas.height = h;
-                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                        copy[key] = canvas.toDataURL('image/jpeg', 0.5);
-                    }
-                } catch(e) {}
+                    };
+                    img.onerror = () => resolve(copy[key]);
+                    img.src = copy[key];
+                });
             }
         }
         return copy;
-    };
+    }));
 
-    if (Array.isArray(data)) {
-        return data.map(cleanItem);
-    }
-    return data;
+    return sanitizedList;
 }
 
 // Yerel hafızadaki güncel verileri Bulut Veritabanına yükleme fonksiyonu
@@ -349,14 +355,19 @@ async function uploadDataToCloud() {
     const rawInsta = JSON.parse(localStorage.getItem("instagram_posts") || JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
     const rawProj = JSON.parse(localStorage.getItem("projects") || JSON.stringify(DEFAULT_PROJECTS));
 
+    const announcements = await sanitizeDataPayload(rawAnn);
+    const slider_items = await sanitizeDataPayload(rawSlides);
+    const instagram_posts = await sanitizeDataPayload(rawInsta);
+    const projects = await sanitizeDataPayload(rawProj);
+
     const dataToSave = {
         members: JSON.parse(localStorage.getItem("members") || JSON.stringify(DEFAULT_MEMBERS)),
-        announcements: sanitizeDataPayload(rawAnn),
+        announcements: announcements,
         comments: JSON.parse(localStorage.getItem("comments") || JSON.stringify(DEFAULT_COMMENTS)),
         suggestions: JSON.parse(localStorage.getItem("suggestions") || JSON.stringify(DEFAULT_SUGGESTIONS)),
-        slider_items: sanitizeDataPayload(rawSlides),
-        instagram_posts: sanitizeDataPayload(rawInsta),
-        projects: sanitizeDataPayload(rawProj),
+        slider_items: slider_items,
+        instagram_posts: instagram_posts,
+        projects: projects,
         admin_password: localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD
     };
     try {

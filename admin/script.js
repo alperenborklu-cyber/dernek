@@ -1236,7 +1236,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!banner || !icon || !text) return;
 
         try {
-            const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f89d3-3629-7317-aa18-290aa6c4610c";
+            const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f8a67-0dde-798b-896e-0f76c95091b5";
             const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
