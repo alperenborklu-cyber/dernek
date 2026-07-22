@@ -275,41 +275,68 @@ function initializeDatabase() {
 // Global Bulut Depolama Veritabanı Adresi (jsonblob.com - PHP/Veritabanı sunucusu gerektirmez, tüm dünyada ortaktır)
 const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f8ac3-a6a0-755f-9c51-1755818ca05f";
 
-// Sunucudan (Bulut Veritabanından) veri senkronizasyonu
+// Sunucudan (Bulut veya Yerel Veritabanından) veri senkronizasyonu
 async function syncDataFromServer() {
     try {
+        // 1. Try local PHP api.php first if running on HTTP server
+        if (window.location.protocol.startsWith('http')) {
+            const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
+            const localApiUrl = (isSubdir ? "../" : "") + "api.php?action=get_data";
+            try {
+                const res = await fetch(localApiUrl);
+                if (res.ok) {
+                    const data = await res.json();
+                    if (data) {
+                        saveLocalData(data);
+                        console.log("Yerel PHP veritabanı başarıyla yerel tarayıcı ile senkronize edildi.");
+                        triggerContentUpdate();
+                        return;
+                    }
+                }
+            } catch (localErr) {
+                console.log("Yerel PHP API aktif değil veya erişilemedi, bulut veritabanı denenecek.", localErr);
+            }
+        }
+
+        // 2. Fallback to Cloud JSONBlob DB
         const res = await fetch(CLOUD_DB_URL, {
             headers: { 'Accept': 'application/json' }
         });
         if (res.ok) {
             const data = await res.json();
             if (data) {
-                if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
-                if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
-                if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
-                if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
-                if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
-                if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
-                if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
-                if (data.admin_password) localStorage.setItem("admin_password", data.admin_password);
+                saveLocalData(data);
                 console.log("Bulut veritabanı başarıyla yerel tarayıcı ile senkronize edildi.");
-
-                // Ekrandaki dinamik içerikleri bulut verisiyle derhal güncelle
-                if (typeof window.initDynamicContent === 'function') {
-                    window.initDynamicContent();
-                }
-                window.dispatchEvent(new CustomEvent('cloudDataSynced'));
+                triggerContentUpdate();
             }
         } else if (res.status === 404) {
             console.log("Bulut veritabanı bulunamadı, başlangıç verileri yükleniyor...");
             await uploadDataToCloud();
         }
     } catch (e) {
-        console.error("Bulut veritabanı senkronizasyon hatası:", e);
+        console.error("Veritabanı senkronizasyon hatası:", e);
     }
 }
 
-// Yerel hafızadaki güncel verileri Bulut Veritabanına yükleme fonksiyonu
+function saveLocalData(data) {
+    if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
+    if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
+    if (data.comments) localStorage.setItem("comments", JSON.stringify(data.comments));
+    if (data.suggestions) localStorage.setItem("suggestions", JSON.stringify(data.suggestions));
+    if (data.slider_items) localStorage.setItem("slider_items", JSON.stringify(data.slider_items));
+    if (data.instagram_posts) localStorage.setItem("instagram_posts", JSON.stringify(data.instagram_posts));
+    if (data.projects) localStorage.setItem("projects", JSON.stringify(data.projects));
+    if (data.admin_password) localStorage.setItem("admin_password", data.admin_password);
+}
+
+function triggerContentUpdate() {
+    if (typeof window.initDynamicContent === 'function') {
+        window.initDynamicContent();
+    }
+    window.dispatchEvent(new CustomEvent('cloudDataSynced'));
+}
+
+// Yerel hafızadaki güncel verileri Bulut/Yerel Veritabanına yükleme fonksiyonu
 async function uploadDataToCloud() {
     const dataToSave = {
         members: JSON.parse(localStorage.getItem("members") || JSON.stringify(DEFAULT_MEMBERS)),
@@ -322,6 +349,26 @@ async function uploadDataToCloud() {
         admin_password: localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD
     };
     try {
+        // 1. Try local PHP api.php first if running on HTTP server
+        if (window.location.protocol.startsWith('http')) {
+            const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
+            const localApiUrl = (isSubdir ? "../" : "") + "api.php?action=save_admin";
+            try {
+                const res = await fetch(localApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataToSave)
+                });
+                if (res.ok) {
+                    console.log("Tüm değişiklikler yerel PHP veritabanına kaydedildi.");
+                    return true;
+                }
+            } catch (localErr) {
+                console.log("Yerel PHP API'ye kaydedilemedi, bulut denenecek.", localErr);
+            }
+        }
+
+        // 2. Fallback to Cloud JSONBlob DB
         const res = await fetch(CLOUD_DB_URL, {
             method: 'PUT',
             headers: {

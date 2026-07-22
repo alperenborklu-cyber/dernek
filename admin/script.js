@@ -1217,13 +1217,34 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!banner || !icon || !text) return;
 
         try {
-            const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f8ac3-a6a0-755f-9c51-1755818ca05f";
-            const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
-            if (!response.ok) {
-                throw new Error("HTTP error " + response.status);
+            let data = null;
+            let connectedMode = "";
+
+            // Try fetching from local PHP API first if running on HTTP server
+            if (window.location.protocol.startsWith('http')) {
+                try {
+                    const localApiUrl = "../api.php?action=get_data";
+                    const response = await fetch(localApiUrl);
+                    if (response.ok) {
+                        data = await response.json();
+                        connectedMode = "Yerel Sunucu (PHP/data)";
+                    }
+                } catch (localErr) {
+                    console.log("Yerel PHP API check failed, falling back to Cloud DB check.");
+                }
             }
 
-            const data = await response.json();
+            // Fallback to Cloud DB if local fetch failed or not running on http
+            if (!data) {
+                const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f8ac3-a6a0-755f-9c51-1755818ca05f";
+                const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
+                if (!response.ok) {
+                    throw new Error("HTTP error " + response.status);
+                }
+                data = await response.json();
+                connectedMode = "Bulut Veritabanı (JSONBlob)";
+            }
+
             if (data) {
                 if (data.members) localStorage.setItem("members", JSON.stringify(data.members));
                 if (data.announcements) localStorage.setItem("announcements", JSON.stringify(data.announcements));
@@ -1254,7 +1275,7 @@ document.addEventListener("DOMContentLoaded", () => {
             icon.style.color = "#10b981";
             icon.classList.remove("fa-spin", "fa-circle-notch");
             
-            text.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan tüm değişiklikler ortak bulut veritabanına kaydedilecektir.`;
+            text.innerHTML = `<strong>Sunucu Aktif (${connectedMode})</strong> - Yapılan tüm değişiklikler ortak veritabanına kaydedilecektir.`;
             
             if (syncBtn) {
                 syncBtn.style.display = "inline-flex";
