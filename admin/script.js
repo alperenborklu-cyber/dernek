@@ -1117,7 +1117,8 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!banner || !icon || !text) return;
 
         try {
-            const response = await fetch("https://kvdb.io/dernek_db_alperen_7f8a9b/data");
+            const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f89d3-3629-7317-aa18-290aa6c4610c";
+            const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
             }

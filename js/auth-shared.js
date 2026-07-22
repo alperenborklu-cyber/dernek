@@ -296,13 +296,15 @@ function initializeDatabase() {
     }
 }
 
-// Global Bulut Depolama Veritabanı Adresi (kvdb.io - PHP/Veritabanı sunucusu gerektirmez, tüm dünyada ortaktır)
-const CLOUD_DB_URL = "https://kvdb.io/dernek_db_alperen_7f8a9b/data";
+// Global Bulut Depolama Veritabanı Adresi (jsonblob.com - PHP/Veritabanı sunucusu gerektirmez, tüm dünyada ortaktır)
+const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f89d3-3629-7317-aa18-290aa6c4610c";
 
 // Sunucudan (Bulut Veritabanından) veri senkronizasyonu
 async function syncDataFromServer() {
     try {
-        const res = await fetch(CLOUD_DB_URL);
+        const res = await fetch(CLOUD_DB_URL, {
+            headers: { 'Accept': 'application/json' }
+        });
         if (res.ok) {
             const data = await res.json();
             if (data) {
@@ -317,8 +319,7 @@ async function syncDataFromServer() {
                 console.log("Bulut veritabanı başarıyla yerel tarayıcı ile senkronize edildi.");
             }
         } else if (res.status === 404) {
-            // Bulut veritabanı henüz oluşturulmadıysa yereldeki başlangıç verilerini yükle
-            console.log("Bulut veritabanı boş, başlangıç verileri yükleniyor...");
+            console.log("Bulut veritabanı bulunamadı, başlangıç verileri yükleniyor...");
             await uploadDataToCloud();
         }
     } catch (e) {
@@ -339,12 +340,19 @@ async function uploadDataToCloud() {
         admin_password: localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD
     };
     try {
-        await fetch(CLOUD_DB_URL, {
-            method: 'POST',
+        const res = await fetch(CLOUD_DB_URL, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
             body: JSON.stringify(dataToSave)
         });
-        console.log("Tüm değişiklikler ortak bulut veritabanına kaydedildi.");
-        return true;
+        if (res.ok) {
+            console.log("Tüm değişiklikler ortak bulut veritabanına kaydedildi.");
+            return true;
+        }
+        throw new Error("HTTP error " + res.status);
     } catch (e) {
         console.error("Bulut veritabanına kaydetme hatası:", e);
         return false;
