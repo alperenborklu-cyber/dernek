@@ -87,6 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (memberIdx !== -1) {
                     allMembers[memberIdx].status = "approved";
                     localStorage.setItem("members", JSON.stringify(allMembers));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     alert("Üye başarıyla onaylandı. Artık geçici şifresi (123456) ile portala giriş yapabilir.");
                     renderAll();
                 }
@@ -100,6 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allMembers = JSON.parse(localStorage.getItem("members") || "[]");
                     const updatedMembers = allMembers.filter(m => m.email !== email);
                     localStorage.setItem("members", JSON.stringify(updatedMembers));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
@@ -141,6 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allMembers = JSON.parse(localStorage.getItem("members") || "[]");
                     const updatedMembers = allMembers.filter(m => m.email !== email);
                     localStorage.setItem("members", JSON.stringify(updatedMembers));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
@@ -343,6 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     announcements[idx].image3Position = image3Position || "gallery";
                     announcements[idx].content = content;
                     localStorage.setItem("announcements", JSON.stringify(announcements));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     
                     alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla güncellendi!';
                     resetAnnForm();
@@ -366,6 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 announcements.unshift(newAnn); // En üste ekle
                 localStorage.setItem("announcements", JSON.stringify(announcements));
+                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                 
                 alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla yayınlandı!';
                 announcementForm.reset();
@@ -450,6 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allAnnouncements = JSON.parse(localStorage.getItem("announcements") || "[]");
                     const updatedAnnouncements = allAnnouncements.filter(ann => ann.id !== id);
                     localStorage.setItem("announcements", JSON.stringify(updatedAnnouncements));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     // Düzenlenen duyuru silinirse formu sıfırla
                     if (editAnnIdInput && editAnnIdInput.value === id) {
                         resetAnnForm();
@@ -563,6 +569,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allSlides = JSON.parse(localStorage.getItem("slider_items") || "[]");
                     const updatedSlides = allSlides.filter(s => s.id !== id);
                     localStorage.setItem("slider_items", JSON.stringify(updatedSlides));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     if (document.getElementById("editSliderId").value === id) {
                         resetSliderForm();
                     }
@@ -631,6 +638,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     slides[idx].image = image;
                     slides[idx].content = content;
                     localStorage.setItem("slider_items", JSON.stringify(slides));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     resetSliderForm();
                 }
             } else {
@@ -645,6 +653,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 slides.unshift(newSlide);
                 localStorage.setItem("slider_items", JSON.stringify(slides));
+                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                 addSliderForm.reset();
                 resetSliderForm();
             }
@@ -712,6 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allPosts = JSON.parse(localStorage.getItem("instagram_posts") || "[]");
                     const updatedPosts = allPosts.filter(p => p.id !== id);
                     localStorage.setItem("instagram_posts", JSON.stringify(updatedPosts));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     if (document.getElementById("editInstagramId").value === id) {
                         resetInstagramForm();
                     }
@@ -777,6 +787,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     posts[idx].username = username;
                     posts[idx].image = image;
                     localStorage.setItem("instagram_posts", JSON.stringify(posts));
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     resetInstagramForm();
                 }
             } else {
@@ -793,6 +804,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 posts.unshift(newPost);
                 localStorage.setItem("instagram_posts", JSON.stringify(posts));
+                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                 addInstagramForm.reset();
                 resetInstagramForm();
             }
