@@ -1057,16 +1057,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
         newSaveBtn.addEventListener("click", () => {
             if (activeCropper) {
-                // Seçilen alanı yüksek kalitede kes ve Base64'e dönüştür
+                // Seçilen alanı web ve bulut veritabanı senkronizasyonu için optimal boyutta kes (900px maks genişlik, ~45KB Base64)
                 const croppedCanvas = activeCropper.getCroppedCanvas({
-                    maxWidth: 1600,
-                    maxHeight: 1200,
+                    maxWidth: 900,
+                    maxHeight: 600,
                     imageSmoothingEnabled: true,
                     imageSmoothingQuality: 'high'
                 });
 
                 if (croppedCanvas) {
-                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.88);
+                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.75);
                     onSaveCallback(croppedDataUrl);
                 }
                 closeCropperModal();

@@ -633,7 +633,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Duyuruları en yeni üstte olacak şekilde ekleyelim
             announcements.slice().reverse().forEach(ann => {
                 let imagePath = ann.image || 'cover-kamp-istisare-toplantisi.webp';
-                if (imagePath.startsWith('../')) {
+                if (!imagePath.startsWith('data:') && imagePath.startsWith('../')) {
                     imagePath = imagePath.substring(3);
                 }
                 const card = document.createElement('article');
@@ -693,13 +693,13 @@ document.addEventListener('DOMContentLoaded', () => {
         const dotsContainer = document.querySelector('.slider-dots');
         if (sliderTrack) {
             sliderTrack.innerHTML = '';
+            const customSlides = JSON.parse(localStorage.getItem('slider_items') || '[]');
             const announcements = JSON.parse(localStorage.getItem('announcements') || '[]');
-            // En güncel 10 haberi slayt olarak gösterelim
-            const slides = announcements.slice(0, 10);
+            const slides = (customSlides && customSlides.length > 0) ? customSlides : announcements.slice(0, 10);
             
             slides.forEach(slideItem => {
                 let imagePath = slideItem.image || 'cover-kamp-istisare-toplantisi.webp';
-                if (imagePath.startsWith('../')) {
+                if (!imagePath.startsWith('data:') && imagePath.startsWith('../')) {
                     imagePath = imagePath.substring(3);
                 }
                 const slide = document.createElement('div');
@@ -707,13 +707,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 slide.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.8)), url('${imagePath}')`;
                 
                 const targetLink = slideItem.link || `haber-detay.html?id=${slideItem.id}`;
+                const contentText = slideItem.content || '';
                 
                 slide.innerHTML = `
                     <div class="news-slide-content">
                         <span class="news-slide-category">${slideItem.category || 'Duyuru'}</span>
                         <span class="news-slide-date">${slideItem.date || ''}</span>
                         <h3 class="news-slide-title">${slideItem.title}</h3>
-                        <p class="news-slide-desc">${slideItem.content.substring(0, 150)}${slideItem.content.length > 150 ? '...' : ''}</p>
+                        <p class="news-slide-desc">${contentText.substring(0, 150)}${contentText.length > 150 ? '...' : ''}</p>
                         <a href="${targetLink}" class="btn btn-primary">Detaylı Bilgi <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 `;
