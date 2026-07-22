@@ -1094,7 +1094,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         newSaveBtn.addEventListener("click", () => {
             if (activeCropper) {
-                // Seçilen alanı web ve bulut veritabanı senkronizasyonu için optimal boyutta kes (~20KB Base64)
                 const croppedCanvas = activeCropper.getCroppedCanvas({
                     maxWidth: 450,
                     maxHeight: 350,
@@ -1111,7 +1110,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // === GÖRSEL YÜKLEME: Freeimagehost CDN API (API key gerektirmez) ===
+    // === GÖRSEL YÜKLEME: Catbox.moe CDN (API key gerektirmez, ücretsiz) ===
 
     const compressToBase64 = (file, maxW, maxH, quality) => new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -1136,29 +1135,27 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     const uploadImageToHost = async (file) => {
-        // Try freeimage.host (no API key needed, CORS-friendly)
+        // Try catbox.moe – no registration, no API key, permanent hosting, CORS allowed
         try {
             const formData = new FormData();
-            formData.append('source', file);
-            formData.append('type', 'file');
-            formData.append('action', 'upload');
-            formData.append('timestamp', Date.now());
-            formData.append('auth_token', '7b1e3f4c5d2a9b8e6f0c1d3e5a7b9c2d');
-            const res = await fetch('https://freeimage.host/api/1/upload?key=6d207e907132d00add7dd08b70f&format=json', {
+            formData.append('reqtype', 'fileupload');
+            formData.append('userhash', ''); // anonymous upload
+            formData.append('fileToUpload', file);
+            const res = await fetch('https://catbox.moe/user/api.php', {
                 method: 'POST',
                 body: formData
             });
             if (res.ok) {
-                const json = await res.json();
-                if (json && json.image && json.image.url) {
-                    console.log('[freeimage.host] Görsel CDN\'e yüklendi:', json.image.url);
-                    return json.image.url;
+                const text = await res.text();
+                if (text && text.startsWith('https://')) {
+                    console.log('[catbox.moe] Görsel CDN\'e yüklendi:', text.trim());
+                    return text.trim();
                 }
             }
         } catch (e) {
-            console.warn('[freeimage.host] başarısız:', e);
+            console.warn('[catbox.moe] başarısız:', e);
         }
-        // Fallback: super-compressed base64 (~8KB, jsonblob\'a sığar)
+        // Fallback: agresif base64 sıkıştırma (~8KB) – jsonblob'a sığar
         console.log('[Görsel] Fallback base64 kullanılıyor (küçük boyut)');
         return await compressToBase64(file, 280, 200, 0.35);
     };
@@ -1181,7 +1178,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 const url = await uploadImageToHost(file);
                 if (textInput) textInput.value = url;
-                if (previewImg) { previewImg.src = url; previewImg.alt = 'Görsel Önİzleme'; }
+                if (previewImg) { previewImg.src = url; previewImg.alt = 'Görsel Önizleme'; }
                 if (previewContainer) previewContainer.style.display = "block";
             });
         }
@@ -1285,7 +1282,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!banner || !icon || !text) return;
 
         try {
-            const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f8a67-0dde-798b-896e-0f76c95091b5";
+            const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f8aa2-1bcf-71ce-805a-49560f8ca662";
             const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);

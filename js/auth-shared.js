@@ -273,7 +273,7 @@ function initializeDatabase() {
 }
 
 // Global Bulut Depolama Veritabanı Adresi (jsonblob.com - PHP/Veritabanı sunucusu gerektirmez, tüm dünyada ortaktır)
-const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f8a67-0dde-798b-896e-0f76c95091b5";
+const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f8aa2-1bcf-71ce-805a-49560f8ca662";
 
 // Sunucudan (Bulut Veritabanından) veri senkronizasyonu
 async function syncDataFromServer() {
