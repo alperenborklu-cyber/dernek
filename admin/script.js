@@ -8,31 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
     }
 
-    // === DEBOUNCED BULUT KAYIT (429 rate-limit önlemi) ===
-    let _saveTimer = null;
-    const saveToCloud = (quiet = true) => {
-        clearTimeout(_saveTimer);
-        _saveTimer = setTimeout(async () => {
-            try {
-                const success = await uploadDataToCloud();
-                if (success) {
-                    const statusSpan = document.getElementById("serverStatusText");
-                    if (statusSpan) {
-                        const timeStr = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-                        statusSpan.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan değişiklikler ortak bulut veritabanına kaydedildi (${timeStr}).`;
-                    }
-                    if (!quiet) alert("Tüm değişiklikler ortak bulut veritabanına başarıyla kaydedildi!");
-                } else {
-                    if (!quiet) alert("Bulut veritabanına bağlanırken hata oluştu. Lütfen tekrar deneyin.");
-                }
-            } catch (err) {
-                console.error('[saveToCloud] hata:', err);
-            }
-        }, 3000);
-    };
-    // Geriye dönük uyumluluk: eski syncWithLocalServer çağrıları saveToCloud'a yönlenir
-    window.syncWithLocalServer = saveToCloud;
-
     // 2. Admin Adını Sidebar'a Yaz
     const sidebarName = document.querySelector(".sidebar-user .user-name");
     if (sidebarName) sidebarName.textContent = session.fullName;
@@ -112,7 +87,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (memberIdx !== -1) {
                     allMembers[memberIdx].status = "approved";
                     localStorage.setItem("members", JSON.stringify(allMembers));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     alert("Üye başarıyla onaylandı. Artık geçici şifresi (123456) ile portala giriş yapabilir.");
                     renderAll();
                 }
@@ -126,7 +101,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allMembers = JSON.parse(localStorage.getItem("members") || "[]");
                     const updatedMembers = allMembers.filter(m => m.email !== email);
                     localStorage.setItem("members", JSON.stringify(updatedMembers));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
@@ -168,7 +143,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allMembers = JSON.parse(localStorage.getItem("members") || "[]");
                     const updatedMembers = allMembers.filter(m => m.email !== email);
                     localStorage.setItem("members", JSON.stringify(updatedMembers));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
@@ -267,7 +242,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (commentIdx !== -1) {
                     allComments[commentIdx].status = "approved";
                     localStorage.setItem("comments", JSON.stringify(allComments));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
@@ -282,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (commentIdx !== -1) {
                     allComments[commentIdx].status = "pending";
                     localStorage.setItem("comments", JSON.stringify(allComments));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
@@ -295,7 +270,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allComments = JSON.parse(localStorage.getItem("comments") || "[]");
                     const updatedComments = allComments.filter(c => c.id !== id);
                     localStorage.setItem("comments", JSON.stringify(updatedComments));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     renderAll();
                 }
             });
@@ -371,7 +346,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     announcements[idx].image3Position = image3Position || "gallery";
                     announcements[idx].content = content;
                     localStorage.setItem("announcements", JSON.stringify(announcements));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     
                     alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla güncellendi!';
                     resetAnnForm();
@@ -395,7 +370,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 announcements.unshift(newAnn); // En üste ekle
                 localStorage.setItem("announcements", JSON.stringify(announcements));
-                saveToCloud();
+                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                 
                 alertBox.innerHTML = '<i class="fa-solid fa-circle-check"></i> Haber / Duyuru başarıyla yayınlandı!';
                 announcementForm.reset();
@@ -464,7 +439,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <td><strong>${ann.title}</strong></td>
                 <td><span class="badge badge-approved" style="background-color: rgba(0, 92, 230, 0.1); color: var(--primary);">${ann.category || 'Kurumsal'}</span></td>
                 <td>${ann.date}</td>
-                <td>${ann.image ? `<img src="${fixAdminImgPath(ann.image)}" style="height: 40px; max-width: 80px; object-fit: cover; border-radius: 4px;" alt="Görsel">` : '<span style="color: var(--text-muted); font-size: 0.85rem;">Görsel Yok</span>'}</td>
+                <td>${ann.image ? `<img src="${ann.image}" style="height: 40px; max-width: 80px; object-fit: cover; border-radius: 4px;" alt="Görsel">` : '<span style="color: var(--text-muted); font-size: 0.85rem;">Görsel Yok</span>'}</td>
                 <td>
                     <button class="btn btn-warning btn-sm btn-edit-announcement" data-id="${ann.id}" style="background-color: #f59e0b; color: white;"><i class="fa-solid fa-edit"></i> Düzenle</button>
                     <button class="btn btn-danger btn-sm btn-delete-announcement" data-id="${ann.id}"><i class="fa-solid fa-trash"></i> Sil</button>
@@ -480,7 +455,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allAnnouncements = JSON.parse(localStorage.getItem("announcements") || "[]");
                     const updatedAnnouncements = allAnnouncements.filter(ann => ann.id !== id);
                     localStorage.setItem("announcements", JSON.stringify(updatedAnnouncements));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     // Düzenlenen duyuru silinirse formu sıfırla
                     if (editAnnIdInput && editAnnIdInput.value === id) {
                         resetAnnForm();
@@ -544,17 +519,8 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     };
 
-    // Helper to fix image paths for admin subpage
-    const fixAdminImgPath = (url) => {
-        if (!url) return '';
-        if (url.startsWith('http') || url.startsWith('data:') || url.startsWith('../')) {
-            return url;
-        }
-        return '../' + url;
-    };
-
     // Ortak Yenileme Fonksiyonu
-    const renderAll = () => {
+    const renderAll = async () => {
         updateStats();
         renderApplications();
         renderMembers();
@@ -563,6 +529,11 @@ document.addEventListener("DOMContentLoaded", () => {
         renderAnnouncementsList();
         renderSliderItems();
         renderInstagramItems();
+        
+        // Sunucuya sessizce kaydet
+        if (typeof syncWithLocalServer === 'function') {
+            await syncWithLocalServer(true);
+        }
     };
 
     // === SLIDER YÖNETİMİ BAŞLANGIÇ ===
@@ -598,7 +569,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allSlides = JSON.parse(localStorage.getItem("slider_items") || "[]");
                     const updatedSlides = allSlides.filter(s => s.id !== id);
                     localStorage.setItem("slider_items", JSON.stringify(updatedSlides));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     if (document.getElementById("editSliderId").value === id) {
                         resetSliderForm();
                     }
@@ -667,7 +638,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     slides[idx].image = image;
                     slides[idx].content = content;
                     localStorage.setItem("slider_items", JSON.stringify(slides));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     resetSliderForm();
                 }
             } else {
@@ -682,7 +653,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 slides.unshift(newSlide);
                 localStorage.setItem("slider_items", JSON.stringify(slides));
-                saveToCloud();
+                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                 addSliderForm.reset();
                 resetSliderForm();
             }
@@ -750,7 +721,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     const allPosts = JSON.parse(localStorage.getItem("instagram_posts") || "[]");
                     const updatedPosts = allPosts.filter(p => p.id !== id);
                     localStorage.setItem("instagram_posts", JSON.stringify(updatedPosts));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     if (document.getElementById("editInstagramId").value === id) {
                         resetInstagramForm();
                     }
@@ -816,7 +787,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     posts[idx].username = username;
                     posts[idx].image = image;
                     localStorage.setItem("instagram_posts", JSON.stringify(posts));
-                    saveToCloud();
+                    if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                     resetInstagramForm();
                 }
             } else {
@@ -833,7 +804,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 };
                 posts.unshift(newPost);
                 localStorage.setItem("instagram_posts", JSON.stringify(posts));
-                saveToCloud();
+                if (typeof syncWithLocalServer === 'function') syncWithLocalServer(true);
                 addInstagramForm.reset();
                 resetInstagramForm();
             }
@@ -961,7 +932,9 @@ document.addEventListener("DOMContentLoaded", () => {
             localStorage.setItem("projects", JSON.stringify(projects));
 
             // Sunucuya sessizce kaydet
-            saveToCloud();
+            if (typeof syncWithLocalServer === 'function') {
+                syncWithLocalServer(true);
+            }
 
             // Form Sıfırla
             addProjectForm.reset();
@@ -1025,7 +998,9 @@ document.addEventListener("DOMContentLoaded", () => {
             changePasswordForm.reset();
             
             // Sunucuya sessizce kaydet
-            saveToCloud();
+            if (typeof syncWithLocalServer === 'function') {
+                syncWithLocalServer(true);
+            }
             
             if (successAlert) {
                 successAlert.style.display = "block";
@@ -1094,75 +1069,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
         newSaveBtn.addEventListener("click", () => {
             if (activeCropper) {
+                // Seçilen alanı web ve bulut veritabanı senkronizasyonu için optimal boyutta kes (900px maks genişlik, ~45KB Base64)
                 const croppedCanvas = activeCropper.getCroppedCanvas({
-                    maxWidth: 1200,
-                    maxHeight: 800,
+                    maxWidth: 900,
+                    maxHeight: 600,
                     imageSmoothingEnabled: true,
                     imageSmoothingQuality: 'high'
                 });
 
                 if (croppedCanvas) {
-                    // Canvas'ı blob olarak al ve CDN'e yükle
-                    croppedCanvas.toBlob(async (blob) => {
-                        const file = new File([blob], 'cropped.jpg', { type: 'image/jpeg' });
-                        const url = await uploadImageToHost(file);
-                        onSaveCallback(url);
-                    }, 'image/jpeg', 0.85);
+                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.75);
+                    onSaveCallback(croppedDataUrl);
                 }
                 closeCropperModal();
             }
         });
-    };
-
-    // === GÖRSEL YÜKLEME: Catbox.moe CDN (API key gerektirmez, ücretsiz) ===
-
-    const compressToBase64 = (file, maxW, maxH, quality) => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-            const img = new Image();
-            img.onload = () => {
-                let w = img.width, h = img.height;
-                if (w > maxW || h > maxH) {
-                    if (w / h > maxW / maxH) { h = Math.round(h * maxW / w); w = maxW; }
-                    else { w = Math.round(w * maxH / h); h = maxH; }
-                }
-                const canvas = document.createElement('canvas');
-                canvas.width = w; canvas.height = h;
-                canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                resolve(canvas.toDataURL('image/jpeg', quality));
-            };
-            img.onerror = reject;
-            img.src = e.target.result;
-        };
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
-    });
-
-    const uploadImageToHost = async (file) => {
-        // Try catbox.moe – no registration, no API key, permanent hosting, CORS allowed
-        // CDN'e yüklendiğinde orijinal kalite korunur, jsonblob'a sadece URL gider
-        try {
-            const formData = new FormData();
-            formData.append('reqtype', 'fileupload');
-            formData.append('userhash', ''); // anonymous upload
-            formData.append('fileToUpload', file);
-            const res = await fetch('https://catbox.moe/user/api.php', {
-                method: 'POST',
-                body: formData
-            });
-            if (res.ok) {
-                const text = await res.text();
-                if (text && text.startsWith('https://')) {
-                    console.log('[catbox.moe] Görsel CDN\'e yüklendi:', text.trim());
-                    return text.trim();
-                }
-            }
-        } catch (e) {
-            console.warn('[catbox.moe] başarısız:', e);
-        }
-        // Fallback: makul kalitede base64 (~25KB) – jsonblob'a sığar
-        console.log('[Görsel] Fallback base64 kullanılıyor');
-        return await compressToBase64(file, 600, 450, 0.65);
     };
 
     const handleFileSelect = (fileInputId, textInputId, previewContainerId, previewImgId) => {
@@ -1172,19 +1093,28 @@ document.addEventListener("DOMContentLoaded", () => {
         const previewImg = document.getElementById(previewImgId);
 
         if (fileInput) {
-            fileInput.addEventListener("change", async (e) => {
+            fileInput.addEventListener("change", (e) => {
                 const file = e.target.files[0];
                 if (!file) return;
 
-                // Show loading state
-                if (previewContainer) previewContainer.style.display = "block";
-                if (previewImg) { previewImg.src = ''; previewImg.alt = 'Yükleniyor...'; }
-                if (textInput) textInput.value = '';
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const rawImgUrl = event.target.result;
+                    
+                    let defaultRatio = 1.7777777777777777; // 16:9 (Slider ve Haberler için ideal)
+                    if (fileInputId === "instaImageFile") {
+                        defaultRatio = 0.5625; // 9:16 (Dikey Video/Post)
+                    } else if (fileInputId === "projImageFile") {
+                        defaultRatio = 1.5;
+                    }
 
-                const url = await uploadImageToHost(file);
-                if (textInput) textInput.value = url;
-                if (previewImg) { previewImg.src = url; previewImg.alt = 'Görsel Önizleme'; }
-                if (previewContainer) previewContainer.style.display = "block";
+                    openCropperWithImage(rawImgUrl, defaultRatio, (croppedDataUrl) => {
+                        if (textInput) textInput.value = croppedDataUrl;
+                        if (previewImg) previewImg.src = croppedDataUrl;
+                        if (previewContainer) previewContainer.style.display = "block";
+                    });
+                };
+                reader.readAsDataURL(file);
             });
         }
     };
@@ -1287,7 +1217,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!banner || !icon || !text) return;
 
         try {
-            const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f8aa2-1bcf-71ce-805a-49560f8ca662";
+            const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f89d3-3629-7317-aa18-290aa6c4610c";
             const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
             if (!response.ok) {
                 throw new Error("HTTP error " + response.status);
@@ -1348,11 +1278,37 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     };
 
+    const syncWithLocalServer = async (quiet = false) => {
+        try {
+            const success = await uploadDataToCloud();
+            if (success) {
+                console.log(`[Senkronizasyon] Veriler başarıyla buluta kaydedildi.`);
+                
+                const statusSpan = document.getElementById("serverStatusText");
+                if (statusSpan) {
+                    const timeStr = new Date().toLocaleTimeString('tr-TR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                    statusSpan.innerHTML = `<strong>Sunucu Aktif</strong> - Yapılan değişiklikler ortak bulut veritabanına kaydedildi (${timeStr}).`;
+                }
+
+                if (!quiet) {
+                    alert("Tüm değişiklikler ortak bulut veritabanına başarıyla kaydedildi!");
+                }
+            } else {
+                throw new Error("Buluta kaydetme başarısız oldu.");
+            }
+        } catch (err) {
+            console.error('[Senkronizasyon] Bulut veritabanı hatası:', err);
+            if (!quiet) {
+                alert("Bulut veritabanına bağlanırken hata oluştu. İnternet bağlantınızı kontrol edin.");
+            }
+        }
+    };
+
     // Force Sync butonu
     const forceSyncBtn = document.getElementById("forceSyncBtn");
     if (forceSyncBtn) {
         forceSyncBtn.addEventListener("click", () => {
-            saveToCloud(false); // false = alert kullanıcıya göster
+            syncWithLocalServer(false);
         });
     }
 

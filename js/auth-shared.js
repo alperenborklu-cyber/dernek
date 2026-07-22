@@ -273,7 +273,7 @@ function initializeDatabase() {
 }
 
 // Global Bulut Depolama Veritabanı Adresi (jsonblob.com - PHP/Veritabanı sunucusu gerektirmez, tüm dünyada ortaktır)
-const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f8aa2-1bcf-71ce-805a-49560f8ca662";
+const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f89d3-3629-7317-aa18-290aa6c4610c";
 
 // Sunucudan (Bulut Veritabanından) veri senkronizasyonu
 async function syncDataFromServer() {
@@ -309,66 +309,16 @@ async function syncDataFromServer() {
     }
 }
 
-async function sanitizeDataPayload(data) {
-    if (!data || !Array.isArray(data)) return data;
-
-    const sanitizedList = await Promise.all(data.map(async (item) => {
-        if (!item || typeof item !== 'object') return item;
-        const copy = { ...item };
-
-        for (let key in copy) {
-            const val = copy[key];
-            // Only process: base64 images larger than 20KB (skip CDN URLs and small images)
-            if (typeof val === 'string' && val.startsWith('data:image/') && val.length > 20000) {
-                copy[key] = await new Promise((resolve) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        try {
-                            const canvas = document.createElement('canvas');
-                            let w = img.width, h = img.height, max = 280;
-                            if (w > max || h > max) {
-                                if (w > h) { h = Math.round((h * max) / w); w = max; }
-                                else { w = Math.round((w * max) / h); h = max; }
-                            }
-                            canvas.width = w;
-                            canvas.height = h;
-                            canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                            resolve(canvas.toDataURL('image/jpeg', 0.35));
-                        } catch (e) {
-                            resolve(val);
-                        }
-                    };
-                    img.onerror = () => resolve(val);
-                    img.src = val;
-                });
-            }
-        }
-        return copy;
-    }));
-
-    return sanitizedList;
-}
-
 // Yerel hafızadaki güncel verileri Bulut Veritabanına yükleme fonksiyonu
 async function uploadDataToCloud() {
-    const rawAnn = JSON.parse(localStorage.getItem("announcements") || JSON.stringify(DEFAULT_ANNOUNCEMENTS));
-    const rawSlides = JSON.parse(localStorage.getItem("slider_items") || JSON.stringify(DEFAULT_SLIDES));
-    const rawInsta = JSON.parse(localStorage.getItem("instagram_posts") || JSON.stringify(DEFAULT_INSTAGRAM_POSTS));
-    const rawProj = JSON.parse(localStorage.getItem("projects") || JSON.stringify(DEFAULT_PROJECTS));
-
-    const announcements = await sanitizeDataPayload(rawAnn);
-    const slider_items = await sanitizeDataPayload(rawSlides);
-    const instagram_posts = await sanitizeDataPayload(rawInsta);
-    const projects = await sanitizeDataPayload(rawProj);
-
     const dataToSave = {
         members: JSON.parse(localStorage.getItem("members") || JSON.stringify(DEFAULT_MEMBERS)),
-        announcements: announcements,
+        announcements: JSON.parse(localStorage.getItem("announcements") || JSON.stringify(DEFAULT_ANNOUNCEMENTS)),
         comments: JSON.parse(localStorage.getItem("comments") || JSON.stringify(DEFAULT_COMMENTS)),
         suggestions: JSON.parse(localStorage.getItem("suggestions") || JSON.stringify(DEFAULT_SUGGESTIONS)),
-        slider_items: slider_items,
-        instagram_posts: instagram_posts,
-        projects: projects,
+        slider_items: JSON.parse(localStorage.getItem("slider_items") || JSON.stringify(DEFAULT_SLIDES)),
+        instagram_posts: JSON.parse(localStorage.getItem("instagram_posts") || JSON.stringify(DEFAULT_INSTAGRAM_POSTS)),
+        projects: JSON.parse(localStorage.getItem("projects") || JSON.stringify(DEFAULT_PROJECTS)),
         admin_password: localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD
     };
     try {
@@ -389,11 +339,6 @@ async function uploadDataToCloud() {
         console.error("Bulut veritabanına kaydetme hatası:", e);
         return false;
     }
-}
-
-// Geriye dönük uyumluluk takma adı (admin panelindeki syncWithLocalServer çağrılarını uploadDataToCloud'a yönlendirir)
-async function syncWithLocalServer(isSilent = false) {
-    return await uploadDataToCloud();
 }
 
 // Oturum Yönetimi
