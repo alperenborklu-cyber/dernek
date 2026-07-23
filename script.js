@@ -732,6 +732,103 @@ document.addEventListener('DOMContentLoaded', () => {
                     dotsContainer.appendChild(dot);
                 }
             }
+
+            // Slider Interactivity (Fade In / Fade Out)
+            const slides = sliderTrack.querySelectorAll('.news-slide');
+            const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
+            const prevBtn = document.querySelector('.news-slider-container .prev-btn');
+            const nextBtn = document.querySelector('.news-slider-container .next-btn');
+            
+            if (window.newsSliderInterval) {
+                clearInterval(window.newsSliderInterval);
+            }
+            
+            if (slides.length > 0) {
+                let currentIndex = 0;
+                const intervalTime = 5000; // 5 seconds interval
+                
+                // Show initial slide
+                slides.forEach((s, idx) => {
+                    if (idx === 0) {
+                        s.classList.add('active');
+                    } else {
+                        s.classList.remove('active');
+                    }
+                });
+                
+                function showSlide(index) {
+                    // Check boundaries
+                    let nextIndex = index;
+                    if (nextIndex >= slides.length) nextIndex = 0;
+                    if (nextIndex < 0) nextIndex = slides.length - 1;
+                    
+                    // Remove active class from current slide and dot
+                    slides[currentIndex].classList.remove('active');
+                    if (dots[currentIndex]) dots[currentIndex].classList.remove('active');
+                    
+                    // Add active class to next slide and dot
+                    currentIndex = nextIndex;
+                    slides[currentIndex].classList.add('active');
+                    if (dots[currentIndex]) dots[currentIndex].classList.add('active');
+                }
+                
+                function nextSlide() {
+                    showSlide(currentIndex + 1);
+                }
+                
+                function prevSlide() {
+                    showSlide(currentIndex - 1);
+                }
+                
+                function startAutoPlay() {
+                    stopAutoPlay();
+                    window.newsSliderInterval = setInterval(nextSlide, intervalTime);
+                }
+                
+                function stopAutoPlay() {
+                    if (window.newsSliderInterval) {
+                        clearInterval(window.newsSliderInterval);
+                        window.newsSliderInterval = null;
+                    }
+                }
+                
+                // Button listeners (robust onclick assignment)
+                if (nextBtn) {
+                    nextBtn.onclick = (e) => {
+                        e.preventDefault();
+                        nextSlide();
+                        startAutoPlay();
+                    };
+                }
+                
+                if (prevBtn) {
+                    prevBtn.onclick = (e) => {
+                        e.preventDefault();
+                        prevSlide();
+                        startAutoPlay();
+                    };
+                }
+                
+                // Dot indicators click listeners
+                dots.forEach(dot => {
+                    dot.onclick = (e) => {
+                        e.preventDefault();
+                        const targetIndex = parseInt(dot.getAttribute('data-index'), 10);
+                        showSlide(targetIndex);
+                        startAutoPlay();
+                    };
+                });
+                
+                // Pause autoplay on mouse enter, resume on leave
+                const sliderContainer = document.querySelector('.news-slider-container');
+                if (sliderContainer) {
+                    sliderContainer.onmouseenter = stopAutoPlay;
+                    sliderContainer.onmouseleave = startAutoPlay;
+                }
+                
+                // Start autoplay loop (sequentially from 1st to last)
+                startAutoPlay();
+            }
         }
 
         // Dinamik Instagram Paylaşımları Yükleyici

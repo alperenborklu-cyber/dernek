@@ -4000,12 +4000,14 @@ body.dark-mode .news-ticker-bar {
     background-color: #000;
 }
 .news-slider-track {
-    display: flex;
+    position: relative;
+    width: 100%;
     height: 100%;
-    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
 }
 .news-slide {
-    flex: 0 0 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     background-size: cover;
@@ -4014,7 +4016,15 @@ body.dark-mode .news-ticker-bar {
     align-items: flex-end;
     padding: 60px;
     box-sizing: border-box;
-    position: relative;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.8s ease-in-out, visibility 0.8s ease-in-out;
+    z-index: 1;
+}
+.news-slide.active {
+    opacity: 1;
+    visibility: visible;
+    z-index: 2;
 }
 .news-slide:nth-child(2) {
     background-position: center 30%;
