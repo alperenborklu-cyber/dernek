@@ -1,98 +1,111 @@
-document.addEventListener('DOMContentLoaded', () => {
-    // 1. Preloader logic & Visual splash screen transition
+// 1. Preloader logic & Visual splash screen transition (Runs immediately outside DOMContentLoaded to prevent sticking)
+(function() {
     const preloader = document.getElementById('preloader');
     
-    const hidePreloader = () => {
+    // Determine if we should show the splash visual (only index.html on first session visit)
+    const isHomepage = window.location.pathname === '/' || 
+                       window.location.pathname.endsWith('/') || 
+                       window.location.pathname.endsWith('/index.html') || 
+                       window.location.pathname.endsWith('/index');
+    const splashShown = sessionStorage.getItem('splash_shown');
+    const shouldShowVisual = isHomepage && !splashShown;
+
+    // Fail-safe backup timer to force hide the preloader under any circumstances (e.g. script crashes)
+    setTimeout(() => {
+        const pl = document.getElementById('preloader');
+        if (pl && pl.style.display !== 'none') {
+            console.warn("Preloader forced closed by fail-safe timeout.");
+            pl.style.opacity = '0';
+            pl.style.visibility = 'hidden';
+            setTimeout(() => {
+                pl.style.display = 'none';
+            }, 500);
+        }
+    }, shouldShowVisual ? 5000 : 1500);
+
+    if (preloader) {
+        const loaderContainer = preloader.querySelector('.loader-container');
+        
+        const closeIntroImmediately = () => {
+            preloader.style.opacity = '0';
+            preloader.style.visibility = 'hidden';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
+        };
+
         setTimeout(() => {
-            if (preloader) {
-                const loaderContainer = preloader.querySelector('.loader-container');
-                
-                // Determine if we should show the splash visual (only index.html on first session visit)
-                const isHomepage = window.location.pathname === '/' || 
-                                   window.location.pathname.endsWith('/') || 
-                                   window.location.pathname.endsWith('/index.html') || 
-                                   window.location.pathname.endsWith('/index');
-                const splashShown = sessionStorage.getItem('splash_shown');
-                const shouldShowVisual = isHomepage && !splashShown;
+            if (loaderContainer) {
+                loaderContainer.style.transition = 'opacity 0.5s ease';
+                loaderContainer.style.opacity = '0';
+                setTimeout(() => {
+                    loaderContainer.style.display = 'none';
+                    
+                    if (shouldShowVisual) {
+                        // Mark as shown in this session
+                        sessionStorage.setItem('splash_shown', 'true');
 
-                if (loaderContainer) {
-                    loaderContainer.style.transition = 'opacity 0.5s ease';
-                    loaderContainer.style.opacity = '0';
-                    setTimeout(() => {
-                        loaderContainer.style.display = 'none';
+                        // Create visual elements
+                        const visualDiv = document.createElement('div');
+                        visualDiv.className = 'preloader-visual';
                         
-                        if (shouldShowVisual) {
-                            // Mark as shown in this session
-                            sessionStorage.setItem('splash_shown', 'true');
+                        // Detect path depth to correct the visual image path if on subpages
+                        const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+                        const prefix = isSubDir ? '../' : '';
+                        
+                        visualDiv.innerHTML = `
+                            <img src="${prefix}gonul-koprusu-engelli-memur-ve-isci-dernegi.jpeg" alt="Gönül Köprüsü Görseli">
+                            <button class="skip-btn">Siteye Giriş Yap <i class="fa-solid fa-arrow-right"></i></button>
+                        `;
+                        preloader.appendChild(visualDiv);
+                        
+                        // Trigger reflow/animation
+                        setTimeout(() => {
+                            visualDiv.classList.add('active');
+                        }, 50);
 
-                            // Create visual elements
-                            const visualDiv = document.createElement('div');
-                            visualDiv.className = 'preloader-visual';
-                            
-                            // Detect path depth to correct the visual image path if on subpages
-                            const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
-                            const prefix = isSubDir ? '../' : '';
-                            
-                            visualDiv.innerHTML = `
-                                <img src="${prefix}gonul-koprusu-engelli-memur-ve-isci-dernegi.jpeg" alt="Gönül Köprüsü Görseli">
-                                <button class="skip-btn">Siteye Giriş Yap <i class="fa-solid fa-arrow-right"></i></button>
-                            `;
-                            preloader.appendChild(visualDiv);
-                            
-                            // Trigger reflow/animation
-                            setTimeout(() => {
-                                visualDiv.classList.add('active');
-                            }, 50);
-
-                            // Setup helper to close the intro screen
-                            const closeIntro = () => {
-                                document.removeEventListener('keydown', handleEscKey);
-                                preloader.style.opacity = '0';
-                                preloader.style.visibility = 'hidden';
-                                setTimeout(() => {
-                                    preloader.style.display = 'none';
-                                }, 500);
-                            };
-
-                            const handleEscKey = (e) => {
-                                if (e.key === 'Escape') {
-                                    clearTimeout(autoCloseTimeout);
-                                    closeIntro();
-                                }
-                            };
-
-                            document.addEventListener('keydown', handleEscKey);
-
-                            // Auto close after 3.5 seconds
-                            const autoCloseTimeout = setTimeout(closeIntro, 3500);
-
-                            // Manual close on click
-                            const skipBtn = visualDiv.querySelector('.skip-btn');
-                            if (skipBtn) {
-                                skipBtn.addEventListener('click', () => {
-                                    clearTimeout(autoCloseTimeout);
-                                    closeIntro();
-                                });
-                            }
-                        } else {
-                            // Close preloader immediately if not showing visual
+                        // Setup helper to close the intro screen
+                        const closeIntro = () => {
+                            document.removeEventListener('keydown', handleEscKey);
                             preloader.style.opacity = '0';
                             preloader.style.visibility = 'hidden';
                             setTimeout(() => {
                                 preloader.style.display = 'none';
                             }, 500);
-                        }
-                    }, 500);
-                } else {
-                    preloader.style.opacity = '0';
-                    preloader.style.visibility = 'hidden';
-                }
-            }
-        }, 300); // Short delay for preloader animation to show smoothly
-    };
+                        };
 
-    // Run preloader hide logic on DOMContentLoaded (since DOM is parsed and ready)
-    hidePreloader();
+                        const handleEscKey = (e) => {
+                            if (e.key === 'Escape') {
+                                clearTimeout(autoCloseTimeout);
+                                closeIntro();
+                            }
+                        };
+
+                        document.addEventListener('keydown', handleEscKey);
+
+                        // Auto close after 3.5 seconds
+                        const autoCloseTimeout = setTimeout(closeIntro, 3500);
+
+                        // Manual close on click
+                        const skipBtn = visualDiv.querySelector('.skip-btn');
+                        if (skipBtn) {
+                            skipBtn.addEventListener('click', () => {
+                                clearTimeout(autoCloseTimeout);
+                                closeIntro();
+                            });
+                        }
+                    } else {
+                        closeIntroImmediately();
+                    }
+                }, 500);
+            } else {
+                closeIntroImmediately();
+            }
+        }, 200); // Short delay for preloader animation to show smoothly
+    }
+})();
+
+document.addEventListener('DOMContentLoaded', () => {
 
     // 2. Sticky Header & Top Bar Logic
     const header = document.getElementById('header');
