@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 1. Preloader logic & Visual splash screen transition
     const preloader = document.getElementById('preloader');
     
-    window.addEventListener('load', () => {
+    const hidePreloader = () => {
         setTimeout(() => {
             if (preloader) {
                 const loaderContainer = preloader.querySelector('.loader-container');
@@ -88,8 +88,11 @@ document.addEventListener('DOMContentLoaded', () => {
                     preloader.style.visibility = 'hidden';
                 }
             }
-        }, 500); // Wait half a second for dramatic effect
-    });
+        }, 300); // Short delay for preloader animation to show smoothly
+    };
+
+    // Run preloader hide logic on DOMContentLoaded (since DOM is parsed and ready)
+    hidePreloader();
 
     // 2. Sticky Header & Top Bar Logic
     const header = document.getElementById('header');
