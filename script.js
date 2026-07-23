@@ -1,111 +1,95 @@
-// 1. Preloader logic & Visual splash screen transition (Runs immediately outside DOMContentLoaded to prevent sticking)
-(function() {
+document.addEventListener('DOMContentLoaded', () => {
+    // 1. Preloader logic & Visual splash screen transition
     const preloader = document.getElementById('preloader');
     
-    // Determine if we should show the splash visual (only index.html on first session visit)
-    const isHomepage = window.location.pathname === '/' || 
-                       window.location.pathname.endsWith('/') || 
-                       window.location.pathname.endsWith('/index.html') || 
-                       window.location.pathname.endsWith('/index');
-    const splashShown = sessionStorage.getItem('splash_shown');
-    const shouldShowVisual = isHomepage && !splashShown;
-
-    // Fail-safe backup timer to force hide the preloader under any circumstances (e.g. script crashes)
-    setTimeout(() => {
-        const pl = document.getElementById('preloader');
-        if (pl && pl.style.display !== 'none') {
-            console.warn("Preloader forced closed by fail-safe timeout.");
-            pl.style.opacity = '0';
-            pl.style.visibility = 'hidden';
-            setTimeout(() => {
-                pl.style.display = 'none';
-            }, 500);
-        }
-    }, shouldShowVisual ? 5000 : 1500);
-
-    if (preloader) {
-        const loaderContainer = preloader.querySelector('.loader-container');
-        
-        const closeIntroImmediately = () => {
-            preloader.style.opacity = '0';
-            preloader.style.visibility = 'hidden';
-            setTimeout(() => {
-                preloader.style.display = 'none';
-            }, 500);
-        };
-
+    window.addEventListener('load', () => {
         setTimeout(() => {
-            if (loaderContainer) {
-                loaderContainer.style.transition = 'opacity 0.5s ease';
-                loaderContainer.style.opacity = '0';
-                setTimeout(() => {
-                    loaderContainer.style.display = 'none';
-                    
-                    if (shouldShowVisual) {
-                        // Mark as shown in this session
-                        sessionStorage.setItem('splash_shown', 'true');
+            if (preloader) {
+                const loaderContainer = preloader.querySelector('.loader-container');
+                
+                // Determine if we should show the splash visual (only index.html on first session visit)
+                const isHomepage = window.location.pathname === '/' || 
+                                   window.location.pathname.endsWith('/') || 
+                                   window.location.pathname.endsWith('/index.html') || 
+                                   window.location.pathname.endsWith('/index');
+                const splashShown = sessionStorage.getItem('splash_shown');
+                const shouldShowVisual = isHomepage && !splashShown;
 
-                        // Create visual elements
-                        const visualDiv = document.createElement('div');
-                        visualDiv.className = 'preloader-visual';
+                if (loaderContainer) {
+                    loaderContainer.style.transition = 'opacity 0.5s ease';
+                    loaderContainer.style.opacity = '0';
+                    setTimeout(() => {
+                        loaderContainer.style.display = 'none';
                         
-                        // Detect path depth to correct the visual image path if on subpages
-                        const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
-                        const prefix = isSubDir ? '../' : '';
-                        
-                        visualDiv.innerHTML = `
-                            <img src="${prefix}gonul-koprusu-engelli-memur-ve-isci-dernegi.jpeg" alt="Gönül Köprüsü Görseli">
-                            <button class="skip-btn">Siteye Giriş Yap <i class="fa-solid fa-arrow-right"></i></button>
-                        `;
-                        preloader.appendChild(visualDiv);
-                        
-                        // Trigger reflow/animation
-                        setTimeout(() => {
-                            visualDiv.classList.add('active');
-                        }, 50);
+                        if (shouldShowVisual) {
+                            // Mark as shown in this session
+                            sessionStorage.setItem('splash_shown', 'true');
 
-                        // Setup helper to close the intro screen
-                        const closeIntro = () => {
-                            document.removeEventListener('keydown', handleEscKey);
+                            // Create visual elements
+                            const visualDiv = document.createElement('div');
+                            visualDiv.className = 'preloader-visual';
+                            
+                            // Detect path depth to correct the visual image path if on subpages
+                            const isSubDir = window.location.pathname.includes('/member/') || window.location.pathname.includes('/admin/');
+                            const prefix = isSubDir ? '../' : '';
+                            
+                            visualDiv.innerHTML = `
+                                <img src="${prefix}gonul-koprusu-engelli-memur-ve-isci-dernegi.jpeg" alt="Gönül Köprüsü Görseli">
+                                <button class="skip-btn">Siteye Giriş Yap <i class="fa-solid fa-arrow-right"></i></button>
+                            `;
+                            preloader.appendChild(visualDiv);
+                            
+                            // Trigger reflow/animation
+                            setTimeout(() => {
+                                visualDiv.classList.add('active');
+                            }, 50);
+
+                            // Setup helper to close the intro screen
+                            const closeIntro = () => {
+                                document.removeEventListener('keydown', handleEscKey);
+                                preloader.style.opacity = '0';
+                                preloader.style.visibility = 'hidden';
+                                setTimeout(() => {
+                                    preloader.style.display = 'none';
+                                }, 500);
+                            };
+
+                            const handleEscKey = (e) => {
+                                if (e.key === 'Escape') {
+                                    clearTimeout(autoCloseTimeout);
+                                    closeIntro();
+                                }
+                            };
+
+                            document.addEventListener('keydown', handleEscKey);
+
+                            // Auto close after 3.5 seconds
+                            const autoCloseTimeout = setTimeout(closeIntro, 3500);
+
+                            // Manual close on click
+                            const skipBtn = visualDiv.querySelector('.skip-btn');
+                            if (skipBtn) {
+                                skipBtn.addEventListener('click', () => {
+                                    clearTimeout(autoCloseTimeout);
+                                    closeIntro();
+                                });
+                            }
+                        } else {
+                            // Close preloader immediately if not showing visual
                             preloader.style.opacity = '0';
                             preloader.style.visibility = 'hidden';
                             setTimeout(() => {
                                 preloader.style.display = 'none';
                             }, 500);
-                        };
-
-                        const handleEscKey = (e) => {
-                            if (e.key === 'Escape') {
-                                clearTimeout(autoCloseTimeout);
-                                closeIntro();
-                            }
-                        };
-
-                        document.addEventListener('keydown', handleEscKey);
-
-                        // Auto close after 3.5 seconds
-                        const autoCloseTimeout = setTimeout(closeIntro, 3500);
-
-                        // Manual close on click
-                        const skipBtn = visualDiv.querySelector('.skip-btn');
-                        if (skipBtn) {
-                            skipBtn.addEventListener('click', () => {
-                                clearTimeout(autoCloseTimeout);
-                                closeIntro();
-                            });
                         }
-                    } else {
-                        closeIntroImmediately();
-                    }
-                }, 500);
-            } else {
-                closeIntroImmediately();
+                    }, 500);
+                } else {
+                    preloader.style.opacity = '0';
+                    preloader.style.visibility = 'hidden';
+                }
             }
-        }, 200); // Short delay for preloader animation to show smoothly
-    }
-})();
-
-document.addEventListener('DOMContentLoaded', () => {
+        }, 500); // Wait half a second for dramatic effect
+    });
 
     // 2. Sticky Header & Top Bar Logic
     const header = document.getElementById('header');
@@ -747,103 +731,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     dot.setAttribute('data-index', i);
                     dotsContainer.appendChild(dot);
                 }
-            }
-
-            // Slider Interactivity (Fade In / Fade Out)
-            const slides = sliderTrack.querySelectorAll('.news-slide');
-            const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
-            const prevBtn = document.querySelector('.news-slider-container .prev-btn');
-            const nextBtn = document.querySelector('.news-slider-container .next-btn');
-            
-            if (window.newsSliderInterval) {
-                clearInterval(window.newsSliderInterval);
-            }
-            
-            if (slides.length > 0) {
-                let currentIndex = 0;
-                const intervalTime = 5000; // 5 seconds interval
-                
-                // Show initial slide
-                slides.forEach((s, idx) => {
-                    if (idx === 0) {
-                        s.classList.add('active');
-                    } else {
-                        s.classList.remove('active');
-                    }
-                });
-                
-                function showSlide(index) {
-                    // Check boundaries
-                    let nextIndex = index;
-                    if (nextIndex >= slides.length) nextIndex = 0;
-                    if (nextIndex < 0) nextIndex = slides.length - 1;
-                    
-                    // Remove active class from current slide and dot
-                    slides[currentIndex].classList.remove('active');
-                    if (dots[currentIndex]) dots[currentIndex].classList.remove('active');
-                    
-                    // Add active class to next slide and dot
-                    currentIndex = nextIndex;
-                    slides[currentIndex].classList.add('active');
-                    if (dots[currentIndex]) dots[currentIndex].classList.add('active');
-                }
-                
-                function nextSlide() {
-                    showSlide(currentIndex + 1);
-                }
-                
-                function prevSlide() {
-                    showSlide(currentIndex - 1);
-                }
-                
-                function startAutoPlay() {
-                    stopAutoPlay();
-                    window.newsSliderInterval = setInterval(nextSlide, intervalTime);
-                }
-                
-                function stopAutoPlay() {
-                    if (window.newsSliderInterval) {
-                        clearInterval(window.newsSliderInterval);
-                        window.newsSliderInterval = null;
-                    }
-                }
-                
-                // Button listeners (robust onclick assignment)
-                if (nextBtn) {
-                    nextBtn.onclick = (e) => {
-                        e.preventDefault();
-                        nextSlide();
-                        startAutoPlay();
-                    };
-                }
-                
-                if (prevBtn) {
-                    prevBtn.onclick = (e) => {
-                        e.preventDefault();
-                        prevSlide();
-                        startAutoPlay();
-                    };
-                }
-                
-                // Dot indicators click listeners
-                dots.forEach(dot => {
-                    dot.onclick = (e) => {
-                        e.preventDefault();
-                        const targetIndex = parseInt(dot.getAttribute('data-index'), 10);
-                        showSlide(targetIndex);
-                        startAutoPlay();
-                    };
-                });
-                
-                // Pause autoplay on mouse enter, resume on leave
-                const sliderContainer = document.querySelector('.news-slider-container');
-                if (sliderContainer) {
-                    sliderContainer.onmouseenter = stopAutoPlay;
-                    sliderContainer.onmouseleave = startAutoPlay;
-                }
-                
-                // Start autoplay loop (sequentially from 1st to last)
-                startAutoPlay();
             }
         }
 
