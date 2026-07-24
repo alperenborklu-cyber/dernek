@@ -1069,9 +1069,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         newSaveBtn.addEventListener("click", async () => {
             if (activeCropper) {
-                const hasImgbb = !!(localStorage.getItem("imgbb_api_key") || "eb4f1f34bbfebb5fef0f4a5d8f85435e");
-                const cropWidth = hasImgbb ? 1920 : 900;
-                const cropHeight = hasImgbb ? 1280 : 600;
+                const userApiKey = localStorage.getItem("imgbb_api_key");
+                const hasImgbb = !!(userApiKey && userApiKey.trim() !== "");
+                const cropWidth = hasImgbb ? 1920 : 640;
+                const cropHeight = hasImgbb ? 1280 : 480;
 
                 const croppedCanvas = activeCropper.getCroppedCanvas({
                     maxWidth: cropWidth,
@@ -1081,7 +1082,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 });
 
                 if (croppedCanvas) {
-                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', 0.85);
+                    // Use lower quality for local storage to keep DB size extremely small
+                    const quality = hasImgbb ? 0.85 : 0.65;
+                    const croppedDataUrl = croppedCanvas.toDataURL('image/jpeg', quality);
 
                     if (hasImgbb) {
                         const originalBtnText = newSaveBtn.innerHTML;
@@ -1097,19 +1100,20 @@ document.addEventListener("DOMContentLoaded", () => {
                             onSaveCallback(uploadedUrl);
                             closeCropperModal();
                         } else {
-                            if (confirm("Görsel buluta yüklenemedi! Varsayılan ImgBB API anahtarı engellenmiş veya geçersiz olabilir. \n\nLütfen yönetim panelinin üst kısmındaki ImgBB alanından kendinize ait ücretsiz bir API anahtarı alıp kaydedin. \n\nYine de görseli yerel (Base64) olarak kaydetmek ister misiniz? (Önerilmez, veritabanı boyutu büyür)")) {
+                            if (confirm("Görsel buluta yüklenemedi! API anahtarınız hatalı veya sınır aşımı olmuş olabilir. \n\nYine de görseli optimize edilmiş yerel formatta (Base64) kaydetmek ister misiniz?")) {
                                 const fallbackCanvas = activeCropper.getCroppedCanvas({
-                                    maxWidth: 900,
-                                    maxHeight: 600,
+                                    maxWidth: 640,
+                                    maxHeight: 480,
                                     imageSmoothingEnabled: true,
                                     imageSmoothingQuality: 'high'
                                 });
-                                const fallbackDataUrl = fallbackCanvas.toDataURL('image/jpeg', 0.7);
+                                const fallbackDataUrl = fallbackCanvas.toDataURL('image/jpeg', 0.6);
                                 onSaveCallback(fallbackDataUrl);
                                 closeCropperModal();
                             }
                         }
                     } else {
+                        // Directly use optimized local base64 without any upload popups
                         onSaveCallback(croppedDataUrl);
                         closeCropperModal();
                     }
@@ -1388,7 +1392,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ImgBB Görsel Bulut Yükleme Fonksiyonu
     const uploadImageToImgBB = async (base64Data) => {
-        const apiKey = localStorage.getItem("imgbb_api_key") || "eb4f1f34bbfebb5fef0f4a5d8f85435e";
+        const apiKey = localStorage.getItem("imgbb_api_key") || "";
         if (!apiKey) return null;
 
         let base64Image = base64Data;
@@ -1424,7 +1428,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const saveImgbbKeyBtn = document.getElementById("saveImgbbKeyBtn");
     
     if (imgbbKeyInput && saveImgbbKeyBtn) {
-        imgbbKeyInput.value = localStorage.getItem("imgbb_api_key") || "eb4f1f34bbfebb5fef0f4a5d8f85435e";
+        imgbbKeyInput.value = localStorage.getItem("imgbb_api_key") || "";
         
         saveImgbbKeyBtn.addEventListener("click", () => {
             const val = imgbbKeyInput.value.trim();
