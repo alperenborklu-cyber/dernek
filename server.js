@@ -34,6 +34,13 @@ const server = http.createServer((req, res) => {
         return;
     }
 
+    // API Endpoint: Status check
+    if (req.method === 'GET' && req.url === '/api/status') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({ success: true, mode: "Node.js Local Server" }));
+        return;
+    }
+
     // API Endpoint: Save changes to js/auth-shared.js
     if (req.method === 'POST' && req.url === '/api/save') {
         let body = '';

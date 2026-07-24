@@ -1254,23 +1254,50 @@ document.addEventListener("DOMContentLoaded", () => {
             let data = null;
             let connectedMode = "";
 
-            // Try fetching from local PHP API first if running on HTTP server
+            // Try fetching from local Node.js API or local PHP API first if running on HTTP server
             if (window.location.protocol.startsWith('http')) {
+                // A. Try Node.js local development server status first
                 try {
-                    const localApiUrl = "../api.php?action=get_data";
-                    const response = await fetch(localApiUrl);
+                    const nodeStatusUrl = "../api/status";
+                    const response = await fetch(nodeStatusUrl);
                     if (response.ok) {
-                        data = await response.json();
-                        connectedMode = "Yerel Sunucu (PHP/data)";
+                        const statusData = await response.json();
+                        if (statusData.success) {
+                            connectedMode = "Yerel Geliştirme Sunucusu (Node.js/Git)";
+                            data = {
+                                members: JSON.parse(localStorage.getItem("members") || "[]"),
+                                announcements: JSON.parse(localStorage.getItem("announcements") || "[]"),
+                                comments: JSON.parse(localStorage.getItem("comments") || "[]"),
+                                suggestions: JSON.parse(localStorage.getItem("suggestions") || "[]"),
+                                slider_items: JSON.parse(localStorage.getItem("slider_items") || "[]"),
+                                instagram_posts: JSON.parse(localStorage.getItem("instagram_posts") || "[]"),
+                                projects: JSON.parse(localStorage.getItem("projects") || "[]"),
+                                admin_password: localStorage.getItem("admin_password") || "admin123"
+                            };
+                        }
                     }
-                } catch (localErr) {
-                    console.log("Yerel PHP API check failed, falling back to Cloud DB check.");
+                } catch (nodeErr) {
+                    console.log("Yerel Node.js API check failed.");
+                }
+
+                // B. Try local PHP API check if not matched by Node.js
+                if (!data) {
+                    try {
+                        const localApiUrl = "../api.php?action=get_data";
+                        const response = await fetch(localApiUrl);
+                        if (response.ok) {
+                            data = await response.json();
+                            connectedMode = "Yerel Sunucu (PHP/data)";
+                        }
+                    } catch (localErr) {
+                        console.log("Yerel PHP API check failed, falling back to Cloud DB check.");
+                    }
                 }
             }
 
             // Fallback to Cloud DB if local fetch failed or not running on http
             if (!data) {
-                const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f8ac3-a6a0-755f-9c51-1755818ca05f";
+                const url = typeof CLOUD_DB_URL !== 'undefined' ? CLOUD_DB_URL : "https://jsonblob.com/api/jsonBlob/019f9360-3666-7b72-b82e-19765739eaeb";
                 const response = await fetch(url, { headers: { 'Accept': 'application/json' } });
                 if (!response.ok) {
                     throw new Error("HTTP error " + response.status);

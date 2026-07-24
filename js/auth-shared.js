@@ -273,7 +273,7 @@ function initializeDatabase() {
 }
 
 // Global Bulut Depolama Veritabanı Adresi (jsonblob.com - PHP/Veritabanı sunucusu gerektirmez, tüm dünyada ortaktır)
-const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f8ac3-a6a0-755f-9c51-1755818ca05f";
+const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f9360-3666-7b72-b82e-19765739eaeb";
 
 // Sunucudan (Bulut veya Yerel Veritabanından) veri senkronizasyonu
 async function syncDataFromServer() {
@@ -304,7 +304,7 @@ async function syncDataFromServer() {
         });
         if (res.ok) {
             const data = await res.json();
-            if (data) {
+            if (data && (data.members || data.announcements)) {
                 saveLocalData(data);
                 console.log("Bulut veritabanı başarıyla yerel tarayıcı ile senkronize edildi.");
                 triggerContentUpdate();
@@ -349,9 +349,29 @@ async function uploadDataToCloud() {
         admin_password: localStorage.getItem("admin_password") || DEFAULT_ADMIN_PASSWORD
     };
     try {
-        // 1. Try local PHP api.php first if running on HTTP server
         if (window.location.protocol.startsWith('http')) {
             const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");
+            
+            // 1. Try Node.js server API first
+            const nodeApiUrl = (isSubdir ? "../" : "") + "api/save";
+            try {
+                const res = await fetch(nodeApiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(dataToSave)
+                });
+                if (res.ok) {
+                    const resData = await res.json();
+                    if (resData.success) {
+                        console.log("Tüm değişiklikler yerel Node.js sunucusuna ve js/auth-shared.js dosyasına kaydedildi.");
+                        return true;
+                    }
+                }
+            } catch (nodeErr) {
+                console.log("Yerel Node.js API aktif değil veya erişilemedi, PHP denenecek.");
+            }
+
+            // 2. Try local PHP api.php
             const localApiUrl = (isSubdir ? "../" : "") + "api.php?action=save_admin";
             try {
                 const res = await fetch(localApiUrl, {
@@ -368,7 +388,7 @@ async function uploadDataToCloud() {
             }
         }
 
-        // 2. Fallback to Cloud JSONBlob DB
+        // 3. Fallback to Cloud JSONBlob DB
         const res = await fetch(CLOUD_DB_URL, {
             method: 'PUT',
             headers: {
