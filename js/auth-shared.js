@@ -278,6 +278,16 @@ const CLOUD_DB_URL = "https://jsonblob.com/api/jsonBlob/019f9360-3666-7b72-b82e-
 // Sunucudan (Bulut veya Yerel Veritabanından) veri senkronizasyonu
 async function syncDataFromServer() {
     try {
+        // Eğer yerel olarak kaydedilmemiş değişiklikler varsa, sunucudan veri çekip yereli ezmiyoruz.
+        if (localStorage.getItem("db_dirty") === "true") {
+            console.log("Yerelde kaydedilmemiş değişiklikler var. Sunucu verisiyle ezme engellendi. Yeniden kaydedilmeye çalışılıyor...");
+            const success = await uploadDataToCloud();
+            if (success) {
+                localStorage.removeItem("db_dirty");
+            }
+            return;
+        }
+
         // 1. Try local PHP api.php first if running on HTTP server
         if (window.location.protocol.startsWith('http')) {
             const isSubdir = window.location.pathname.includes("/member/") || window.location.pathname.includes("/admin/");

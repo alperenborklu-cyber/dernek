@@ -1366,8 +1366,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const syncWithLocalServer = async (quiet = false) => {
         try {
+            localStorage.setItem("db_dirty", "true"); // Mark as dirty since we have new local modifications
             const success = await uploadDataToCloud();
             if (success) {
+                localStorage.removeItem("db_dirty"); // Clear dirty flag on successful server save
                 console.log(`[Senkronizasyon] Veriler başarıyla buluta kaydedildi.`);
                 
                 const statusSpan = document.getElementById("serverStatusText");
@@ -1385,7 +1387,7 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch (err) {
             console.error('[Senkronizasyon] Bulut veritabanı hatası:', err);
             if (!quiet) {
-                alert("Bulut veritabanına bağlanırken hata oluştu. İnternet bağlantınızı kontrol edin.");
+                alert("Bulut veritabanına bağlanırken hata oluştu. Değişiklikler yerel tarayıcınızda güvendedir.");
             }
         }
     };
