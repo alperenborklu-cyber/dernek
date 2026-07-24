@@ -1097,7 +1097,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             onSaveCallback(uploadedUrl);
                             closeCropperModal();
                         } else {
-                            if (confirm("Görsel buluta yüklenemedi. Yerel Base64 biçiminde kaydetmek ister misiniz? (Önerilmez, veritabanı boyutu büyür)")) {
+                            if (confirm("Görsel buluta yüklenemedi! Varsayılan ImgBB API anahtarı engellenmiş veya geçersiz olabilir. \n\nLütfen yönetim panelinin üst kısmındaki ImgBB alanından kendinize ait ücretsiz bir API anahtarı alıp kaydedin. \n\nYine de görseli yerel (Base64) olarak kaydetmek ister misiniz? (Önerilmez, veritabanı boyutu büyür)")) {
                                 const fallbackCanvas = activeCropper.getCroppedCanvas({
                                     maxWidth: 900,
                                     maxHeight: 600,
