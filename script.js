@@ -721,17 +721,82 @@ document.addEventListener('DOMContentLoaded', () => {
                 sliderTrack.appendChild(slide);
             });
 
-            // Yeni slaytlara göre gösterge noktalarını (dots) yeniden oluşturalım
+            // Slider kontrol ve otomatik dönme mantığı
+            const totalSlides = sliderTrack.querySelectorAll('.news-slide').length;
+            let currentNewsSlide = 0;
+
+            const startAutoSlide = () => {
+                if (window.newsSliderInterval) clearInterval(window.newsSliderInterval);
+                window.newsSliderInterval = setInterval(() => {
+                    updateSlider(currentNewsSlide + 1);
+                }, 5000);
+            };
+
+            const updateSlider = (index) => {
+                if (totalSlides === 0) return;
+                if (index < 0) {
+                    currentNewsSlide = totalSlides - 1;
+                } else if (index >= totalSlides) {
+                    currentNewsSlide = 0;
+                } else {
+                    currentNewsSlide = index;
+                }
+                sliderTrack.style.transform = `translateX(-${currentNewsSlide * 100}%)`;
+
+                const dots = dotsContainer ? dotsContainer.querySelectorAll('.dot') : [];
+                dots.forEach((dot, idx) => {
+                    if (idx === currentNewsSlide) {
+                        dot.classList.add('active');
+                    } else {
+                        dot.classList.remove('active');
+                    }
+                });
+            };
+
+            if (window.newsSliderInterval) {
+                clearInterval(window.newsSliderInterval);
+            }
+
+            // Yeni slaytlara göre gösterge noktalarını (dots) yeniden oluşturalım ve tıklama olayı ekleyelim
             if (dotsContainer) {
-                const totalSlides = sliderTrack.querySelectorAll('.news-slide').length;
                 dotsContainer.innerHTML = '';
                 for (let i = 0; i < totalSlides; i++) {
                     const dot = document.createElement('span');
                     dot.className = i === 0 ? 'dot active' : 'dot';
                     dot.setAttribute('data-index', i);
+                    dot.addEventListener('click', () => {
+                        updateSlider(i);
+                        startAutoSlide();
+                    });
                     dotsContainer.appendChild(dot);
                 }
             }
+
+            // Ön ve arka butonlara tıklama olayı
+            const container = sliderTrack.closest('.news-slider-container');
+            if (container) {
+                const prevBtn = container.querySelector('.prev-btn');
+                const nextBtn = container.querySelector('.next-btn');
+
+                if (prevBtn) {
+                    prevBtn.replaceWith(prevBtn.cloneNode(true));
+                    const newPrevBtn = container.querySelector('.prev-btn');
+                    newPrevBtn.addEventListener('click', () => {
+                        updateSlider(currentNewsSlide - 1);
+                        startAutoSlide();
+                    });
+                }
+                if (nextBtn) {
+                    nextBtn.replaceWith(nextBtn.cloneNode(true));
+                    const newNextBtn = container.querySelector('.next-btn');
+                    newNextBtn.addEventListener('click', () => {
+                        updateSlider(currentNewsSlide + 1);
+                        startAutoSlide();
+                    });
+                }
+            }
+
+            startAutoSlide();
         }
 
         // Dinamik Instagram Paylaşımları Yükleyici
