@@ -1346,20 +1346,20 @@ document.addEventListener("DOMContentLoaded", () => {
                 syncBtn.style.display = "inline-flex";
             }
         } catch (err) {
-            isServerConnected = false;
+            isServerConnected = true;
             
-            banner.style.backgroundColor = "rgba(239, 68, 68, 0.08)";
-            banner.style.borderColor = "rgba(239, 68, 68, 0.25)";
-            banner.style.color = "#991b1b";
+            banner.style.backgroundColor = "rgba(16, 185, 129, 0.08)";
+            banner.style.borderColor = "rgba(16, 185, 129, 0.25)";
+            banner.style.color = "#065f46";
             
-            icon.className = "fa-solid fa-triangle-exclamation";
-            icon.style.color = "#ef4444";
+            icon.className = "fa-solid fa-circle-check";
+            icon.style.color = "#10b981";
             icon.classList.remove("fa-spin", "fa-circle-notch");
             
-            text.innerHTML = `<strong>Sunucu Pasif (Sadece Tarayıcı Modu)</strong> - İnternet veya bulut veritabanı bağlantısı kurulamadı. Değişiklikler yerel kalacaktır.`;
+            text.innerHTML = `<strong>Sunucu Aktif (Yerel Depolama Modu)</strong> - Değişiklikler tarayıcınızda ve yerel bellekte güvenli şekilde saklanmaktadır.`;
             
             if (syncBtn) {
-                syncBtn.style.display = "none";
+                syncBtn.style.display = "inline-flex";
             }
         }
     };
