@@ -647,7 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <span class="news-category">${ann.category || 'Kurumsal'}</span>
                         <h3>${ann.title}</h3>
                         <p>${ann.content.substring(0, 150)}${ann.content.length > 150 ? '...' : ''}</p>
-                        <a href="haber-detay.html?id=${ann.id}" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
+                        <a href="${ann.link || ('haber-detay.html?id=' + ann.id)}" class="read-more">Devamını Oku <i class="fa-solid fa-arrow-right"></i></a>
                     </div>
                 `;
                 newsGrid.insertBefore(card, newsGrid.firstChild);
@@ -849,8 +849,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 const prefix = isSubDir ? '../' : '';
                 
                 tickerContent.innerHTML = '';
-                // En yeni eklenen haberler en başta görünecek şekilde sıralayalım (reverse)
-                announcements.slice().reverse().forEach(ann => {
+                // En yeni eklenen haberler en başta görünecek şekilde sıralayalım
+                announcements.slice(0, 10).forEach(ann => {
                     const link = ann.link || `${prefix}haber-detay.html?id=${ann.id}`;
                     const dateParts = ann.date ? ann.date.split('-') : [];
                     const formattedDate = dateParts.length === 3 ? `[${dateParts[2]}.${dateParts[1]}.${dateParts[0]}]` : `[${ann.date || ''}]`;

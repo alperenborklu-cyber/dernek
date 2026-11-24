@@ -33,6 +33,33 @@ if (!defined('SECURE_API')) {
     ],
     "announcements": [
         {
+            "id": "ann-engelli-emeklilik-hak-kayiplari",
+            "title": "Engelli Emekliliğinde Hak Kayıpları! 2008 Öncesi Sigortalıların Hakları Korunmalıdır!",
+            "category": "Kurumsal",
+            "content": "Gönül Köprüsü Engelli Memur ve İşçi Derneği olarak; 2008 yılı öncesinde sigorta girişi yapılmış engelli çalışanlarımızın ve vatandaşlarımızın, eski mevzuata göre kazanılmış haklarının korunmasını, mevcut emeklilik sistemindeki haksızlık ve mağduriyetlerin acilen giderilmesini ve telafisi güç hak kayıplarının önlenmesini talep ediyoruz.\n\nTalebimiz Ayrıcalık Değil; Hukuki Güvenlik, Eşitlik ve Sosyal Devlet İlkesidir!\n\nKazanılmış Haklar Dokunulmazdır:\nYıllarca binbir zorlukla kamuda ve özel sektörde alın teri döken engelli kardeşlerimizin emeklilik hakkı, çalışma hayatının en temel teminatıdır. Mevzuat değişikliklerinin geriye dönük mağduriyet yaratması hukuk devleti ve sosyal devlet anlayışıyla bağdaşmamaktadır.\n\nHaklı Taleplerimiz:\n1. 2008 Öncesi Haklar Korunmalıdır: 2008 yılından önce sigortalı olan engelli çalışanların ilk işe giriş tarihindeki şartlara göre emeklilik hakları eksiksiz korunmalıdır.\n2. Eski Mevzuata Göre Haklar Güvence Altına Alınmalıdır: Yasaların geriye yürütülmesi sonucu oluşan haksız uygulamalara son verilmelidir.\n3. Emekliliğine Az Süre Kalanlar Mağdur Edilmemelidir: Yıllarca prim ödeyip emeklilik planlaması yapan sigortalıların emeklilik şartları son anda ağırlaştırılmamalıdır.\n4. Sağlık Raporları Dikkate Alınmalıdır: Sürekli ibareli ve kazanılmış sağlık kurulu raporlarının geçerliliği tartışmaya açılmamalıdır.\n5. Değerlendirme Farklılıkları Giderilmelidir: Kurumlar ve kurullar arasındaki çelişkili maluliyet ve engellilik değerlendirme kriterleri objektif bir standarda bağlanmalıdır.\n6. Reddedilen Başvurular Şeffaf İncelenmelidir: Mağduriyet yaşayan sigortalıların itiraz ve başvuru süreçleri şeffaf, adil ve hızlı bir şekilde sonuçlandırılmalıdır.\n7. Mağduriyetin Boyutu Açıklanmalıdır: İlgili kamu otoriteleri ve SGK, yeni uygulamalar nedeniyle kaç engelli çalışanın etkilendiğini şeffaflıkla kamuoyu ile paylaşmalıdır.\n\nEngelli vatandaşlarımızın haklarını korumak, anayasal bir ödev ve sosyal devlet ilkesinin en birincil gereğidir. Haklarımızı Birlikte Savunalım!",
+            "image": "cover-engelli-emeklilik-hak-kayiplari.webp",
+            "date": "2026-11-25",
+            "link": "haber-engelli-emeklilik-hak-kayiplari.html"
+        },
+        {
+            "id": "ann-ozel-bakim-merkezleri-yonetmelik",
+            "title": "Engelli Bireyler ve Aileleri Dikkat! Yeni Özel Bakım Yönetmeliği Yürürlüğe Girdi!",
+            "category": "Kurumsal",
+            "content": "Engelli bireyleri ve ailelerini doğrudan ilgilendiren önemli mevzuat değişikliği: Engelli Bireylere Yönelik Özel Bakım Merkezleri Yönetmeliği, 7 Ekim 2026 tarihli ve 33393 sayılı Resmî Gazete'de yayımlanarak resmen yürürlüğe girdi.\n\nYayımlanan yeni yönetmelikle birlikte; özel bakım merkezlerinin fiziki ve teknik çalışma koşulları, görev yapacak personelin nitelik ve standartları, denetim ve teftiş mekanizmaları, sunulacak bakım ve rehabilitasyon hizmetleri ile engelli bireylerin kabul ve yerleştirme işlemlerine dair tüm usul ve esaslar günümüz ihtiyaçları doğrultusunda kapsamlı şekilde yeniden düzenlendi.\n\nYeni Yönetmelikte Öne Çıkan Başlıklar:\n• Engelli bireylerin insan onuruna, kişisel mahremiyetine, bağımsız yaşam haklarına ve toplumsal hayata tam ve etkin katılımlarına mutlak saygı gösterilmesi ilkesi pekiştirildi.\n• Kişisel bakım hizmetleri, psikososyal destek programları ve sağlık takibi uygulamalarının standartları yükseltilerek hizmet kalitesinin güvence altına alınması hedeflendi.\n• Merkezlerde istihdam edilecek mesleki personelin yetkinlikleri ve sürekli eğitim zorunlulukları artırıldı.\n• Hizmet alan bireylerin güvenliği ve refahı için denetim kriterleri sıkılaştırıldı ve şeffaflık ilkeleri genişletildi.\n\nGönül Köprüsü Engelli Memur ve İşçi Derneği olarak, engelli bireylerimizi ve fedakâr ailelerini ilgilendiren tüm mevzuat ve yasal düzenlemeleri yakından takip ediyor, haklar konusunda toplumsal bilinç ve farkındalığı artırmak için sahada ve masada aktif mücadelemizi sürdürüyoruz.\n\nUnutmayalım: Engelli bireylerin haklarını bilmesi; bu hakları savunabilmesinin ve koruyabilmesinin en birinci adımıdır.",
+            "image": "cover-ozel-bakim-merkezleri-yonetmelik.webp",
+            "date": "2026-11-24",
+            "link": "haber-ozel-bakim-merkezleri-yonetmelik.html"
+        },
+        {
+            "id": "ann-engelli-istihdam-kamu-yasal-oran",
+            "title": "Kamu Kurumlarında Engelli Personel Çalıştırma Zorunluluğu: Yasal Oran %3!",
+            "category": "Eğitim & İstihdam",
+            "content": "Kamu kurumlarında engelli bireylerin istihdamına ilişkin en temel yasal güvencelerden biri olan 657 sayılı Devlet Memurları Kanunu'nun 53. maddesi, kamu kurum ve kuruluşlarına engelli personel çalıştırma yükümlülüğü getirmektedir.\n\nKanuna göre kamu kurum ve kuruluşları, yurtdışı teşkilatları hariç olmak üzere toplam dolu memur kadrolarının en az %3'ü oranında engelli personel istihdam etmekle yükümlüdür.\n\nEngelli adaylar için yapılan merkezi sınavlar (EKPSS), diğer memur alım sınavlarından ayrı olarak düzenlenmekte; sınav soruları adayların engel grupları, özel ihtiyaçları ve öğrenim düzeyleri titizlikle dikkate alınarak hazırlanmaktadır. İlkokul, ortaokul ve ilgili özel eğitim kurumlarından mezun olan adaylar için ise mevzuatta belirlenen usul ve esaslar doğrultusunda kura yöntemi uygulanmaktadır.\n\nYasal mevzuat yalnızca istihdam kotasını belirlemekle kalmamakta, kamu kurumlarına önemli erişilebilirlik sorumlulukları da yüklemektedir. Buna göre kurumlar, engelli personelin görevlerini layıkıyla ve bağımsız şekilde yerine getirebilmesi için çalışma ortamlarını fiziksel ve dijital olarak erişilebilir hâle getirmek, gerekli ergonomik düzenlemeleri yapmak ve ihtiyaç duyulan yardımcı teknolojik araç ve gereçleri sağlamakla mükelleftir.\n\nGönül Köprüsü Engelli Memur ve İşçi Derneği olarak engelli istihdamının yalnızca kanuni bir zorunluluk değil, aynı zamanda fırsat eşitliğinin, insan onurunun ve sosyal adaletin vazgeçilmez bir gereği olduğunu önemle vurguluyoruz. Tüm kamu kurumlarının yasal istihdam kotalarını eksiksiz doldurması ve çalışma koşullarını hak temelli bir yaklaşımla iyileştirmesi, engelli bireylerin toplumsal ve ekonomik hayata eşit katılımı için hayati önem taşımaktadır.\n\nUnutmayalım: Engelli bireylerin istihdamı bir lütuf veya ayrıcalık değil; anayasal bir hak, yasal bir zorunluluk ve eşit yurttaşlığın en temel gereğidir.",
+            "image": "cover-engelli-istihdam-kamu-yasal-oran.webp",
+            "date": "2026-11-23",
+            "link": "haber-engelli-istihdam-kamu-yasal-oran.html"
+        },
+        {
             "id": "ann-sivas-tasra-toplantisi",
             "title": "Gönül Köprüsü Taşra Teşkilat Toplantılarına Sivas'ta Start Verildi",
             "category": "Kurumsal",
@@ -191,6 +218,33 @@ if (!defined('SECURE_API')) {
         }
     ],
     "slider_items": [
+        {
+            "id": "slide-engelli-emeklilik-hak-kayiplari",
+            "title": "Engelli Emekliliğinde Hak Kayıpları! 2008 Öncesi Sigortalıların Hakları Korunmalıdır!",
+            "category": "Kurumsal",
+            "content": "Gönül Köprüsü Engelli Memur ve İşçi Derneği olarak, 2008 yılı öncesinde sigortalı olan engelli vatandaşlarımızın eski mevzuata göre kazanılmış haklarının korunmasını ve emeklilik sistemindeki mağduriyetlerin giderilmesini talep ediyoruz.",
+            "image": "cover-engelli-emeklilik-hak-kayiplari.webp",
+            "date": "2026-11-25",
+            "link": "haber-engelli-emeklilik-hak-kayiplari.html"
+        },
+        {
+            "id": "slide-ozel-bakim-merkezleri-yonetmelik",
+            "title": "Engelli Bireyler ve Aileleri Dikkat! Yeni Özel Bakım Yönetmeliği Yürürlüğe Girdi!",
+            "category": "Kurumsal",
+            "content": "Engelli Bireylere Yönelik Özel Bakım Merkezleri Yönetmeliği Resmî Gazete'de yayımlanarak yürürlüğe girdi. Bakım hizmetleri, personel standartları ve denetim süreçleri yeniden düzenlendi.",
+            "image": "cover-ozel-bakim-merkezleri-yonetmelik.webp",
+            "date": "2026-11-24",
+            "link": "haber-ozel-bakim-merkezleri-yonetmelik.html"
+        },
+        {
+            "id": "slide-engelli-istihdam-kamu-yasal-oran",
+            "title": "Kamu Kurumlarında Engelli Personel Çalıştırma Zorunluluğu: Yasal Oran %3!",
+            "category": "Eğitim & İstihdam",
+            "content": "657 sayılı Devlet Memurları Kanunu'nun 53. maddesi gereğince kamu kurum ve kuruluşları, dolu memur kadrolarının %3'ü oranında engelli personel istihdam etmek zorundadır.",
+            "image": "cover-engelli-istihdam-kamu-yasal-oran.webp",
+            "date": "2026-11-23",
+            "link": "haber-engelli-istihdam-kamu-yasal-oran.html"
+        },
         {
             "id": "slide-sivas-tasra-toplantisi",
             "title": "Gönül Köprüsü Taşra Teşkilat Toplantılarına Sivas'ta Start Verildi",
