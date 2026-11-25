@@ -33,6 +33,15 @@ if (!defined('SECURE_API')) {
     ],
     "announcements": [
         {
+            "id": "ann-msb-148-surekli-isci-alimi",
+            "title": "MİLLÎ SAVUNMA BAKANLIĞI 148 SÜREKLİ İŞÇİ ALACAK!",
+            "category": "Eğitim & İstihdam",
+            "content": "Millî Savunma Bakanlığı (MSB), 2026 yılı kapsamında 148 sürekli işçi alımı gerçekleştirecektir.\n\nYayımlanan ilana göre, Bakanlık bünyesinde istihdam edilmek üzere 42 engelli meydancı ve 106 Terörle Mücadelede Malul Sayılmayacak Şekilde Yaralanan (TMSY) sürekli işçi alınacaktır.\n\nKPSS ŞARTI ARANMIYOR!\nAlım kapsamında adaylardan en az ilkokul mezunu olmaları istenirken, başvurularda KPSS puanı şartı aranmayacaktır. Adayların 36 yaşından gün almamış olması gerekmektedir.\n\nALIM YAPILACAK İLLER:\nAfyonkarahisar, Ankara, Çanakkale, Diyarbakır, Elazığ, Mersin, İstanbul, İzmir, Kayseri, Kocaeli, Muğla, Niğde ve Tekirdağ.\n\nBAŞVURU TARİHLERİ:\n• Başvurular: 23-27 Kasım 2026\n• Başvuru adresi: İŞKUR\n• Kura tarihi: 16 Aralık 2026\n\nAlımlar kura yöntemiyle gerçekleştirilecektir. Başvuru yapmayı düşünen adayların İŞKUR üzerinden yayımlanan resmî ilanı ve özel başvuru şartlarını incelemeleri önem taşımaktadır.",
+            "image": "cover-msb-148-surekli-isci-alimi.webp",
+            "date": "2026-11-25",
+            "link": "haber-msb-148-surekli-isci-alimi.html"
+        },
+        {
             "id": "ann-engelli-emeklilik-hak-kayiplari",
             "title": "Engelli Emekliliğinde Hak Kayıpları! 2008 Öncesi Sigortalıların Hakları Korunmalıdır!",
             "category": "Kurumsal",
@@ -218,6 +227,15 @@ if (!defined('SECURE_API')) {
         }
     ],
     "slider_items": [
+        {
+            "id": "slide-msb-148-surekli-isci-alimi",
+            "title": "MİLLÎ SAVUNMA BAKANLIĞI 148 SÜREKLİ İŞÇİ ALACAK!",
+            "category": "Eğitim & İstihdam",
+            "content": "Millî Savunma Bakanlığı (MSB), 2026 yılı kapsamında 42 engelli meydancı ve 106 TMSY olmak üzere 148 sürekli işçi alımı gerçekleştirecek. Başvurular 23-27 Kasım 2026 tarihlerinde İŞKUR üzerinden yapılacak.",
+            "image": "cover-msb-148-surekli-isci-alimi.webp",
+            "date": "2026-11-25",
+            "link": "haber-msb-148-surekli-isci-alimi.html"
+        },
         {
             "id": "slide-engelli-emeklilik-hak-kayiplari",
             "title": "Engelli Emekliliğinde Hak Kayıpları! 2008 Öncesi Sigortalıların Hakları Korunmalıdır!",
